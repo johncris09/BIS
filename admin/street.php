@@ -59,17 +59,37 @@
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Strret </label>
-												<div class="col-sm-8">
+												<label class="col-sm-3 control-label">Barangay</label>
+												<div class="col-sm-9">
+													<select id="company" class="form-control" required="">
+														<option value="">Choose a Barangay</option>
+														<option value="brgy1">Barangay 1</option>
+														<option value="brgy2">Barangay 2</option>
+														<option value="brgy3">Barangay 3</option>
+													</select>
+													<label class="error" for="company"></label>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label">Street </label>	
+												<div class="col-sm-9">
 													<input type="text" name="name" class="form-control" required autofocus>
 												</div>
 											</div>
 										</div>
 										<footer class="panel-footer" style="display: block;">
-											<button type="submit" class="btn btn-primary mb-xs mt-xs mr-xs ">Save</button>
-											<button type="reset" class="btn btn-default">Reset</button>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="submit" class="btn btn-primary hidden-xs mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
+													<button type="submit" class="btn btn-default hidden-xs mb-xs mt-xs mr-xs "> Reset</button>
+													<button type="submit" class="btn btn-primary btn-block  visible-xs mb-xs mt-xs mr-xs"><i class="fa fa-save"></i>  Save</button>
+													<button type="submit" class="btn btn-default btn-block  visible-xs mb-xs mt-xs mr-xs"> Reset</button>
+												</div>
+											</div>
 										</footer>
 									</section>
+								
 								</form>
 							</div>
 						<div class="col-md-7">
