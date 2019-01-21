@@ -12,9 +12,6 @@
 	<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 	<?php include('../component/csslink.php'); ?>
 
-
-	
-
 </head>
 	<body>
 		<section class="body">
@@ -70,12 +67,17 @@
 											</div>
 										</div>
 										<footer class="panel-footer" style="display: block;">
-											<button type="submit" class="btn btn-primary mb-xs mt-xs mr-xs ">Save</button>
-											<button type="reset" class="btn btn-default">Reset</button>
-										</footer>
+										<div class="row">
+											<div class="col-sm-12 text-right">
+												<button type="submit" class="btn btn-primary hidden-xs mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
+												<button type="submit" class="btn btn-default hidden-xs mb-xs mt-xs mr-xs "> Reset</button>
+												<button type="submit" class="btn btn-primary btn-block  visible-xs mb-xs mt-xs mr-xs"><i class="fa fa-save"></i>  Save</button>
+												<button type="submit" class="btn btn-default btn-block  visible-xs mb-xs mt-xs mr-xs"> Reset</button>
+											</div>
 									</section>
 								</form>
 							</div>
+
 						<div class="col-md-7">
 							<section class="panel">
 								<header class="panel-heading">
