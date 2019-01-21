@@ -40,8 +40,8 @@
 									</a>
 								</li>
                 <li><span>Barangay &amp; Streets</span></li>
-                <li><span>Barangay</span></li>
-								<li><span>All Barangay</span></li>
+								<li><span>Barangay</span></li>
+								
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
