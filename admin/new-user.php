@@ -54,7 +54,7 @@
                     <a href="#" class="fa fa-times"></a>
                   </div>
           
-                  <h2 class="panel-title">Form Wizard</h2>
+                  <h2 class="panel-title">Add User</h2>
                 </header>
                 <div class="panel-body">
                   <div class="wizard-progress wizard-progress-lg">
@@ -63,13 +63,13 @@
                     </div>
                     <ul class="wizard-steps">
                       <li class="active">
-                        <a href="#w4-account" data-toggle="tab"><span>1</span>Account Info</a>
+                        <a href="#w4-profile" data-toggle="tab"><span>1</span>Profile Info</a>
                       </li>
                       <li>
-                        <a href="#w4-profile" data-toggle="tab"><span>2</span>Profile Info</a>
-                      </li>
+                        <a href="#w4-position" data-toggle="tab"><span>2</span> Position</a>
+                      </li>`
                       <li>
-                        <a href="#w4-billing" data-toggle="tab"><span>3</span>Barangay Position</a>
+                        <a href="#w4-account" data-toggle="tab"><span>3</span>Account Info</a>
                       </li>
                       <li>
                         <a href="#w4-confirm" data-toggle="tab"><span>4</span>Confirmation</a>
@@ -79,25 +79,12 @@
           
                   <form class="form-horizontal" novalidate="novalidate">
                     <div class="tab-content">
-                      <div id="w4-account" class="tab-pane active">
-                        <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-username" >Username</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="username" id="w4-username" autofocus required="">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-password">Password</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control" name="password" id="w4-password" required="" minlength="6">
-                          </div>
-                        </div>
-                      </div>
-                      <div id="w4-profile" class="tab-pane">
+                      
+                      <div id="w4-profile" class="tab-pane active">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="first-name" id="w4-first-name" required="">
+                            <input type="text" class="form-control" name="first-name" id="w4-first-name" required="" autofocus>
                           </div>
                         </div>
                         <div class="form-group">
@@ -107,7 +94,7 @@
                           </div>
                         </div>
                       </div>
-                      <div id="w4-billing" class="tab-pane">
+                      <div id="w4-position" class="tab-pane">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-cc">Barangay</label>
                           <div class="col-sm-9">
@@ -130,6 +117,20 @@
                               <option>Secretary</option>
                               <option>Treasurer</option>
                             </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="w4-account" class="tab-pane">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-username" >Username</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="username" id="w4-username"  required="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-password">Password</label>
+                          <div class="col-sm-9">
+                            <input type="password" class="form-control" name="password" id="w4-password" required="" minlength="6">
                           </div>
                         </div>
                       </div>
