@@ -96,7 +96,7 @@
       <ul class="nav nav-main">
         <li class="nav-parent">
           <a>
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <i class="fa fa-file-text" aria-hidden="true"></i>
             <span>Residence Profiling</span>
           </a>
           <ul class="nav nav-children">
@@ -114,7 +114,7 @@
         </li>
         <li class="nav-parent">
           <a>
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
             <span>Barangay Issue</span>
           </a>
           <ul class="nav nav-children">
