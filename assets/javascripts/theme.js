@@ -705,7 +705,7 @@ window.theme = {};
 										'</div>',
 										'<div class="form-group mb-lg">',
 											'<div class="input-group input-group-icon">',
-												'<input id="pwd" name="pwd" type="password" class="form-control input-lg" placeholder="Password" required/>',
+												'<input id="pwd" name="pwd" type="password" class="form-control input-lg" placeholder="Password" required autofocus/>',
 												'<span class="input-group-addon">',
 													'<span class="icon icon-lg">',
 														'<i class="fa fa-lock"></i>',
