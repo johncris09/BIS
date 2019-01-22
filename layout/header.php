@@ -41,7 +41,7 @@
         <ul class="list-unstyled">
           <li class="divider"></li>
           <li>
-            <a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user"></i> My Profile</a>
+            <a role="menuitem" tabindex="-1" href="../admin/profile.php"><i class="fa fa-user"></i> My Profile</a>
           </li>
           <li>
             <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
