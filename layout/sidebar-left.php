@@ -37,6 +37,19 @@
               </li>
             </ul>
           </li>
+          <li class="nav-parent">
+            <a>
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span>Barangay Position</span>
+            </a>
+            <ul class="nav nav-children">
+              <li>
+                <a href="position.php">
+                   Position
+                </a>
+              </li>
+            </ul>
+          </li>
           
           <li class="nav-parent">
             <a>
@@ -76,9 +89,6 @@
               </li>
             </ul>
           </li>
-
-          
-          
         </ul>
       </nav>
       
@@ -91,12 +101,12 @@
           </a>
           <ul class="nav nav-children">
             <li>
-              <a href="">
+              <a href="../staff/all-resident.php">
                   All Resident
               </a>
             </li>
             <li>
-              <a href="">
+              <a href="../staff/new-resident.php">
                   Add New Resident
               </a>
             </li>
