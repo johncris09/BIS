@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Dasboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>All Users</title>
+
+	<?php include('../component/metadata.php'); ?>
+	
 	
 	<!-- Specific Page Vendor CSS -->
 	<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
@@ -57,7 +57,7 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12 text-right">
-										<a href="new-user.php" title="Add New User" class="btn btn-primary mb-xs mt-xs mr-xs">Add New User</a>
+										<a href="new-user.php" title="Add New User" class="btn btn-primary mb-sm mt-xs mr-xs">Add New User</a>
 									</div>
 								</div>
 								

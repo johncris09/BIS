@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Dasboard</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<head>
+		<title>Position</title>
+		<?php include('../component/metadata.php'); ?>
+		
 
-	<!-- Specific Page Vendor CSS -->
-	<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
-	<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-	<?php include('../component/csslink.php'); ?>
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<?php include('../component/csslink.php'); ?>
 
-</head>
+	</head>
 	<body>
 		<section class="body">
 

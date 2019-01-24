@@ -2,23 +2,14 @@
 <!doctype html>
 <html class="fixed">
 	<head>
+		<title>Back Up Records</title>
 
-		<!-- Basic -->
-		<meta charset="UTF-8">
-
-		<title>Notifications | Okler Themes | Porto-Admin</title>
-		<meta name="keywords" content="HTML5 Admin Template" />
-		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
-		<meta name="author" content="okler.net">
-
-		<!-- Mobile Metas -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-		<!-- Web Fonts  -->
+		<?php include('../component/metadata.php'); ?>
     
     <?php include('../component/csslink.php'); ?>
+		
 		<!-- Specific Page Vendor CSS -->
-    <link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
+    	<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
     
 
 	</head>
