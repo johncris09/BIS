@@ -95,19 +95,22 @@
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-gender">Gender</label>
-                          <div class="col-sm-4">
-                            <select id="gender" class="form-control" required="">
-                              <option value="">Choose Gender</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
+                          <div class="col-sm-9">
+                            <div class="radio-custom radio-primary">
+                              <input id="male" name="gender" type="radio" value="Male" required="">
+                              <label for="male">Male</label>
+                            </div>
+                            <div class="radio-custom radio-primary">
+                              <input id="female" name="gender" type="radio" value="Female" required="">
+                              <label for="female">Female</label>
+                            </div>
                             <label class="error" for="gender"></label>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-status">Status</label>
                           <div class="col-sm-4">
-                            <select id="status" class="form-control" required="">
+                            <select id="status" name="status" class="form-control" required="">
                               <option value="">Choose Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -124,10 +127,30 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-citizenship-name">Profile Picture</label>
-                          <div class="col-sm-4">
-                            <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="w4-citizenship-name" required="">
+                          <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
+                          <div class="row">
+                            <div class="col-md-1 col-xs-6 col-lg-3">
+
+                              <section class="panel">
+                                <div class="panel-body">
+                                  <div class="thumb-info mb-md">
+                                    <img src="../assets/images/sample-user.jpg" name="profiel_pic" height="145" width="145" class="rounded img-responsive" alt="Sample User">
+                                    <input type="file" class="btn btn-block btn-default mb-xs mt-xs mr-xs ">
+                                  </div>
+                                </div>
+                              </section>
+
+                            </div>
+
                           </div>
+                          <!-- <div class="col-md-4" style="background-color:red;">
+                            <img class="img-responsive" src="../assets/images/sample-user.jpg" width="100">
+                            <input type="file" class="btn btn-block btn-primary"/>
+                          </div> -->
+
+                          <!-- <div class="col-sm-4">
+                            <input type="text" class="form-control"  name="profile_pic" id="w4-profile-pic">
+                          </div> -->
                         </div>
                       </div>
                       
