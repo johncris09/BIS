@@ -91,17 +91,15 @@
 									<h2 class="panel-title">List of All Barangay</h2>
 								</header>
 								<div class="panel-body">
-									<table class="table table-bordered table-striped mb-none" id="datatable-default">
+									<table class="table table-bordered table-striped mb-none"  id="datatable-default">
 										<thead>
 											<tr>
-											<th>Barangay Id</th>
 												<th>Barangay Name</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php for($i=1;$i<=5;$i++){ ?>
 											<tr class="gradeX">
-												<td><?php echo $i; ?></td>
 												<td>Barangay <? echo $i; ?></td>
 												</tr>
 											<?php } ?>
