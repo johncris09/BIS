@@ -181,14 +181,8 @@
 		<script src="../assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
 		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		
-		<!-- Theme Base, Components and Settings -->
-		<script src=" ../assets/javascripts/theme.js"></script>
 		
-		<!-- Theme Custom -->
-		<script src=" ../assets/javascripts/theme.custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src=" ../assets/javascripts/theme.init.js"></script>
+		<?php include('../component/themejslink.php');  ?>
 
 
 		<!-- Examples -->
