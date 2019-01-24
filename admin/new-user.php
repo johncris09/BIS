@@ -130,7 +130,6 @@
                           <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
                           <div class="row">
                             <div class="col-md-1 col-xs-6 col-lg-3">
-
                               <section class="panel">
                                 <div class="panel-body">
                                   <div class="thumb-info mb-md">
@@ -139,60 +138,47 @@
                                   </div>
                                 </div>
                               </section>
-
                             </div>
-
                           </div>
-                          <!-- <div class="col-md-4" style="background-color:red;">
-                            <img class="img-responsive" src="../assets/images/sample-user.jpg" width="100">
-                            <input type="file" class="btn btn-block btn-primary"/>
-                          </div> -->
-
-                          <!-- <div class="col-sm-4">
-                            <input type="text" class="form-control"  name="profile_pic" id="w4-profile-pic">
-                          </div> -->
                         </div>
                       </div>
                       
                       <!-- Barangay Staff Position -->
-                      <div id="w4-position" class="tab-pane">
+                      <div id="w4-position" class="tab-pane ">
                         <!-- Barangay -->
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-barangay">Barangay</label>
+                          <label class="col-sm-3 control-label" for="barangay">Barangay</label>
                           <div class="col-sm-7">
-                            <select id="barangay" class="form-control" required autofocus>
+                            <select id="barangay" class="form-control" name="barangay" required autofocus>
                               <option value="">Choose a Barangay</option>
                               <? for($i=1;$i<=10;$i++){ ?>
                               <option value="<? echo $i; ?>">Barangay <? echo $i; ?></option>
                               <? } ?>
                             </select>
-                            <label class="error" for="w4-barangay"></label>
                           </div>
                         </div>
                         <!-- Position -->
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-position">Position</label>
+                          <label class="col-sm-3 control-label" for="position">Position</label>
                           <div class="col-sm-7">
-                            <select id="position" class="form-control"  required="">
+                            <select id="position" class="form-control" name="position" required="">
                               <option value="">Choose a position</option>
                               <option value="Captain">Captain</option>
                               <option value="Council">Council</option>
                               <option value="Secretary">Secretary</option>
                               <option value="Treasurer">Treasurer</option>
                             </select>
-                            <label class="error" for="w4-position"></label>
                           </div>
                         </div>
                         <!-- Role Type -->
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-role">Role</label>
+                          <label class="col-sm-3 control-label" for="role">Role</label>
                           <div class="col-sm-7">
-                            <select id="role" class="form-control" required>
+                            <select id="role" class="form-control" name="role" required>
                               <option value="">Choose a Role Type</option>
                               <option value="Administration">Administration</option>
                               <option value="Staff">Staff</option>
                             </select>
-                            <label class="error" for="w4-role"></label>
                           </div>
                         </div>
                       </div> 
