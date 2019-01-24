@@ -74,7 +74,7 @@
                     <div class="tab-content">
                       
                       <!-- Profile -->
-                      <div id="w4-profile" class="tab-pane active">
+                      <div id="w4-profile" class="tab-pane ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
                           <div class="col-sm-7">
@@ -184,7 +184,7 @@
                       </div> 
 
                       <!-- User Account -->
-                      <div id="w4-account" class="tab-pane ">
+                      <div id="w4-account" class="tab-pane active">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-username" >Username</label>
                           <div class="col-sm-7">
@@ -207,17 +207,17 @@
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-confirm-password">Confirm Password</label>
                           <div class="col-sm-7">
                             <div class="input-group input-group-icon ">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                               </span>
-                              <input type="password" class="form-control" name="confirm_password" id="w4-confirm-password" required="" minlength="6">
+                              <input type="password" class="form-control"placeholder="Confirm Password" name="confirm_password" id="w4-confirm-password" required="" >
                             </div>
                           </div>
-                        </div> -->
+                        </div>
                       </div>
 
                       <!-- User Email -->
