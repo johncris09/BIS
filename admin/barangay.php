@@ -60,9 +60,9 @@
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Barangay </label>
+												<label class="col-sm-4 control-label">Barangay Name </label>
 												<div class="col-sm-8">
-													<input type="text" name="name" class="form-control" required autofocus>
+													<input type="text" name="add_barangay" placeholder="Barangay Name" class="form-control" required autofocus>
 												</div>
 											</div>
 										</div>
@@ -94,57 +94,17 @@
 									<table class="table table-bordered table-striped mb-none" id="datatable-default">
 										<thead>
 											<tr>
-												<th>Rendering engine</th>
-												<th>Browser</th>
-												<th>Platform(s)</th>
-												<th class="hidden-phone">Engine version</th>
-												<th class="hidden-phone">CSS grade</th>
+											<th>Barangay Id</th>
+												<th>Barangay Name</th>
 											</tr>
 										</thead>
 										<tbody>
-											
+											<?php for($i=1;$i<=5;$i++){ ?>
 											<tr class="gradeX">
-												<td>Misc</td>
-												<td>Dillo 0.8</td>
-												<td>Embedded devices</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">X</td>
-											</tr>
-											<tr class="gradeX">
-												<td>Misc</td>
-												<td>Links</td>
-												<td>Text only</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">X</td>
-											</tr>
-											<tr class="gradeX">
-												<td>Misc</td>
-												<td>Lynx</td>
-												<td>Text only</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">X</td>
-											</tr>
-											<tr class="gradeC">
-												<td>Misc</td>
-												<td>IE Mobile</td>
-												<td>Windows Mobile 6</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">C</td>
-											</tr>
-											<tr class="gradeC">
-												<td>Misc</td>
-												<td>PSP browser</td>
-												<td>PSP</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">C</td>
-											</tr>
-											<tr class="gradeU">
-												<td>Other browsers</td>
-												<td>All others</td>
-												<td>-</td>
-												<td class="center hidden-phone">-</td>
-												<td class="center hidden-phone">U</td>
-											</tr>
+												<td><?php echo $i; ?></td>
+												<td>Barangay <? echo $i; ?></td>
+												</tr>
+											<?php } ?>
 										</tbody>
 									</table>
 								</div>
