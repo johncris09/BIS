@@ -55,9 +55,16 @@
 								<h2 class="panel-title">List of All User</h2>
 							</header>
 							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-12 text-right">
+										<a href="new-user.php" title="Add New User" class="btn btn-primary mb-xs mt-xs mr-xs">Add New User</a>
+									</div>
+								</div>
+								
 								<table class="table table-bordered table-striped mb-none" id="datatable-default">
 									<thead>
 										<tr>
+											<th>Name</th>
 											<th>Username</th>
 											<th>Password</th>
 											<th>Email</th>
@@ -68,11 +75,12 @@
 									<tbody>
 										<?php for($i=1;$i<=20;$i++){ ?>
 										<tr class="gradeA">
+										<td>Juan Tamad</td>
 											<td>john</td>
 											<td>$897328hjehfjehwr889</td>
 											<td>email@email.com</td>
-											<td class="center hidden-phone">2019-01-92 12-12-12</td>
-											<td class="center hidden-phone">0</td>
+											<td>2019-01-22 05:36:18</td>
+											<td>Administrator</td>
 										</tr>
 										<?php } ?>
 									</tbody>
