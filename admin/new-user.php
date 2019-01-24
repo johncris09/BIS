@@ -94,6 +94,17 @@
                           </div>
                         </div>
                         <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-gender">Gender</label>
+                          <div class="col-sm-4">
+                            <select id="gender" class="form-control" required="">
+                              <option value="">Choose Gender</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+                            <label class="error" for="gender"></label>
+                          </div>
+                        </div>
+                        <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-status">Status</label>
                           <div class="col-sm-4">
                             <select id="status" class="form-control" required="">
@@ -103,11 +114,17 @@
                               <option value="Widowed">Widowed</option>
                               <option value="Separated">Separated</option>
                             </select>
-                            <label class="error" for="w4-status"></label>
+                            <label class="error" for="status"></label>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-citizenship-name">Citizenship</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="w4-citizenship-name" required="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-citizenship-name">Profile Picture</label>
                           <div class="col-sm-4">
                             <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="w4-citizenship-name" required="">
                           </div>
