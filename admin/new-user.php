@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Dasboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add New User</title>
+  
+  <?php include('../component/metadata.php'); ?>
   
   <!-- Specific Page Vendor CSS -->
   <link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
   <?php include('../component/csslink.php'); ?>
-  <!--
-
-  Css
-  -->
-
-
 </head>
 <body>
   <section class="body">
@@ -80,65 +73,138 @@
                   <form class="form-horizontal" novalidate="novalidate">
                     <div class="tab-content">
                       
+                      <!-- Profile -->
                       <div id="w4-profile" class="tab-pane active">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="first-name" id="w4-first-name" required="" autofocus>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="First Name" name="first_name" id="w4-first-name" required="" autofocus>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-last-name">Last Name</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="last-name" id="w4-last-name" required="">
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="Last Name" name="last_name" id="w4-last-name" required="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-middle-name">Middle Name</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="Midde Name" name="middle_name" id="w4-middle-name" required="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-status">Status</label>
+                          <div class="col-sm-4">
+                            <select id="status" class="form-control" required="">
+                              <option value="">Choose Status</option>
+                              <option value="Single">Single</option>
+                              <option value="Married">Married</option>
+                              <option value="Widowed">Widowed</option>
+                              <option value="Separated">Separated</option>
+                            </select>
+                            <label class="error" for="w4-status"></label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-citizenship-name">Citizenship</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="w4-citizenship-name" required="">
                           </div>
                         </div>
                       </div>
+                      
+                      <!-- Barangay Staff Position -->
                       <div id="w4-position" class="tab-pane">
+                        <!-- Barangay -->
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-cc">Barangay</label>
-                          <div class="col-sm-9">
-                            <select id="company" class="form-control" required="">
+                          <label class="col-sm-3 control-label" for="w4-barangay">Barangay</label>
+                          <div class="col-sm-7">
+                            <select id="barangay" class="form-control" required autofocus>
                               <option value="">Choose a Barangay</option>
-                              <option value="brgy1">Barangay 1</option>
-                              <option value="brgy2">Barangay 2</option>
-                              <option value="brgy3">Barangay 3</option>
+                              <? for($i=1;$i<=10;$i++){ ?>
+                              <option value="<? echo $i; ?>">Barangay <? echo $i; ?></option>
+                              <? } ?>
                             </select>
-                            <label class="error" for="company"></label>
+                            <label class="error" for="w4-barangay"></label>
                           </div>
                         </div>
+                        <!-- Position -->
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="inputSuccess">Position</label>
-                          <div class="col-sm-9">
-                            <select class="form-control" name="exp-month" required="">
-                            <option>Choose a position</option>
-                              <option>Captain</option>
-                              <option>Council</option>
-                              <option>Secretary</option>
-                              <option>Treasurer</option>
+                          <label class="col-sm-3 control-label" for="w4-position">Position</label>
+                          <div class="col-sm-7">
+                            <select id="position" class="form-control"  required="">
+                              <option value="">Choose a position</option>
+                              <option value="Captain">Captain</option>
+                              <option value="Council">Council</option>
+                              <option value="Secretary">Secretary</option>
+                              <option value="Treasurer">Treasurer</option>
                             </select>
+                            <label class="error" for="w4-position"></label>
                           </div>
                         </div>
-                      </div>
-                      <div id="w4-account" class="tab-pane">
+                        <!-- Role Type -->
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-role">Role</label>
+                          <div class="col-sm-7">
+                            <select id="role" class="form-control" required>
+                              <option value="">Choose a Role Type</option>
+                              <option value="Administration">Administration</option>
+                              <option value="Staff">Staff</option>
+                            </select>
+                            <label class="error" for="w4-role"></label>
+                          </div>
+                        </div>
+                      </div> 
+
+                      <!-- User Account -->
+                      <div id="w4-account" class="tab-pane ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-username" >Username</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="username" id="w4-username"  required="">
+                          <div class="col-sm-7">
+                            <div class="input-group input-group-icon">
+                              <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-user"></i></span>
+                              </span>
+                              <input type="text" class="form-control" placeholder="Username" name="username" id="w4-username"  autofocus required="">
+                            </div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-password">Password</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control" name="password" id="w4-password" required="" minlength="6">
+                          <div class="col-sm-7">
+                            <div class="input-group input-group-icon">
+                              <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-key"></i></span>
+                              </span>
+                              <input type="password" class="form-control" placeholder="Password" name="password" id="w4-password" required="" minlength="6">
+                            </div>
                           </div>
                         </div>
+                        <!-- <div class="form-group">
+                          <label class="col-sm-3 control-label" for="w4-confirm-password">Confirm Password</label>
+                          <div class="col-sm-7">
+                            <div class="input-group input-group-icon ">
+                              <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-key"></i></span>
+                              </span>
+                              <input type="password" class="form-control" name="confirm_password" id="w4-confirm-password" required="" minlength="6">
+                            </div>
+                          </div>
+                        </div> -->
                       </div>
-                      <div id="w4-confirm" class="tab-pane">
+
+                      <!-- User Email -->
+                      <div id="w4-confirm" class="tab-pane ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-email">Email</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="email" id="w4-email" required="">
+                          <div class="col-sm-7">
+                            <div class="input-group input-group-icon ">
+                              <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-envelope"></i></span>
+                              </span>
+                              <input type="text" class="form-control" placeholder="you@email.com" name="email" id="w4-email" autofocus required="">
+                            </div>
                           </div>
                         </div>
                         <div class="form-group">
