@@ -60,9 +60,9 @@
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Position </label>
+												<label class="col-sm-4 control-label">Position Name </label>
 												<div class="col-sm-8">
-													<input type="text" name="name" class="form-control" required autofocus>
+													<input type="text" name="position" placeholder="Position Name" class="form-control" required autofocus>
 												</div>
 											</div>
 										</div>
@@ -94,14 +94,12 @@
 									<table class="table table-bordered table-striped mb-none" id="datatable-default">
 										<thead>
 											<tr>
-												<th>Position Id</th>
 												<th>Position</th>
 											</tr>
 										</thead>
 										<tbody>
                       <?php for($i=1;$i<=5;$i++){ ?>
 											<tr>
-												<td><?php echo $i; ?></td>
 												<td>Position <?php echo $i; ?></td>
 											</tr>
                       <?php } ?>
