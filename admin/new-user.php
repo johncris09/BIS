@@ -74,7 +74,7 @@
                     <div class="tab-content">
                       
                       <!-- Profile -->
-                      <div id="w4-profile" class="tab-pane ">
+                      <div id="w4-profile" class="tab-pane active ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
                           <div class="col-sm-7">
@@ -127,6 +127,13 @@
                           </div>
                         </div>
                         <div class="form-group">
+													<label class="col-md-3 control-label" for="profilePhoneNumber">Phone Number</label>
+													<div class="col-sm-4">
+															<input id="profilePhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control" required>
+														
+													</div>
+												</div>
+                        <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
                           <div class="row">
                             <div class="col-md-4 col-xs-8 col-lg-3">
@@ -144,12 +151,12 @@
                       </div>
                       
                       <!-- Barangay Staff Position -->
-                      <div id="w4-position" class="tab-pane active">
+                      <div id="w4-position" class="tab-pane ">
                         <!-- Role Type -->
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="role">Role</label>
                           <div class="col-sm-7">
-                            <select id="role" class="form-control" name="role" required>
+                            <select id="role" class="form-control" name="role" required autofocus>
                               <option value="">Choose a Role Type</option>
                               <option value="Administration">Administration</option>
                               <option value="Staff">Staff</option>
@@ -161,7 +168,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="barangay">Barangay</label>
                           <div class="col-sm-7">
-                            <select id="barangay" class="form-control" name="barangay" required autofocus>
+                            <select id="barangay" class="form-control" name="barangay"  >
                               <option value="">Choose a Barangay</option>
                               <? for($i=1;$i<=10;$i++){ ?>
                               <option value="<? echo $i; ?>">Barangay <? echo $i; ?></option>
@@ -174,7 +181,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="position">Position</label>
                           <div class="col-sm-7">
-                            <select id="position" class="form-control" name="position" required="">
+                            <select id="position" class="form-control" name="position">
                               <option value="">Choose a position</option>
                               <option value="Captain">Captain</option>
                               <option value="Council">Council</option>
