@@ -75,10 +75,6 @@
               </div>
               
             </div>
-
-            <span class="mt-lg mb-lg line-thru text-center text-uppercase">
-              <span>or</span>
-            </span>
           </form>
         </div>
       </div>
