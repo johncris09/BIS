@@ -82,15 +82,15 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-last-name">Last Name</label>
+                          <label class="col-sm-3 control-label" for="w4-middle-name">Middle Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" placeholder="Last Name" name="last_name" id="w4-last-name" required="">
+                            <input type="text" class="form-control"  placeholder="Midde Name" name="middle_name" id="w4-middle-name" >
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-middle-name">Middle Name</label>
+                          <label class="col-sm-3 control-label" for="w4-last-name">Last Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" placeholder="Midde Name" name="middle_name" id="w4-middle-name" >
+                            <input type="text" class="form-control" placeholder="Last Name" name="last_name" id="w4-last-name" required="">
                           </div>
                         </div>
                         <div class="form-group">
