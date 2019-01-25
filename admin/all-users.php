@@ -82,7 +82,6 @@
 											<td>Administrator</td>
 											<td>
 												<ul class="list-inline">
-													<li><a class="text-primary" href="profile.php"> <i class="fa fa-eye" aria-hidden="true"></i> View </a></li>
 													<li><a class="text-warning" href="edit-user.php"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
 													<li><a class="text-danger" href="delete-user.php"> <i class="fa fa-eye" aria-hidden="true"></i> Delete</a></li>
 												</ul>
