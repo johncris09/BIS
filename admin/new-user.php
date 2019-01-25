@@ -74,7 +74,7 @@
                     <div class="tab-content">
                       
                       <!-- Profile -->
-                      <div id="w4-profile" class="tab-pane ">
+                      <div id="w4-profile" class="tab-pane active">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
                           <div class="col-sm-7">
@@ -90,7 +90,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-middle-name">Middle Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" placeholder="Midde Name" name="middle_name" id="w4-middle-name" required="">
+                            <input type="text" class="form-control" placeholder="Midde Name" name="middle_name" id="w4-middle-name" >
                           </div>
                         </div>
                         <div class="form-group">
@@ -129,7 +129,7 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
                           <div class="row">
-                            <div class="col-md-1 col-xs-6 col-lg-3">
+                            <div class="col-md-4 col-xs-8 col-lg-3">
                               <section class="panel">
                                 <div class="panel-body">
                                   <div class="thumb-info mb-md">
@@ -184,7 +184,7 @@
                       </div> 
 
                       <!-- User Account -->
-                      <div id="w4-account" class="tab-pane active">
+                      <div id="w4-account" class="tab-pane">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-username" >Username</label>
                           <div class="col-sm-7">
