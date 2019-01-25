@@ -61,15 +61,15 @@
 									</div>
 								</div>
 								
-								<table class="table table-bordered table-striped mb-none" id="datatable-default">
+								<table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
 									<thead>
 										<tr>
 											<th>Name</th>
 											<th>Username</th>
-											<th>Password</th>
 											<th>Email</th>
 											<th>Registered</th>
 											<th>Status</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -77,10 +77,16 @@
 										<tr class="gradeA">
 										<td>Juan Tamad</td>
 											<td>john</td>
-											<td>$897328hjehfjehwr889</td>
 											<td>email@email.com</td>
 											<td>2019-01-22 05:36:18</td>
 											<td>Administrator</td>
+											<td>
+												<ul class="list-inline">
+													<li><a class="text-primary" href="profile.php"> <i class="fa fa-eye" aria-hidden="true"></i> View </a></li>
+													<li><a class="text-warning" href="edit-user.php"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
+													<li><a class="text-danger" href="delete-user.php"> <i class="fa fa-eye" aria-hidden="true"></i> Delete</a></li>
+												</ul>
+											</td>
 										</tr>
 										<?php } ?>
 									</tbody>
