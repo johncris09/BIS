@@ -74,7 +74,7 @@
                     <div class="tab-content">
                       
                       <!-- Profile -->
-                      <div id="w4-profile" class="tab-pane active">
+                      <div id="w4-profile" class="tab-pane ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
                           <div class="col-sm-7">
@@ -144,7 +144,19 @@
                       </div>
                       
                       <!-- Barangay Staff Position -->
-                      <div id="w4-position" class="tab-pane ">
+                      <div id="w4-position" class="tab-pane active">
+                        <!-- Role Type -->
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="role">Role</label>
+                          <div class="col-sm-7">
+                            <select id="role" class="form-control" name="role" required>
+                              <option value="">Choose a Role Type</option>
+                              <option value="Administration">Administration</option>
+                              <option value="Staff">Staff</option>
+                            </select>
+                          </div>
+                        </div>
+                        <hr class="dotted tall">
                         <!-- Barangay -->
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="barangay">Barangay</label>
@@ -157,6 +169,7 @@
                             </select>
                           </div>
                         </div>
+                        
                         <!-- Position -->
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="position">Position</label>
@@ -170,17 +183,7 @@
                             </select>
                           </div>
                         </div>
-                        <!-- Role Type -->
-                        <div class="form-group">
-                          <label class="col-sm-3 control-label" for="role">Role</label>
-                          <div class="col-sm-7">
-                            <select id="role" class="form-control" name="role" required>
-                              <option value="">Choose a Role Type</option>
-                              <option value="Administration">Administration</option>
-                              <option value="Staff">Staff</option>
-                            </select>
-                          </div>
-                        </div>
+                        
                       </div> 
 
                       <!-- User Account -->
