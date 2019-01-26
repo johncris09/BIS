@@ -40,7 +40,7 @@
           <!-- Main Content -->
           <div class="row">
             <div class="col-xs-12">
-              <section class="panel form-wizard" id="w4">
+              <section class="panel form-wizard panel-featured panel-featured-primary" id="w4">
                 <header class="panel-heading">
                   <div class="panel-actions">
                     <a href="#" class="fa fa-caret-down"></a>

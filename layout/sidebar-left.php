@@ -75,14 +75,7 @@
             </ul>
           </li>
 
-          
-          
-        </ul>
-      </nav>
-      
-
-      <ul class="nav nav-main">
-        <li class="nav-parent">
+          <li class="nav-parent">
           <a>
             <i class="fa fa-file-text" aria-hidden="true"></i>
             <span>Residence Profiling</span>
@@ -107,13 +100,13 @@
           </a>
           <ul class="nav nav-children">
             <li>
-              <a href="">
+              <a href="barangay-issue.php">
                   All Issue
               </a>
             </li>
             <li>
-              <a href="">
-                  Add New Issude
+              <a href="new-issue.php">
+                  Add New Issue
               </a>
             </li>
           </ul>
@@ -132,8 +125,10 @@
               </li>
             </ul>
           </li>
-      </ul>
-
+          
+        </ul>
+      </nav>
+      
       <hr class="separator" />
       <ul class="nav nav-main">
         <li class="nav-parent">

@@ -53,7 +53,7 @@
 					</header>
 
           <!-- start: page -->
-          <section class="panel">
+          <section class="panel panel-featured panel-featured-primary">
             <header class="panel-heading">
               <div class="panel-actions">
                 <a href="#" class="fa fa-caret-down"></a>
