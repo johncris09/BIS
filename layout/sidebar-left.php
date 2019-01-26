@@ -76,19 +76,7 @@
           </li>
 
           
-          <li class="nav-parent">
-            <a>
-              <i class="fa fa-gears" aria-hidden="true"></i>
-              <span>Utilities</span>
-            </a>
-            <ul class="nav nav-children">
-              <li>
-                <a href="back-up-records.php">
-                    Back up Records
-                </a>
-              </li>
-            </ul>
-          </li>
+          
         </ul>
       </nav>
       
@@ -130,6 +118,20 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-parent">
+            <a>
+              <i class="fa fa-gears" aria-hidden="true"></i>
+              <span>Utilities</span>
+            </a>
+            <ul class="nav nav-children">
+              <li>
+                <a href="back-up-records.php">
+                    Back up Records
+                </a>
+              </li>
+            </ul>
+          </li>
       </ul>
 
       <hr class="separator" />
