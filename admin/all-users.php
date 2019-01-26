@@ -45,7 +45,7 @@
 					</header>
 
 					<!-- start: page -->
-						<section class="panel">
+						<section class="panel panel-featured panel-featured-primary">
 							<header class="panel-heading">
 								<div class="panel-actions">
 									<a href="#" class="fa fa-caret-down"></a>
@@ -83,9 +83,9 @@
 										<td>Administrator</td>
 										<td>
 											<ul class="list-inline">
-												<li><a class="btn text-warning" href="edit-user.php"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
+												<li><a class="text-warning" href="edit-user.php"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
 												<!-- on:click('delete'){Call Modal} -->
-												<li><a class="btn text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+												<li><a class="text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
 											</ul>
 										</td>
 									</tr>
