@@ -105,12 +105,25 @@
                             <input type="text" class="form-control"  placeholder="Birthplace" name="birthplace" id="Birtplace">
                           </div>
                         </div>
+                        
                         <div class="form-group">
+                          <label class="col-sm-3 control-label" for="date">Birthdate</label>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                              <input  id="date"  data-date-format="yyyy/mm/dd" name="birthdate" data-plugin-datepicker="" placeholder="YYYY/MM/DD" class="form-control" required>
+                            </div>
+                            <label class="error" for="date"></label>
+                          </div>
+                        </div>
+                        <!-- <div class="form-group">
                           <label class="col-sm-3 control-label" for="date">Birthdate</label>
                           <div class="col-sm-3">
                             <input id="date" data-plugin-masked-input="" data-input-mask="9999/99/99"  name="birthplace" placeholder="YYYY/MM/DD" class="form-control" required>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-gender">Gender</label>
                           <div class="col-sm-9">
@@ -145,11 +158,17 @@
                             <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="Citizenship" required="">
                           </div>
                         </div>
+                          
                         <div class="form-group">
 													<label class="col-md-3 control-label" for="PhoneNumber">Phone Number</label>
 													<div class="col-sm-4">
-															<input id="PhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control">
-													</div>
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                              </span>
+                              <input id="PhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control">
+                            </div>
+                          </div>
                         </div>
                         <div class="form-group">
 													<label class="col-md-3 control-label" for="occupation">Occupation</label>
@@ -233,7 +252,7 @@
   <script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
   <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
   <script src="../assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
-  B
+  <script src="../assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
   <?php include('../component/themejslink.php');  ?>
 
   <!-- Examples -->
