@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="fixed">
 	<head>
 		<title>Position</title>
 		<?php include('../component/metadata.php'); ?>
