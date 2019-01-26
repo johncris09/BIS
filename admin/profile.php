@@ -95,6 +95,32 @@
 														<input type="text" class="form-control" name="last_name" id="profileLastName" value="Manabo" placeholder="Last Name" required>
 													</div>
 												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label" for="profileGender">Gender</label>
+													<div class="col-md-3">
+														<select id="profileGender" class="form-control" name="gender" required>
+															<option value="Male">Male</option>
+															<option value="Female">Female</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label" for="profileStatus">Status</label>
+													<div class="col-md-3">
+														<select id="profileStatus" class="form-control" name="status" required>
+															<option value="Single">Single</option>
+															<option value="Married">Married</option>
+															<option value="Widowed">Widowed</option>
+															<option value="Separated">Separated</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label" for="profileCitizenship">Citizenship</label>
+													<div class="col-md-3">
+														<input type="text" class="form-control" name="citizenship" id="profileCitizenship" value="Filipino" placeholder="Citizenship" required>
+													</div>
+												</div>
 											</fieldset>
 
 											<!-- Contact Info -->
@@ -114,8 +140,23 @@
 															<span class="input-group-addon">
 																<i class="fa fa-phone"></i>
 															</span>
-															<input id="profilePhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control">
+															<input id="profilePhoneNumber" name="phone_number" value="+639123123121" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control" required>
 														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<!-- Role Managament -->
+											<hr class="dotted tall">
+											<h4 class="mb-xlg">Role Management</h4>
+											<fieldset>
+												<div class="form-group">
+													<label class="col-md-3 control-label" for="profileRoleType">Role Type</label>
+													<div class="col-md-5">
+														<select id="profileRoleType" class="form-control" name="status" required>
+															<option value="Administration">Administration</option>
+															<option value="Staff">Staff</option>
+														</select>
 													</div>
 												</div>
 											</fieldset>
