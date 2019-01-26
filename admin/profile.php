@@ -140,8 +140,8 @@
 															<span class="input-group-addon">
 																<i class="fa fa-phone"></i>
 															</span>
-															<input id="profilePhoneNumber" name="phone_number" value="+639123123121" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control" required>
-														</div>
+															<input id="profilePhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control">
+													</div>
 													</div>
 												</div>
 											</fieldset>
@@ -217,7 +217,8 @@
 
 
     </section>
-    <?php include('../component/jslink.php');  ?>
+		<?php include('../component/jslink.php');  ?>
+		<script src="../assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
     
     <?php include('../component/themejslink.php');  ?>
   </body>
