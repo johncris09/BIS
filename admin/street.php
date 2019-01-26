@@ -46,7 +46,7 @@
 					<div class="row">
 							<div class="col-md-5">
 								<form id="form1" class="form-horizontal">
-									<section class="panel">
+									<section class="panel panel-featured panel-featured-primary">
 										<header class="panel-heading">
 											<div class="panel-actions">
 												<a href="#" class="fa fa-caret-down"></a>
@@ -90,7 +90,7 @@
 								</form>
 							</div>
 						<div class="col-md-7">
-							<section class="panel">
+							<section class="panel panel-featured panel-featured-primary">
 								<header class="panel-heading">
 									<div class="panel-actions">
 										<a href="#" class="fa fa-caret-down"></a>
