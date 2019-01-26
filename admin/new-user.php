@@ -127,12 +127,11 @@
                           </div>
                         </div>
                         <div class="form-group">
-													<label class="col-md-3 control-label" for="profilePhoneNumber">Phone Number</label>
+													<label class="col-md-3 control-label" for="PhoneNumber">Phone Number</label>
 													<div class="col-sm-4">
-															<input id="profilePhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control" required>
-														
+															<input id="PhoneNumber" name="phone_number" data-plugin-masked-input="" data-input-mask="(+63) 999-999-9999" placeholder="(+63) 123-123-1234" class="form-control">
 													</div>
-												</div>
+                        </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
                           <div class="row">
@@ -288,6 +287,7 @@
   <script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
   <script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
   <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
+  <script src="../assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
 
  
   <?php include('../component/themejslink.php');  ?>
