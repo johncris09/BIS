@@ -5,6 +5,7 @@
 			<?php include('../component/metadata.php'); ?>
 		
 			<?php include('../component/csslink.php'); ?>
+			<?php include('../component/cssthemelink.php'); ?>
 
 	</head>
 	<body>
