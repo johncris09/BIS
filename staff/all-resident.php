@@ -36,7 +36,7 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Resident Profiling</span></li>
+								<li><span>Residence Profiling</span></li>
 								<li><span>All Resident</span></li>
 							</ol>
 					
@@ -64,6 +64,7 @@
 									<thead>
 										<tr>
 											<th>#</th>
+											<th>Profile	</th>
 											<th>Last Name</th>
 											<th>First Name</th>
 											<th>Middle Name</th>
@@ -84,6 +85,9 @@
 										<? for($i=1;$i<50;$i++){ ?>
 										<tr class="gradeX">
 											<th><? echo $i;?></th>
+											<td>
+											<img src="../assets/images/sample-user.jpg" width="40" height="40" alt="John Cris'sProfile Picture" /> 
+											</td>
 											<td>Manabo</td>
 											<td>John Cris</td>
 											<td>Calamongay</td>
