@@ -5,9 +5,11 @@
 		<?php include('../component/metadata.php'); ?>
 
 		<!-- Specific Page Vendor CSS -->
+		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-		<?php include('../component/csslink.php'); ?>
+				
+		<?php include('../component/cssthemelink.php'); ?>
 
 	</head>
 	<body>
