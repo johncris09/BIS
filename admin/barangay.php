@@ -49,7 +49,7 @@
 					<div class="row">
 							<div class="col-md-5">
 								<form id="form1" class="form-horizontal">
-									<section class="panel">
+									<section class="panel panel-featured panel-featured-primary">
 										<header class="panel-heading">
 											<div class="panel-actions">
 												<a href="#" class="fa fa-caret-down"></a>
@@ -80,7 +80,7 @@
 							</div>
 
 						<div class="col-md-7">
-							<section class="panel">
+							<section class="panel panel-featured panel-featured-primary">
 								<header class="panel-heading">
 									<div class="panel-actions">
 										<a href="#" class="fa fa-caret-down"></a>
@@ -93,13 +93,23 @@
 									<table class="table table-bordered table-striped mb-none"  id="datatable-default">
 										<thead>
 											<tr>
+												<th>#</th>
 												<th>Barangay Name</th>
+												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php for($i=1;$i<=5;$i++){ ?>
 											<tr class="gradeX">
+												<td><? echo $i; ?></td>
 												<td>Barangay <? echo $i; ?></td>
+												<td>
+													<ul class="list-inline">
+														<li><a class="text-warning" href=""> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
+														<!-- on:click('delete'){Call Modal} -->
+														<li><a class="text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+													</ul>
+												</td>
 												</tr>
 											<?php } ?>
 										</tbody>
