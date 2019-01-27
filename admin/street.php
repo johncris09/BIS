@@ -103,17 +103,27 @@
 									<table class="table table-bordered table-striped mb-none" id="datatable-default">
 										<thead>
 											<tr>
+												<th>#</th>
 												<th>Barangay Name</th>
 												<th>Street Name</th>
+												<th>Action</th>
 											</tr>
 											
 										</thead>
 										<tbody>
 											<?php for($i=1;$i<=5;$i++){ ?>
 											<tr class="gradeX">
+												<td><? echo $i; ?></td>
 												<td>Barangay<?php echo $i; ?></td>
 												<td>Street <? echo $i; ?></td>
-												</tr>
+												<td>
+													<ul class="list-inline">
+														<li><a class="text-warning" href=""> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
+														<!-- on:click('delete'){Call Modal} -->
+														<li><a class="text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+													</ul>
+												</td>
+											</tr>
 											<?php } ?>
 										</tbody>
 									</table>
