@@ -142,7 +142,9 @@
 		</section>
 
     
-    <?php include('../component/jslink.php'); ?>
+		<?php include('../component/jslink.php'); ?>
+		<!-- Specific Page Vendor -->
+		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
 		
 		<?php include('../component/themejslink.php');   ?>
 
