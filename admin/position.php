@@ -1,15 +1,17 @@
+
+
+ 
 <!DOCTYPE html>
 <html class="fixed">
 	<head>
 		<title>Position</title>
-		<?php include('../component/metadata.php'); ?>
-		
-
-		<!-- Specific Page Vendor CSS -->
+		<?php include('../component/metadata.php'); ?> 
+		<!-- Specific Page Vendor CSS --> 
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
 		<?php include('../component/csslink.php'); ?>
-
+		 
 	</head>
 	<body>
 		<section class="body">
@@ -47,30 +49,31 @@
 					
 					<div class="row">
 							<div class="col-md-5">
-								<form id="form1" class="form-horizontal">
+								<form id="form_position" class="form-horizontal" >
 									<section class="panel panel-featured panel-featured-primary">
 										<header class="panel-heading">
 											<div class="panel-actions">
 												<a href="#" class="fa fa-caret-down"></a>
 												<a href="#" class="fa fa-times"></a>
 											</div>
-											<h2 class="panel-title">Add Position</h2>
+											<h2 class="panel-title" id="panel-title">Add Position</h2>
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Position Name </label>
+												<label id="label" class="col-sm-4 control-label" for="position">Position Name </label>
 												<div class="col-sm-8">
-													<input type="text" name="position" placeholder="Position Name" class="form-control" required autofocus>
-												</div>
+													<input type="hidden" id="position_id"  class="form-control">
+													<input type="text" id="position" name="position" placeholder="Position Name"  class="form-control" required autofocus >
+													<label class="error" id="err_msgs"></label>
+												</div>	
 											</div>
 										</div>
 										<footer class="panel-footer" style="display: block;">
 											<div class="row">
 												<div class="col-sm-12 text-right">
-													<button type="submit" class="btn btn-primary hidden-xs mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
-													<button type="submit" class="btn btn-default hidden-xs mb-xs mt-xs mr-xs "> Reset</button>
-													<button type="submit" class="btn btn-primary btn-block  visible-xs mb-xs mt-xs mr-xs"><i class="fa fa-save"></i>  Save</button>
-													<button type="submit" class="btn btn-default btn-block  visible-xs mb-xs mt-xs mr-xs"> Reset</button>
+													<button type="button" name="update_position" id="update_position" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													<button type="button" name="add_position" id="add_new_position" class="btn btn-primary   mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
+													<button type="button" id="reset_position" class="btn btn-default  mb-xs mt-xs mr-xs "> Reset</button>
 												</div>
 											</div>
 										</footer>
@@ -85,35 +88,36 @@
 										<a href="#" class="fa fa-caret-down"></a>
 										<a href="#" class="fa fa-times"></a>
 									</div>
-							
 									<h2 class="panel-title">List of All Position</h2>
 								</header>
+								
 								<div class="panel-body">
-									<table class="table table-bordered table-striped mb-none" id="datatable-default">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Position</th>
-												<td>Action</td>
-											</tr>
-										</thead>
-										<tbody>
-                      <?php for($i=1;$i<=5;$i++){ ?>
-											<tr>
-												<td><? echo $i; ?></td>
-												<td>Position <?php echo $i; ?></td>
-												<td>
-													<ul class="list-inline">
-														<li><a class="text-warning" href=""> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
-														<!-- on:click('delete'){Call Modal} -->
-														<li><a class="text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
-													</ul>
-												</td>
-											</tr>
-                      <?php } ?>
-										</tbody>
-									</table>
+                  <div id="list_of_position"></div>
 								</div>
+
+								<!-- Modal -->
+								<div class="modal fade" id="deletePositionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<div class="modal-wrapper">
+													<div class="modal-icon center ">
+														<i class="text-primary fa fa-question-circle"></i>
+													</div>
+													<div class="modal-text text-center">
+														<h4>Are you sure?</h4>
+														<p>Are you sure that you want to delete this position <span id="delete_position_id"></span>?</p>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" id="confirm-delete-Position" class="btn btn-primary">Confirm</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							
 							</section>
 						</div>
 
@@ -126,23 +130,40 @@
 
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
+		
 
 		<!-- Vendor -->
+		
 		<?php include('../component/jslink.php'); ?>
 		
 		<!-- Specific Page Vendor -->
+		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="../assets/vendor/select2/select2.js"></script>
 		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+		<!-- <script src="../assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script> -->
 		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		
 		
-		<?php include('../component/themejslink.php');  ?>
 
+		<?php include('../component/themejslink.php');  ?>
+		
+		
 
 		<!-- Examples -->
-		<script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
+		<!-- <script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
 		<script src="../assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
 		<script src="../assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		 -->
+		
+		
+		
+		<!-- Examples -->
+		<!-- <script src="../assets/javascripts/ui-elements/examples.notifications.js"></script> -->
+		<!--Jquery Effect -->
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script>
+		
+		<!-- <script src="../assets/javascripts/ui-elements/examples.modals.js"></script> -->
+
+    
 	</body>
 </html>
