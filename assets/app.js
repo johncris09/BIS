@@ -94,14 +94,11 @@ $(document).ready(function(){
       success: function(response,data){
         JSON.parse(JSON.stringify(data));
         afterBarangayAction(); 
+        
         if(response.msg == true){
           msg_SuccessfulSave();
         }else{
-          new PNotify({
-            title: 'Error!',
-            text: response.msg,
-            type: 'error'
-          });
+          msg_FailedToSave();
         }
         viewBarangay();
         
@@ -166,14 +163,11 @@ $(document).ready(function(){
       dataType: 'JSON',
       success: function(response,data){
         afterBarangayAction();
+        $('.panel-title#panel-title-barangay').text('Add Barangay');
         $('#update_barangay').hide();
         $('#add_new_barangay').slideDown(500);
         if(response.msg == true){
-          new PNotify({
-            title: 'Saved',
-            text: 'New Record Updated.',
-            type: 'success'
-          });
+          msg_SuccessfulUpdate();
         }else{
           new PNotify({
             title: 'Error!',
@@ -366,6 +360,7 @@ $(document).ready(function(){
       success: function(response,data){
         // JSON.parse(JSON.stringify(data));
         afterPositionAction();
+        $('.panel-title#panel-title').text('Add Position');
         $('#update_position').hide();
         $('#add_new_position').slideDown(500);
         if(response.msg == true){
@@ -439,6 +434,13 @@ $(document).ready(function(){
     });
   }
 
+  function msg_FailedToSave(){
+    new PNotify({
+      title: 'Error!',
+      text: "Already Exist",
+      type: 'error'
+    });
+  }
   function msg_SuccessfulUpdate(){
     new PNotify({
       title: 'Updated!',
