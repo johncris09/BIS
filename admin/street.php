@@ -1,12 +1,23 @@
+<?php
+	// Include all database and object files
+	include_once '../classes/Database.php';
+	include_once  '../classes/Barangay.php';
+	include_once  '../classes/initial.php';
+
+	$barangay = new Barangay($db);
+  $prep_state = $barangay->getAllBarangay();
+?>
+
 <!DOCTYPE html>
 <html class="fixed">
 	<head>
 		<title>Street</title>
 		<?php include('../component/metadata.php'); ?>
 		<!-- Specific Page Vendor CSS -->
+		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
 		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-
+		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
 		<?php include('../component/csslink.php'); ?>
 
 	</head>
@@ -45,43 +56,47 @@
 					<!-- start: page -->
 					<div class="row">
 							<div class="col-md-5">
-								<form id="form1" class="form-horizontal">
+								<form id="barangay_street_form" class="form-horizontal">
 									<section class="panel panel-featured panel-featured-primary">
 										<header class="panel-heading">
 											<div class="panel-actions">
 												<a href="#" class="fa fa-caret-down"></a>
 												<a href="#" class="fa fa-times"></a>
 											</div>
-											<h2 class="panel-title">Add Street</h2>
+											<h2 class="panel-title" id="panel-title">Add Street</h2>
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Barangay Name</label>
+												<label class="col-sm-4 control-label" for="barangay-list">Barangay Name</label>
 												<div class="col-sm-8">
-													<select id="company" class="form-control" required="">
+													<!-- List of all the barangay -->
+													<select id="barangay-list" class="form-control" required="">
 														<option value="">Choose a Barangay</option>
-														<option value="brgy1">Barangay 1</option>
-														<option value="brgy2">Barangay 2</option>
-														<option value="brgy3">Barangay 3</option>
+													<?php while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
+
+														<option value="<?php echo $row['barangay_id'];?>"><?php echo $row['barangay_name']; ?></option>
+													
+													<?php 	} ?>
+
 													</select>
-													<label class="error" for="company"></label>
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-4 control-label">Street Name </label>	
+												<label class="col-sm-4 control-label" for="barangay_street">Street Name </label>	
 												<div class="col-sm-8">
-													<input type="text" name="street_name" placeholder="Street Name" class="form-control" required autofocus>
+													<input type="hidden" id="barangay_street_id"  class="form-control">
+													<input type="text" id="barangay_streey" name="barangay_streey" placeholder="Street Name"  class="form-control" required autofocus >
+													<label class="error" id="err_msgs"></label>
 												</div>
 											</div>
 										</div>
 										<footer class="panel-footer" style="display: block;">
 											<div class="row">
 												<div class="col-sm-12 text-right">
-													<button type="submit" class="btn btn-primary hidden-xs mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
-													<button type="submit" class="btn btn-default hidden-xs mb-xs mt-xs mr-xs "> Reset</button>
-													<button type="submit" class="btn btn-primary btn-block  visible-xs mb-xs mt-xs mr-xs"><i class="fa fa-save"></i>  Save</button>
-													<button type="submit" class="btn btn-default btn-block  visible-xs mb-xs mt-xs mr-xs"> Reset</button>
+													<button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													<button type="button" id="add_new_barangay_street" class="btn btn-primary   mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
+													<button type="button" id="reset_barangay_street" class="btn btn-default  mb-xs mt-xs mr-xs "> Reset</button>
 												</div>
 											</div>
 										</footer>
@@ -100,33 +115,7 @@
 									<h2 class="panel-title">List of All Street with in the Barangay</h2>
 								</header>
 								<div class="panel-body">
-									<table class="table table-bordered table-striped mb-none" id="datatable-default">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Barangay Name</th>
-												<th>Street Name</th>
-												<th>Action</th>
-											</tr>
-											
-										</thead>
-										<tbody>
-											<?php for($i=1;$i<=5;$i++){ ?>
-											<tr class="gradeX">
-												<td><? echo $i; ?></td>
-												<td>Barangay<?php echo $i; ?></td>
-												<td>Street <? echo $i; ?></td>
-												<td>
-													<ul class="list-inline">
-														<li><a class="text-warning" href=""> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a></li>
-														<!-- on:click('delete'){Call Modal} -->
-														<li><a class="text-danger" href="#"> <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
-													</ul>
-												</td>
-											</tr>
-											<?php } ?>
-										</tbody>
-									</table>
+                  <div id="list_of_barangay_street"></div>
 								</div>
 							</section>
 						</div>
@@ -139,23 +128,19 @@
 
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
-
 		<!-- Vendor -->
+			
 		<?php include('../component/jslink.php'); ?>
 		
 		<!-- Specific Page Vendor -->
+		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="../assets/vendor/select2/select2.js"></script>
 		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
 		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		
 		
+
 		<?php include('../component/themejslink.php');  ?>
-
-
-		<!-- Examples -->
-		<script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
-		<script src="../assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
-		<script src="../assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 	</body>
 </html>
