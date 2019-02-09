@@ -8,6 +8,272 @@ $(document).ready(function(){
 
   /*********************************************************** 
   *
+  * Barangay Street Crud with Ajax
+  *
+  ***********************************************************/
+ 
+  viewBarangayStreet();
+  $('#update_barangay_street').hide();
+  // Barangay Street List
+  function viewBarangayStreet(){
+    $.get("view_barangay_street.php", function(data) {
+      // list of all street within the barangay
+      $("#list_of_barangay_street").html(data);
+      // Edit Barangay Street
+      $('.edit-barangay-street').click(function() {
+        $('#barangay_street').focus();
+        $('#barangay_streey').css("border-color","");
+        $('#label').css("color","");
+        $('#err_msgs').empty();
+        
+        var barangay_street_id = $(this).attr('id');  
+
+        $('#update_barangay_street').hide();
+        $('#update_barangay_street').slideDown(500);
+        $('#add_new_barangay_street').hide();
+        $('#barangay-list').val();
+        
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'edit_barangay_street':1,
+            'barangay_street_id': barangay_street_id
+          },
+          async: true,
+          dataType: 'JSON',
+          success: function(response,data){
+            // console.info(JSON.parse(JSON.stringify(data))); 
+            
+            // Pass the response value in an element
+            $('#barangay-list').val(response.barangay_id);
+            $('#barangay_street_id').val(response.barangay_street_id);
+            $('#barangay_street').val(response.barangay_street);
+            $('#barangay_street').focus();
+            $('.panel-title#panel-title').text('Update Street');
+          },
+
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr.responseText);
+          }
+        });
+        
+      });
+
+      // Call Modal to Delete Barangay Street
+      $('.delete-barangay-street').click(function() {
+        var barangay_street_id = $(this).attr('id');
+        $('#delete_barangay_street_id').text(barangay_street_id);
+        $('#delete_barangay_street_id').hide();
+        $('#deleteBarangayStreetModal').modal('show');
+      });
+
+    });
+  }
+  
+  // Add New Barangay Street
+  $(document).on('click','#add_new_barangay_street',function(){
+    var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
+    var _isBarangayStreetRequired = isBarangayStreetRequired();
+
+    if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
+      return
+    }
+
+    var barangay_street = $('#barangay_street').val();
+    var barangay_id = $('#barangay-list').val();
+
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'save_barangay_street':1,
+        'barangay_street': barangay_street,
+        'barangay_id': barangay_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        JSON.parse(JSON.stringify(data));
+        afterBarangayStreetAction();
+        
+        if(response.msg == true){
+          msg_SuccessfulSave();
+        }else{
+          msg_FailedToSave(); 
+        }
+        viewBarangayStreet();
+        
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+    });
+
+
+  });
+
+
+  //  Update Selected Barangay Street
+  $(document).on('click','#update_barangay_street',function(){
+
+    var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
+    var _isBarangayStreetRequired = isBarangayStreetRequired();
+
+    if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
+      return
+    }
+    
+    var barangay_street_id = $('#barangay_street_id').val();
+    var barangay_street = $('#barangay_street').val();
+    var barangay_id = $('#barangay-list').val();
+
+    
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'update_barangay_street':1,
+        'barangay_street_id': barangay_street_id,
+        'barangay_street':barangay_street,
+        'barangay_id':barangay_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        afterBarangayStreetAction();
+        $('.panel-title#panel-title').text('Add Street');
+        $('#update_barangay_street').hide();
+        $('#add_new_barangay_street').slideDown(500);
+        if(response.msg == true){
+          msg_SuccessfulUpdate();
+        }else{
+          new PNotify({
+            title: 'Error!',
+            text: response.msg,
+            type: 'error'
+          });
+        }
+        viewBarangayStreet();
+      },
+      error: function(xhr,textStatus, error){
+        console.info( xhr.responseText);
+      }
+    });
+  });
+
+
+  // Delete Selected Barangay
+  $('#confirm-delete-Barangay-Street').click(function() {
+    var barangay_street_id =  $('#delete_barangay_street_id').text();
+    
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'delete_barangay_street':1,
+        'barangay_street_id': barangay_street_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        JSON.parse(JSON.stringify(data));
+        // afterBarangayAction();
+        // Successful Delete
+        if(response.msg == true){
+          msg_SuccessfulDelete();
+        }else{
+          msg_FailedToDelete();
+        }
+        viewBarangayStreet();
+        $('#deleteBarangayStreetModal').modal('hide');
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+    });
+  });
+
+
+
+
+
+  // fields is required Function
+  function isBarangayRequiredForStreet(){
+    if($('#barangay-list').val() == ""){
+      $('#err_msgs_barangay_list').text('This field is required');
+      $('#barangay-list').focus();
+      $('#barangay-list').css("border-color", "red");
+      $('#label_barangay').css("color", "red");
+      $( "#barangay-list" ).effect( "shake", 500 );
+      return true;
+    }else{
+      $('#err_msgs_barangay_list').empty();
+      $('#barangay-list').focus();
+      $('#barangay-list').css("border-color","");
+      $('#label_barangay').css("color","");
+      return false;
+    }
+  }
+  function isBarangayStreetRequired(){
+    if($('#barangay_street').val().length<1){
+      $('#err_msgs').text('This field is required');
+      $('#barangay_street').focus();
+      $('#barangay_street').css("border-color", "red");
+      $('#label_barangay_street').css("color", "red");
+      $( "#barangay_street" ).effect( "shake", 500 );
+      return true;
+    }else{
+      $('#err_msgs').empty();
+      $('#barangay_street').focus();
+      $('#barangay_street').css("border-color","");
+      $('#label_barangay_street').css("color","");
+      return false;
+    }
+  }
+
+  // do this after an actions
+  function afterBarangayStreetAction(){
+    $('#barangay-list').val(''); 
+    $('#barangay_street').val(''); 
+  }
+ 
+  // Reset fields
+  $(document).on('click','#reset_barangay_street',function(){
+    $('#barangay-list').val(''); 
+    $('#err_msgs_barangay_list').empty();
+    $('#barangay-list').focus();
+    $('#barangay-list').css("border-color","");
+    $('#label_barangay').css("color","");
+    $('#barangay_street').val('');
+    $('#err_msgs').empty();
+    $('#barangay_street').focus();
+    $('#barangay_street').css("border-color","");
+    $('#label_barangay_street').css("color","");
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*********************************************************** 
+  *
   * Barangay Crud with Ajax
   *
   ***********************************************************/
@@ -26,7 +292,7 @@ $(document).ready(function(){
         $('#label').css("color","");
         $('#err_msgs').empty();
         
-        var baragay_id = $(this).attr('id');
+        var barangay_id = $(this).attr('id');
 
         $('#update_barangay').hide();
         $('#update_barangay').slideDown(500);
@@ -37,7 +303,7 @@ $(document).ready(function(){
           type: 'POST',
           data:{
             'edit_barangay':1,
-            'baragay_id': baragay_id
+            'barangay_id': barangay_id
           },
           async: true,
           dataType: 'JSON',
@@ -130,7 +396,7 @@ $(document).ready(function(){
         if(response.msg == true){
           msg_SuccessfulDelete();
         }else{
-          msg_FailedToDelete(response.msg);
+          msg_FailedToDelete();
         }
         viewBarangay();
         $('#deleteBarangayModal').modal('hide');
@@ -141,7 +407,7 @@ $(document).ready(function(){
     });
   });
 
-  // Update Barangay
+  // Update Selected Barangay
   $(document).on('click','#update_barangay',function(){
 
     if(isBarangayRequired()){
@@ -453,7 +719,7 @@ $(document).ready(function(){
   // Delete Messages
   function msg_SuccessfulDelete(){
     new PNotify({
-      title: 'Saved',
+      title: 'Deleted',
       text: 'New Record Deleted.',
       type: 'success'
     });
