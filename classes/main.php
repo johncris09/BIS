@@ -4,12 +4,67 @@
   include_once '../classes/Database.php';
   include_once  '../classes/Position.php';
   include_once  '../classes/Barangay.php';
+  include_once  '../classes/BarangayStreet.php';
   include_once  '../classes/initial.php';
   
   
   
   $position = new Position($db);
   $barangay = new Barangay($db);
+  $barangay_street = new BarangayStreet($db);
+  /********************************************
+  *
+  * Barangay Street
+  *
+  *********************************************/
+
+  // Edit Barangay Street
+  if(isset($_POST['edit_barangay_street']))
+  {
+    $barangay_street_id = $_POST['barangay_street_id']; // Use to get Specific barangay Street
+    $data = array();
+    $prep_state = $barangay_street->getBarangayStreet($barangay_street_id);
+    while ($row = $prep_state->fetch(PDO::FETCH_ASSOC))
+    {
+      $data['barangay_id'] = $row['barangay_id'];
+      $data['barangay_street'] = $row['street_name'];
+      $data['barangay_street_id'] = $row['street_id'];
+    }
+    echo json_encode($data);
+
+  }
+
+  // Delete Selected Barangay Street
+  if(isset($_POST['delete_barangay_street']))
+  {
+    $barangay_street_id = $_POST['barangay_street_id'];
+    $data['msg'] = $barangay_street->deleteBarangayStreet($barangay_street_id);
+    echo json_encode($data);
+  }
+
+  // Add New Barangay Street
+  if(isset($_POST['save_barangay_street']))
+  {
+    $new_barangay_street = $_POST['barangay_street']; 
+    $new_barangay_id = $_POST['barangay_id']; 
+    $data['msg'] = $barangay_street->saveBarangayStreet($new_barangay_id,trim($new_barangay_street));
+    echo json_encode($data);
+  }
+
+  // Update Selecte Barangay Street
+  if(isset($_POST['update_barangay_street']))
+  {
+    $barangay_street_id = $_POST['barangay_street_id'];
+    $update_barangay_street = $_POST['barangay_street'];
+    $barangay_id = $_POST['barangay_id'];
+    $data['msg'] = $barangay_street->updateBarangayStreet( $barangay_street_id,trim($update_barangay_street),$barangay_id);
+    echo json_encode($data);
+  }
+
+
+
+
+
 
   /********************************************
   *
@@ -28,7 +83,7 @@
   // Edit Barangay
   if(isset($_POST['edit_barangay']))
   {
-    $barangay_id = $_POST['baragay_id']; // Use to get Specific barangay
+    $barangay_id = $_POST['barangay_id']; // Use to get Specific barangay
     $data = array();
     $prep_state = $barangay->getBarangay($barangay_id);
     while ($row = $prep_state->fetch(PDO::FETCH_ASSOC))
