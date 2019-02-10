@@ -7,15 +7,22 @@
   
   $barangay = new Barangay($db);
   $prep_state = $barangay->getAllBarangay();
-
+  $fieldname = $barangay->getBarangayFieldName();
+  $fields = array_keys($fieldname->fetch(PDO::FETCH_ASSOC)); 
   $counter=1;
   $list = '
     <table class="table table-bordered table-striped mb-none" id="datatable-default" >
       <thead>
         <tr>
-          <th>#</th>
-          <th>Positon</th>
-          <th>Action</th>
+          <th>#</th>';
+      // Iterate all selected fieldnames
+      for( $i = 0 ; $i < sizeof($fields) ; $i++ ){
+        $list .= '
+          <th>'.$fields[$i].'</th> ';
+      }     
+  
+   $list .='   
+          <th>Action</th>    
         </tr>
       </thead>
       <tbody>
