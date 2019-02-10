@@ -1,3 +1,17 @@
+<? 
+  session_start(); 
+  include_once '../classes/Database.php';
+  include_once  '../classes/Position.php';
+  include_once  '../classes/Barangay.php'; 
+  include_once  '../classes/initial.php'; 
+
+  $position = new Position($db);
+  $barangay = new Barangay($db);
+  
+  // Ternary Operator
+  $account_id = isset($_SESSION['edit_account_id'])?$_SESSION['edit_account_id']: null ;
+  $user_id =isset($_SESSION['edit_user_id'])?$_SESSION['edit_user_id']: null ;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +68,9 @@
                     <div class="steps-progress">
                       <div class="progress-indicator" style="width: 0%;"></div>
                     </div>
+                    
                     <ul class="wizard-steps">
+                      
                       <li class="active">
                         <a href="#w4-profile" data-toggle="tab"><span>1</span>Profile Info</a>
                       </li>
@@ -65,7 +81,10 @@
                         <a href="#w4-account" data-toggle="tab"><span>3</span>Account Info</a>
                       </li>
                       <li>
-                        <a href="#w4-confirm" data-toggle="tab"><span>4</span>Confirmation</a>
+                        <a href="#w4-role" data-toggle="tab"><span>4</span>Role Type</a>
+                      </li>
+                      <li>
+                        <a href="#w4-confirm" data-toggle="tab"><span>5</span>Confirmation</a>
                       </li>
                     </ul>
                   </div>
@@ -75,29 +94,35 @@
                       
                       <!-- Profile -->
                       <div id="w4-profile" class="tab-pane active">
+                        <!-- this fields is used to edit and update the user account -->
+                        <!-- account_id -->
+                        <input type="hidden" value="<?php echo $account_id ?>" id="account_id">
+                        <!-- user_id -->
+                        <input type="hidden" value="<?php echo $user_id ?>" id="user_id">
+                        
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-first-name">First Name</label>
+                          <label class="col-sm-3 control-label" for="first-name">First Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" value="John Cris" placeholder="First Name" name="first_name" id="w4-first-name" required="" autofocus>
+                            <input type="text" id="first_name" class="form-control"  placeholder="First Name" name="first_name" required="" autofocus>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-middle-name">Middle Name</label>
+                          <label class="col-sm-3 control-label" for="middle_name">Middle Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" value="Calamongay" placeholder="Midde Name" name="middle_name" id="w4-middle-name" >
+                            <input type="text" id="middle_name" class="form-control"  placeholder="Midde Name" name="middle_name" >
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-last-name">Last Name</label>
+                          <label class="col-sm-3 control-label" for="last_name">Last Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" value="Manabo" placeholder="Last Name" name="last_name" id="w4-last-name" required="">
+                            <input type="text" id="last_name" class="form-control"  placeholder="Last Name" name="last_name"  required="">
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-gender">Gender</label>
                           <div class="col-sm-9">
                             <div class="radio-custom radio-primary">
-                              <input id="male" name="gender" type="radio" value="Male" required="" checked>
+                              <input id="male" name="gender" type="radio" value="Male" required="">
                               <label for="male">Male</label>
                             </div>
                             <div class="radio-custom radio-primary">
@@ -108,9 +133,10 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-status">Status</label>
+                          <label class="col-sm-3 control-label" for="civil_status">Status</label>
                           <div class="col-sm-4">
-                            <select id="status" name="status" class="form-control" required="">
+                            <select id="civil_status" name="status" class="form-control" required="">
+                            <option value="">Choose Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
                               <option value="Widowed">Widowed</option>
@@ -120,9 +146,9 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-citizenship-name">Citizenship</label>
+                          <label class="col-sm-3 control-label" for="citizenship">Citizenship</label>
                           <div class="col-sm-4">
-                            <input type="text" class="form-control" value="Filipino" placeholder="Citizenship" name="citizenship" id="w4-citizenship-name" required="">
+                            <input type="text" id="citizenship" class="form-control"   placeholder="Citizenship" name="citizenship"  required="">
                           </div>
                         </div>
                         <div class="form-group">
@@ -145,13 +171,21 @@
                       <!-- Barangay Staff Position -->
                       <div id="w4-position" class="tab-pane ">
                         <!-- Barangay -->
+                        
                         <div class="form-group">
+
                           <label class="col-sm-3 control-label" for="barangay">Barangay</label>
                           <div class="col-sm-7">
-                            <select id="barangay" class="form-control" name="barangay" required autofocus>
-                              <? for($i=1;$i<=10;$i++){ ?>
-                              <option value="<? echo $i; ?>">Barangay <? echo $i; ?></option>
-                              <? } ?>
+                            <select id="barangay-list" class="form-control" required="">
+                              
+                              <option value="">Choose a Barangay</option>
+                            
+                            <?php $prep_state = $barangay->getAllBarangay(); while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
+
+                              <option value="<?php echo $row['barangay_id'];?>"><?php echo $row['barangay_name']; ?></option>
+                            
+                            <?php 	} ?>
+
                             </select>
                           </div>
                         </div>
@@ -159,59 +193,69 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="position">Position</label>
                           <div class="col-sm-7">
-                            <select id="position" class="form-control" name="position" required="">
-                              <option value="Captain">Captain</option>
-                              <option value="Council">Council</option>
-                              <option value="Secretary">Secretary</option>
-                              <option value="Treasurer">Treasurer</option>
+                            <select id="position-list" class="form-control" required="">
+                              
+                              <option value="">Choose a Position</option>
+                            
+                            <?php $prep_state = $position->getAllPosition(); while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
+
+                              <option value="<?php echo $row['position_id'];?>"><?php echo $row['position']; ?></option>
+                            
+                            <?php 	} ?>
+
                             </select>
+
                           </div>
                         </div>
-                        <!-- Role Type -->
-                        <div class="form-group">
-                          <label class="col-sm-3 control-label" for="role">Role</label>
-                          <div class="col-sm-7">
-                            <select id="role" class="form-control" name="role" required>
-                              <option value="Administration">Administration</option>
-                              <option value="Staff">Staff</option>
-                            </select>
-                          </div>
-                        </div>
+                        
                       </div> 
 
                       <!-- User Account -->
                       <div id="w4-account" class="tab-pane">
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-username" >Username</label>
+                          <label class="col-sm-3 control-label" for="usename" >Username</label>
                           <div class="col-sm-7">
                             <div class="input-group input-group-icon">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-user"></i></span>
                               </span>
-                              <input type="text" class="form-control" value="myusername" placeholder="Username" name="username" id="w4-username"  autofocus required="">
+                              <input type="text" id="username" class="form-control" placeholder="Username" name="username"  autofocus required="">
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-password">Password</label>
+                          <label class="col-sm-3 control-label" for="password">Password</label>
                           <div class="col-sm-7">
                             <div class="input-group input-group-icon">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                               </span>
-                              <input type="password" class="form-control" value="mypassword123" placeholder="Password" name="password" id="w4-password" required="" minlength="6">
+                              <input type="password" id="password" class="form-control" placeholder="Password" name="password" required="" minlength="6">
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-confirm-password">Confirm Password</label>
+                          <label class="col-sm-3 control-label" for="confirm_password">Confirm Password</label>
                           <div class="col-sm-7">
                             <div class="input-group input-group-icon ">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                               </span>
-                              <input type="password" class="form-control" value="mypassword123" placeholder="Confirm Password" name="confirm_password" id="w4-confirm-password" required="" >
+                              <input type="password" id="confirm_password" class="form-control" placeholder="Confirm Password" name="confirm_password" required="" >
                             </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Role Type -->
+                      <div id="w4-role" class="tab-pane">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label" for="role">Role</label>
+                          <div class="col-sm-7">
+                            <select id="role" class="form-control" name="role" required>
+                              <option value="0">Administration</option>
+                              <option value="1">Staff</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -219,13 +263,13 @@
                       <!-- User Email -->
                       <div id="w4-confirm" class="tab-pane ">
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-email">Email</label>
+                          <label class="col-sm-3 control-label" for="email">Email</label>
                           <div class="col-sm-7">
                             <div class="input-group input-group-icon ">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-envelope"></i></span>
                               </span>
-                              <input type="text" class="form-control" value="email@gmail.com" placeholder="you@email.com" name="email" id="w4-email" autofocus required="">
+                              <input type="text" class="form-control" placeholder="you@email.com" name="email" id="email" autofocus required="">
                             </div>
                           </div>
                         </div>
@@ -280,6 +324,8 @@
 
   <!-- Examples -->
   <script src="../assets/javascripts/forms/examples.wizard.js"></script>
+  <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+  
 
 </body>
 </html>
