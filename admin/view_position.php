@@ -6,7 +6,7 @@
   
   $position = new Position($db);
   $prep_state = $position->getAllPosition();
-  $fieldname = $position->getAllPositionFieldName();
+  $fieldname = $position->getPositionFieldName();
   $fields = array_keys($fieldname->fetch(PDO::FETCH_ASSOC)); 
   $counter=1;
   $list = '
