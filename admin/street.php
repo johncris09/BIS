@@ -67,7 +67,7 @@
 										</header>
 										<div class="panel-body" style="display: block;">
 											<div class="form-group">
-												<label class="col-sm-4 control-label" for="barangay-list">Barangay Name</label>
+												<label id="label_barangay" class="col-sm-4 control-label" for="barangay-list">Barangay Name</label>
 												<div class="col-sm-8">
 													<!-- List of all the barangay -->
 													<select id="barangay-list" class="form-control" required="">
@@ -79,14 +79,15 @@
 													<?php 	} ?>
 
 													</select>
+													<label class="error" id="err_msgs_barangay_list"></label>
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-4 control-label" for="barangay_street">Street Name </label>	
+												<label id="label_barangay_street" class="col-sm-4 control-label" for="barangay_street">Street Name </label>	
 												<div class="col-sm-8">
 													<input type="hidden" id="barangay_street_id"  class="form-control">
-													<input type="text" id="barangay_streey" name="barangay_streey" placeholder="Street Name"  class="form-control" required autofocus >
+													<input type="text" id="barangay_street" name="barangay_streey" placeholder="Street Name"  class="form-control" required autofocus >
 													<label class="error" id="err_msgs"></label>
 												</div>
 											</div>
@@ -111,11 +112,32 @@
 										<a href="#" class="fa fa-caret-down"></a>
 										<a href="#" class="fa fa-times"></a>
 									</div>
-							
 									<h2 class="panel-title">List of All Street with in the Barangay</h2>
 								</header>
 								<div class="panel-body">
                   <div id="list_of_barangay_street"></div>
+								</div>
+								<!-- Modal -->
+								<div class="modal fade" id="deleteBarangayStreetModal" tabindex="-1" role="dialog" aria-labelledby="deleteBarangayStreetModal" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<div class="modal-wrapper">
+													<div class="modal-icon center ">
+														<i class="text-primary fa fa-question-circle"></i>
+													</div>
+													<div class="modal-text text-center">
+														<h4>Are you sure?</h4>
+														<p>Are you sure that you want to delete this Barangay Street<span id="delete_barangay_street_id"></span>?</p>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" id="confirm-delete-Barangay-Street" class="btn btn-primary">Confirm</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</section>
 						</div>
