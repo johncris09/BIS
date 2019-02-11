@@ -93,7 +93,7 @@
                     <div class="tab-content">
                       
                       <!-- Profile -->
-                      <div id="w4-profile" class="tab-pane active">
+                      <div id="w4-profile" class="tab-pane active ">
                         <!-- this fields is used to edit and update the user account -->
                         <!-- account_id -->
                         <input type="hidden" value="<?php echo $account_id ?>" id="account_id">
@@ -151,7 +151,7 @@
                             <input type="text" id="citizenship" class="form-control"   placeholder="Citizenship" name="citizenship"  required="">
                           </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
                           <div class="row">
                             <div class="col-md-4 col-xs-8 col-lg-3">
@@ -165,7 +165,7 @@
                               </section>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                       
                       <!-- Barangay Staff Position -->
@@ -177,8 +177,6 @@
                           <label class="col-sm-3 control-label" for="barangay">Barangay</label>
                           <div class="col-sm-7">
                             <select id="barangay-list" class="form-control" required="">
-                              
-                              <option value="">Choose a Barangay</option>
                             
                             <?php $prep_state = $barangay->getAllBarangay(); while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
 
@@ -193,9 +191,8 @@
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="position">Position</label>
                           <div class="col-sm-7">
+                            
                             <select id="position-list" class="form-control" required="">
-                              
-                              <option value="">Choose a Position</option>
                             
                             <?php $prep_state = $position->getAllPosition(); while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
 
@@ -211,7 +208,7 @@
                       </div> 
 
                       <!-- User Account -->
-                      <div id="w4-account" class="tab-pane">
+                      <div id="w4-account" class="tab-pane ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="usename" >Username</label>
                           <div class="col-sm-7">
@@ -230,21 +227,20 @@
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                               </span>
-                              <input type="password" id="password" class="form-control" placeholder="Password" name="password" required="" minlength="6">
+                              <input type="password" id="password" class="form-control" placeholder="Password" name="password" minlength="6">
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="confirm_password">Confirm Password</label>
-                          <div class="col-sm-7">
-                            <div class="input-group input-group-icon ">
-                              <span class="input-group-addon">
-                                <span class="icon"><i class="fa fa-key"></i></span>
-                              </span>
-                              <input type="password" id="confirm_password" class="form-control" placeholder="Confirm Password" name="confirm_password" required="" >
+                          <div class="col-sm-3"></div>
+                          <div class="col-sm-9">
+                            <div class="checkbox-custom">
+                              <input type="checkbox"  name="show_password" id="show-password">
+                              <label for="show-password">Show Password</label>
                             </div>
                           </div>
                         </div>
+                       
                       </div>
 
                       <!-- Role Type -->
@@ -261,7 +257,7 @@
                       </div>
 
                       <!-- User Email -->
-                      <div id="w4-confirm" class="tab-pane ">
+                      <div id="w4-confirm" class="tab-pane  ">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="email">Email</label>
                           <div class="col-sm-7">
@@ -277,7 +273,7 @@
                           <div class="col-sm-3"></div>
                           <div class="col-sm-9">
                             <div class="checkbox-custom">
-                              <input type="checkbox" name="terms" id="w4-terms" required="">
+                              <input type="checkbox" name="terms" id="w4-terms" >
                               <label for="w4-terms">I agree to the terms of service</label>
                             </div>
                           </div>
@@ -292,7 +288,8 @@
                       <a><i class="fa fa-angle-left"></i> Previous</a>
                     </li>
                     <li class="finish hidden pull-right">
-                      <a>Finish</a>
+                      <!-- <button class="btn btn-primary">Finnish</button> -->
+                      <a>Finnish</a>
                     </li>
                     <li class="next">
                       <a>Next <i class="fa fa-angle-right"></i></a>
@@ -323,7 +320,7 @@
   <?php include('../component/themejslink.php');  ?>
 
   <!-- Examples -->
-  <script src="../assets/javascripts/forms/examples.wizard.js"></script>
+  <!-- <script src="../assets/javascripts/forms/examples.wizard.js"></script> -->
   <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
   
 
