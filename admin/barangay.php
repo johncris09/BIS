@@ -94,7 +94,7 @@
                   <div id="list_of_barangay"></div>
 								</div>
 								<!-- Modal -->
-								<div class="modal fade" id="deleteBarangayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal fade" id="deleteBarangayModal" tabindex="-1" role="dialog" aria-labelledby="deleteBarangayModal" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -104,7 +104,7 @@
 													</div>
 													<div class="modal-text text-center">
 														<h4>Are you sure?</h4>
-														<p>Are you sure that you want to delete this Barangay <span id="delete_barangay_id"></span>?</p>
+														<p>Are you sure that you want to delete this Barangay  <span id="delete_barangay_id"></span>?</p>
 													</div>
 												</div>
 											</div>
@@ -128,9 +128,9 @@
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
 
-	<!-- Vendor -->
-		
-	<?php include('../component/jslink.php'); ?>
+		<!-- Vendor -->
+			
+		<?php include('../component/jslink.php'); ?>
 		
 		<!-- Specific Page Vendor -->
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
