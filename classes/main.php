@@ -1,17 +1,151 @@
 <?php
   
+  session_start();
   // Include all database and object files
   include_once '../classes/Database.php';
   include_once  '../classes/Position.php';
   include_once  '../classes/Barangay.php';
   include_once  '../classes/BarangayStreet.php';
   include_once  '../classes/initial.php';
+  include_once  '../classes/Account.php';
+  include_once  '../classes/User.php';
   
   
   
-  $position = new Position($db);
-  $barangay = new Barangay($db);
-  $barangay_street = new BarangayStreet($db);
+  $position         = new Position($db);
+  $barangay         = new Barangay($db);
+  $barangay_street  = new BarangayStreet($db);
+  $account	        = new Account($db);
+  $user             = new User($db);
+
+  /********************************************
+  *
+  * User Account
+  *
+  *********************************************/
+
+  // get the user id and account to edit and update
+  if(isset($_POST['edit_account']))
+  {
+    $account_id = $_POST['account_id'];
+    $prep_state = $account->getAccount($account_id);
+    while ($row = $prep_state->fetch(PDO::FETCH_ASSOC))
+    {
+      $_SESSION['edit_account_id'] = $row['account_id'];
+      $_SESSION['edit_user_id'] = $row['user_id'];
+
+    }
+  }
+
+  // Find the user id to delete
+  if(isset($_POST['find_user_id']))
+  {
+    $account_id = $_POST['account_id'];
+    $data['account_id'] =$account_id;
+    $prep_state = $account->getAccount($account_id);
+    while ($row = $prep_state->fetch(PDO::FETCH_ASSOC))
+    { 
+      $data['user_id']= $row['user_id'];
+    }
+    echo json_encode($data);
+  }
+
+
+  // delete selected user account
+  if(isset($_POST['delete_user_account']))
+  {
+    $account_id = $_POST['account_id'];
+    $user_id = $_POST['user_id'];
+    // $data = array();
+    $data['msg_account'] = $account->deleteUserAccount($account_id);
+    $data['msg_user'] = $user->deleteUser($user_id);
+    echo json_encode($data);
+  }
+        
+
+  // Edit User Account
+  if(isset($_POST['edit_user_account']))
+  {
+    $user_id = $_POST['user_id'];
+    $account_id = $_POST['account_id'];
+    $data = array();
+    $prep_state = $account->getUserAccount($user_id,$account_id);
+    while ($row = $prep_state->fetch(PDO::FETCH_ASSOC))
+    {
+      $data['user_id']      = $row['user_id'];
+      $data['last_name']    = $row['last_name'];
+      $data['first_name']   = $row['first_name'];
+      $data['middle_name']  = $row['middle_name'];
+      $data['gender']       = $row['gender'];
+      $data['civil_status'] = $row['civil_status'];
+      $data['citizenship']  = $row['citizenship'];
+      $data['barangay_id']  = $row['barangay_id'];
+      $data['position_id']  = $row['position_id'];
+      $data['account_id']   = $row['account_id'];
+      $data['username']     = $row['username'];
+      $data['password']     = $row['password'];
+      $data['status']       = $row['status'];
+      $data['email']        = $row['email'];
+
+    }
+    echo json_encode($data);
+  }
+
+
+  // Update User Account
+  if(isset($_POST['update_user_acccount']))
+  {
+    $user_id = $_POST['user_id'];
+    $account_id = $_POST['account_id'];
+    $first_name = $_POST['first_name'];
+    $middle_names = $_POST['middle_name'];
+    $last_name = $_POST['last_name'];
+    $gender = $_POST['gender'];
+    $civil_status = $_POST['civil_status'];
+    $citizenship = $_POST['citizenship'];
+    $barangay_list = $_POST['barangay_list'];
+    $position_list = $_POST['position_list'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+    $email = $_POST['email'];
+
+    // Update User information
+    $data['msg_user'] = $user->updateUser($user_id,trim($first_name),trim($middle_names),trim($last_name),$gender,trim($civil_status),trim($citizenship),$barangay_list,$position_list);
+    // Update User Account
+    $data['msg_user_account'] = $account->updateUserAccount($account_id,$username,$password,$role,$email,$user_id);
+
+    echo json_encode($data);
+    
+  }
+
+
+  // Add new User Account
+  if(isset($_POST['add_new_user_account']))
+  {
+    $first_name       = $_POST['first_name'];
+    $middle_name      = $_POST['middle_name'];
+    $last_name	      = $_POST['last_name'];
+    $gender           = $_POST['gender'];
+    $civil_status     = $_POST['civil_status'];
+    $citizenship      = $_POST['citizenship'];
+    $barangay_id      = $_POST['barangay_list'];
+    $position_id      = $_POST['position_list'];
+    $username         = $_POST['username'];
+    $password         = $_POST['password'];
+    $date_registered  = date("Y-m-d");
+    $role             = $_POST['role'];
+    $email            = $_POST['email'];
+    
+    $user_id = $user->saveUser($last_name,$first_name,$middle_name,$gender,$civil_status,$citizenship,$barangay_id,$position_id);
+    $data['msg'] = $account->saveUserAccount($username,$password,$email,$date_registered,$role,$user_id);
+    
+    echo json_encode($data);
+
+  }
+
+
+
   /********************************************
   *
   * Barangay Street
