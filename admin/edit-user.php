@@ -60,8 +60,8 @@
                     <a href="#" class="fa fa-caret-down"></a>
                     <a href="#" class="fa fa-times"></a>
                   </div>
-          
-                  <h2 class="panel-title">Edit User</h2>
+              
+                  <h2 class="panel-title text-primary">Edit User</h2>
                 </header>
                 <div class="panel-body">
                   <div class="wizard-progress wizard-progress-lg">
@@ -273,7 +273,7 @@
                           <div class="col-sm-3"></div>
                           <div class="col-sm-9">
                             <div class="checkbox-custom">
-                              <input type="checkbox" name="terms" id="w4-terms" >
+                              <input type="checkbox" name="terms" id="w4-terms" required>
                               <label for="w4-terms">I agree to the terms of service</label>
                             </div>
                           </div>
