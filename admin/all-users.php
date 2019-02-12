@@ -63,6 +63,28 @@
 								<div class="panel-body">
                   <div id="list_of_user"></div>
 								</div>
+								<!-- Modal -->
+								<div class="modal fade" id="deleteUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserAccountModal" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<div class="modal-wrapper">
+													<div class="modal-icon center ">
+														<i class="text-primary fa fa-question-circle"></i>
+													</div>
+													<div class="modal-text text-center">
+														<h4>Are you sure?</h4>
+														<p>Are you sure that you want to delete this User Account  <span id="delete_account_id"></span> <span id="delete_user_id"></span>?</p>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" id="confirm-delete-user-account" class="btn btn-primary">Confirm</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</section>
 						
