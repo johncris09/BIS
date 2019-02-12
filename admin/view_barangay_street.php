@@ -14,14 +14,9 @@
     <table class="table table-bordered table-striped mb-none" id="datatable-default" >
       <thead>
         <tr>
-          <th>#</th>';
-      // Iterate all selected fieldnames
-      for( $i = 0 ; $i < sizeof($fields) ; $i++ ){
-        $list .= '
-          <th>'.$fields[$i].'</th> ';
-      }     
-  
-   $list .='   
+          <th>#</th>
+          <th>Barangay</th>
+          <th>Street</th>
           <th>Action</th>    
         </tr>
       </thead>
