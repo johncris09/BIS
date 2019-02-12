@@ -40,7 +40,6 @@ $(document).ready(function(){
             // async: true,
             // dataType: 'JSON',
             success: function(response,data){
-              console.info(JSON.parse(JSON.stringify(data))); 
               window.location.replace("../admin/edit-user.php");
               
             },
@@ -53,19 +52,75 @@ $(document).ready(function(){
           
         });
 
-        // Call Modal to Delete Barangay Street
+        // Call Modal to Delete User Account
         $('.delete-account').click(function() {
-          console.info('testing');
+          var account_id = $(this).attr('id');
+          
+          $.ajax({
+            url: '../classes/main.php',
+            type: 'POST',
+            data:{
+              'find_user_id':1,
+              'account_id': account_id
+            },
+            async: true,
+            dataType: 'JSON',
+            success: function(response,data){
+              // console.info(response)
+              $('#deleteUserAccountModal').modal('show');
+              $('#delete_account_id').text(response.account_id).hide();;
+              $('#delete_user_id').text(response.user_id).hide();;
+            },
+            // Error Handler
+            error: function(xhr, textStatus, error){
+              console.info(xhr.responseText);
+            }
+          });
         });
 
       });
     }
 
 
+    //Confirm delete user account
+    $('#confirm-delete-user-account').click(function() {
+      var account_id =  $('#delete_account_id').text();
+      var user_id =  $('#delete_user_id').text();
+      
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'delete_user_account':1,
+          'account_id': account_id,
+          'user_id': user_id,
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+
+          // Successful Delete
+          if(response.msg == true){
+            msg_SuccessfulDelete();
+          }else{
+            console.info(response);
+            msg_FailedToDelete();
+          }
+          viewAllUser();
+          $('#deleteUserAccountModal').modal('hide');
+        },
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      });
+    });
+
   }
   
 
   if(filename=="edit-user"){
+    editUserAccount();
+
     function editUserAccount(){
       $.get("edit-user.php", function(data) {
         var user_id = $('#user_id').val();
@@ -82,8 +137,7 @@ $(document).ready(function(){
           async: true,
           dataType: 'JSON',
           success: function(response,data){
-            // console.info(JSON.parse(JSON.stringify(data))); 
-            // Pass the response value in an element
+            
             $('#first_name').val(response.first_name);
             $('#middle_name').val(response.middle_name);
             $('#last_name').val(response.last_name);
@@ -93,11 +147,10 @@ $(document).ready(function(){
             $('#barangay-list').val(response.barangay_id);
             $('#position-list').val(response.position_id);
             $('#username').val(response.username);
-            $('#password').val(response.password);
+            // $('#password').val(response.password);
             $('#role').val(response.status);
             $('#email').val(response.email);
-             
-            // $data['phone_number'] = $row['phone_number'];
+            
           },
   
           // Error Handler
@@ -108,8 +161,282 @@ $(document).ready(function(){
         });
       });
     }
+
+    /*
+	Wizard #4
+	*/
+	var $w4finish = $('#w4').find('ul.pager li.finish'),
+  $w4validator = $("#w4 form").validate({
+      highlight: function(element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error').effect("shake",900);
+        
+      },
+      success: function(element) {
+        $(element).closest('.form-group').removeClass('has-error');
+        $(element).remove();
+      },
+      errorPlacement: function( error, element ) {
+        element.parent().append( error );
+      }
+    });
+
+    $w4finish.on('click', function( ev ) {
+      ev.preventDefault();
+      var validated = $('#w4 form').valid();
+      if ( validated ) {
+
+        // User Id
+        var user_id = $('#user_id').val(); 
+
+        // Account Id
+        var account_id = $('#account_id').val(); 
+        
+        // Personal iformation
+        var first_name = $('#first_name').val();
+        var middle_name = $('#middle_name').val();
+        var last_name = $('#last_name').val();
+        var gender = $('input[name="gender"]:checked').val();
+        var civil_status = $('#civil_status').val();
+        var citizenship = $('#citizenship').val();
+
+        // Barangay Position
+        var barangay_list = $('#barangay-list').val();
+        var position_list = $('#position-list').val();
+
+        // Account info
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        // role type
+        var role = $('#role').val();
+
+        // email
+        var email = $('#email').val();
+        
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'update_user_acccount':1,
+            'user_id':user_id,
+            'account_id':account_id,
+            'first_name':first_name,
+            'middle_name':middle_name,
+            'last_name':last_name,
+            'gender':gender,
+            'civil_status':civil_status,
+            'citizenship':citizenship,
+            'barangay_list':barangay_list,
+            'position_list':position_list,
+            'username':username,
+            'password': password,
+            'role':role,
+            'email':email
+          },
+          async: true,
+          dataType: 'JSON',
+          success: function(response,data){
+            if(response.msg_user == true && response.msg_user_account == true){
+              msg_SuccessfulUpdate();
+            }else{
+              msg_FailedToUPdate();
+            }
+          },
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr.responseText);
+          }
+        });
+        // new PNotify({
+        // 	title: 'Congratulations',
+        // 	text: 'You completed the wizsdfsdfard form.',
+        // 	type: 'custom',
+        // 	addclass: 'notification-success',
+        // 	icon: 'fa fa-check'
+        // });
+      }
+    });
+
+    $('#w4').bootstrapWizard({
+      tabClass: 'wizard-steps',
+      nextSelector: 'ul.pager li.next',
+      previousSelector: 'ul.pager li.previous',
+      firstSelector: null,
+      lastSelector: null,
+      onNext: function( tab, navigation, index, newindex ) {
+        var validated = $('#w4 form').valid();
+        if( !validated ) {
+          $w4validator.focusInvalid();
+          return false;
+
+        }
+      },
+      onTabClick: function( tab, navigation, index, newindex ) {
+        if ( newindex == index + 1 ) {
+          return this.onNext( tab, navigation, index, newindex);
+        } else if ( newindex > index + 1 ) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      onTabChange: function( tab, navigation, index, newindex ) {
+        var $total = navigation.find('li').size() - 1;
+        $w4finish[ newindex != $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+        $('#w4').find(this.nextSelector)[ newindex == $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+      },
+      onTabShow: function( tab, navigation, index ) {
+        var $total = navigation.find('li').length - 1;
+        var $current = index;
+        var $percent = Math.floor(( $current / $total ) * 100);
+        $('#w4').find('.progress-indicator').css({ 'width': $percent + '%' });
+        tab.prevAll().addClass('completed');
+        tab.nextAll().removeClass('completed');
+      }
+    });
+
+
+
+    // Show Password
+    $('#show-password').click(function(){
+      // Check if the checkbox is checked
+      $('input[name=show_password]').is(':checked') ? $('#password').attr("type","text"):$('#password').attr("type","password");
+      
+    });
+
     
   }
+
+  if(filename == "new-user"){
+
+    // Show Password
+    $('#show-password').click(function(){
+      // Check if the checkbox is checked
+      $('input[name=show_password]').is(':checked') ? $('#password').attr("type","text"):$('#password').attr("type","password");
+      
+    });
+      /*
+    Wizard #4
+    */
+    var $w4finish = $('#w4').find('ul.pager li.finish'),
+    $w4validator = $("#w4 form").validate({
+      highlight: function(element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error').effect("shake",900);
+        
+      },
+      success: function(element) {
+        $(element).closest('.form-group').removeClass('has-error');
+        $(element).remove();
+      },
+      errorPlacement: function( error, element ) {
+        element.parent().append( error );
+      }
+    });
+
+    $w4finish.on('click', function( ev ) {
+      ev.preventDefault();
+      var validated = $('#w4 form').valid();
+      if ( validated ) {
+        
+        // Personal iformation
+        var first_name = $('#first_name').val();
+        var middle_name = $('#middle_name').val();
+        var last_name = $('#last_name').val();
+        var gender = $('input[name="gender"]:checked').val();
+        var civil_status = $('#civil_status').val();
+        var citizenship = $('#citizenship').val();
+
+        // Barangay Position
+        var barangay_list = $('#barangay-list').val();
+        var position_list = $('#position-list').val();
+
+        // Account info
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        // role type
+        var role = $('#role').val();
+
+        // email
+        var email = $('#email').val();
+        
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'add_new_user_account':1,
+            'first_name':first_name,
+            'middle_name':middle_name,
+            'last_name':last_name,
+            'gender':gender,
+            'civil_status':civil_status,
+            'citizenship':citizenship,
+            'barangay_list':barangay_list,
+            'position_list':position_list,
+            'username':username,
+            'password': password,
+            'role':role,
+            'email':email
+          },
+          async: true,
+          dataType: 'JSON',
+          success: function(response,data){
+            console.info(response);
+            if(response.msg_user == true && response.msg_user_account == true){
+              msg_SuccessfulUpdate();
+            }else{
+              msg_FailedToUPdate();
+            }
+          },
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr.responseText);
+          }
+        });
+      }
+    });
+
+    $('#w4').bootstrapWizard({
+      tabClass: 'wizard-steps',
+      nextSelector: 'ul.pager li.next',
+      previousSelector: 'ul.pager li.previous',
+      firstSelector: null,
+      lastSelector: null,
+      onNext: function( tab, navigation, index, newindex ) {
+        var validated = $('#w4 form').valid();
+        if( !validated ) {
+          $w4validator.focusInvalid();
+          return false;
+
+        }
+      },
+      onTabClick: function( tab, navigation, index, newindex ) {
+        if ( newindex == index + 1 ) {
+          return this.onNext( tab, navigation, index, newindex);
+        } else if ( newindex > index + 1 ) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      onTabChange: function( tab, navigation, index, newindex ) {
+        var $total = navigation.find('li').size() - 1;
+        $w4finish[ newindex != $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+        $('#w4').find(this.nextSelector)[ newindex == $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+      },
+      onTabShow: function( tab, navigation, index ) {
+        var $total = navigation.find('li').length - 1;
+        var $current = index;
+        var $percent = Math.floor(( $current / $total ) * 100);
+        $('#w4').find('.progress-indicator').css({ 'width': $percent + '%' });
+        tab.prevAll().addClass('completed');
+        tab.nextAll().removeClass('completed');
+      }
+    });
+
+
+  }
+  
   
   
 
@@ -810,6 +1137,7 @@ $(document).ready(function(){
       title: 'Error!',
       text: "Already Exist",
       type: 'error'
+      
     });
   }
 
