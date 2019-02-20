@@ -1,9 +1,9 @@
+<?php
+  $role = (isset($_SESSION['status']))  ? $_SESSION['status'] : null;
+?>
 <aside id="sidebar-left" class="sidebar-left">
 				
   <div class="sidebar-header">
-    <div class="sidebar-title">
-      Navigation
-    </div>
     <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
       <i class="fa fa-tasks" aria-label="Toggle sidebar"></i>
     </div>
@@ -19,6 +19,7 @@
               <span>Dashboard</span>
             </a>
           </li>
+        <?php if($role == 0){ ?>
           <li class="nav-parent">
             <a>
               <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -44,7 +45,7 @@
             </a>
             <ul class="nav nav-children">
               <li>
-                <a href="position.php">
+                <a id="link-to-position" href="position.php">
                    Position
                 </a>
               </li>
@@ -74,45 +75,7 @@
               </li>
             </ul>
           </li>
-
           <li class="nav-parent">
-          <a>
-            <i class="fa fa-file-text" aria-hidden="true"></i>
-            <span>Residence Profiling</span>
-          </a>
-          <ul class="nav nav-children">
-            <li>
-              <a href="../staff/all-resident.php">
-                  All Resident
-              </a>
-            </li>
-            <li>
-              <a href="../staff/new-resident.php">
-                  Add New Resident
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a>
-            <i class="fa fa-folder-open" aria-hidden="true"></i>
-            <span>Barangay Issue</span>
-          </a>
-          <ul class="nav nav-children">
-            <li>
-              <a href="barangay-issue.php">
-                  All Issue
-              </a>
-            </li>
-            <li>
-              <a href="new-issue.php">
-                  Add New Issue
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="nav-parent">
             <a>
               <i class="fa fa-gears" aria-hidden="true"></i>
               <span>Utilities</span>
@@ -125,7 +88,63 @@
               </li>
             </ul>
           </li>
-          
+        <?php }else{ ?>
+          <li class="nav-parent">
+          <a>
+            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <span>Residence Profiling</span>
+          </a>
+          <ul class="nav nav-children">
+            <li>
+              <a href="all-resident.php">
+                  All Resident
+              </a>
+            </li>
+            <li>
+              <a href="new-resident.php">
+                  Add New Resident
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-parent">
+          <a>
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
+            <span>Barangay Issue</span>
+          </a>
+          <ul class="nav nav-children">
+            <li>
+              <a href="all-issue.php">
+                  All Issue
+              </a>
+            </li>
+            <li>
+              <a href="new-issue.php">
+                  Add New Issue
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-parent">
+          <a>
+            <i class="fa fa-gears" aria-hidden="true"></i>
+            <span>Utilities</span>
+          </a>
+          <ul class="nav nav-children">
+            <li>
+              <a href="back-up-records.php">
+                  Back up Records
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+        <a href="profile.php">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+        <?php } ?>  
         </ul>
       </nav>
       
@@ -138,24 +157,16 @@
           </a>
           <ul class="nav nav-children">
             <li>
-              <a href="layouts-default.html">
-                  Default
-              </a>
+              <a style="cursor: pointer" id="layout-default">Default</a>
             </li>
             <li>
-              <a href="layouts-boxed.html">
-                  Boxed
-              </a>
+            <a style="cursor: pointer" id="layout-boxed">Boxed</a>
             </li>
             <li>
-              <a href="layouts-menu-collapsed.html">
-                  Menu Collapsed
-              </a>
+              <a style="cursor: pointer" id="layout-menu-collapsed">Menu Collapsed</a>
             </li>
             <li>
-              <a href="layouts-scroll.html">
-                  Scroll
-              </a>
+              <a style="cursor: pointer" id="layouts-scroll">Scroll</a>
             </li>
           </ul>
         </li>
