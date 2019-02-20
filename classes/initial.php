@@ -1,4 +1,4 @@
 <?php 
-  $db = new Database();
-  $db = $db->getConnection();
+$db = new Database();
+$db = $db->getConnection();
 ?>
