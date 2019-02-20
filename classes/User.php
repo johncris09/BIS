@@ -67,6 +67,7 @@
       
     }
 
+    // Update SElected User
     public function updateUser($user_id,$first_name,$middle_names,$last_name,$gender,$civil_status,$citizenship,$barangay_list,$position_list)
     {
 
@@ -94,6 +95,43 @@
       $stmnt->bindParam(':citizenship',$citizenship);
       $stmnt->bindParam(':barangay_list',$barangay_list);
       $stmnt->bindParam(':position_list',$position_list);
+      // return  $stmnt->execute() ;
+
+      // execute the query
+      if ($stmnt->execute()) {
+        return true;
+      } else {
+        return $stmnt->errorInfo()[2];
+        // return false;
+      }
+      
+    }
+
+
+    // update profile
+    public function updateProfile($user_id,$first_name,$middle_names,$last_name,$gender,$civil_status,$citizenship)
+    {
+
+      $sql = " 
+        UPDATE  ". $this->table_name ."
+        SET
+          last_name	    = :last_name,
+          first_name	  = :first_name,
+          middle_name	  = :middle_names,
+          gender        = :gender,
+          civil_status	= :civil_status,
+          citizenship	  = :citizenship
+        WHERE user_id   = :user_id";
+
+      $stmnt = $this->conn->prepare($sql);
+      
+      $stmnt->bindParam(':user_id',$user_id);
+      $stmnt->bindParam(':last_name',$last_name);
+      $stmnt->bindParam(':first_name',$first_name);
+      $stmnt->bindParam(':middle_names',$middle_names);
+      $stmnt->bindParam(':gender',$gender);
+      $stmnt->bindParam(':civil_status',$civil_status);
+      $stmnt->bindParam(':citizenship',$citizenship);
       // return  $stmnt->execute() ;
 
       // execute the query
