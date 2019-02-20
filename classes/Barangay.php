@@ -3,6 +3,7 @@
   
   class Barangay
   {
+    
     // table name definition and database connection
     private $conn;
     private $table_name = "barangay";
@@ -113,6 +114,17 @@
       return $stmnt;
       $db_conn = NULL;
       
+    }
+
+    // Get the important fieldname 
+    public function getBarangayFieldName(){
+      $sql = "SELECT barangay_name as Barangay
+              FROM " . $this->table_name;
+
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->execute();
+      return $stmnt;
+      $conn= NULL;
     }
   }
 
