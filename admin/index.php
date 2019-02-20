@@ -1,3 +1,6 @@
+
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html>
 	<head>	
@@ -47,9 +50,11 @@
 
 
 		</section>
-		<?php include('../component/jslink.php');  ?>
-		
+		<!-- Vendor -->
+			
+		<?php include('../component/jslink.php'); ?>
 		<?php include('../component/themejslink.php');  ?>
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 		
 	</body>
 </html>
