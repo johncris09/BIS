@@ -1,15 +1,13 @@
-
+<?php session_start(); ?>
 <!doctype html>
 <html class="fixed">
 	<head>
 		<title>Back Up Records</title>
 
-		<?php include('../component/metadata.php'); ?>
-    
-    <?php include('../component/csslink.php'); ?>
-		
 		<!-- Specific Page Vendor CSS -->
+		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
+		<?php include('../component/csslink.php'); ?>
     
 
 	</head>
@@ -58,7 +56,7 @@
               
               <div class="row">
                 <div class="col-sm-12 text-right">  
-                  <button id="default-success" class="hidden-xs mt-sm mb-sm btn text-right btn-success"><i class="fa fa-database"></i> Back up Here</button>
+                  <button id="back-up" class="hidden-xs mt-sm mb-sm btn text-right btn-success"><i class="fa fa-database"></i> Back up Here</button>
                   <button id="default-success" class=" btn mt-sm mb-sm form-control btn-md text-right btn-success  visible-xs"><i class="fa fa-database"></i> Back up Here</button>
             
                   
@@ -76,15 +74,9 @@
 
     
     <?php include('../component/jslink.php'); ?>
-		
 		<!-- Specific Page Vendor -->
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
-		
-		
 		<?php include('../component/themejslink.php');  ?>
-
-
-		<!-- Examples -->
-		<script src="../assets/javascripts/ui-elements/examples.notifications.js"></script>
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 	</body>
 </html>
