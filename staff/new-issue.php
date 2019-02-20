@@ -1,15 +1,35 @@
+<?php 
+	session_start();
+	include_once '../classes/Database.php';
+  include_once '../classes/ResidenceHousehold.php';
+  include_once '../classes/initial.php';
+  
+	$complained 					= new ResidenceHousehold($db);
+	$complained_resident	= new ResidenceHousehold($db);
+	$complained 					= $complained->fetchResidenceHouseholdWithinTheBarangay($_SESSION['barangay_id']);
+	$complained_resident 	= $complained_resident->fetchResidenceHouseholdWithinTheBarangay($_SESSION['barangay_id']);
+?>
+
+
+
 <!DOCTYPE html>
 <html class="fixed">
 	<head>
 		<title>New Issue</title>
 
 		<?php include('../component/metadata.php'); ?>
+  
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="../assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
+		<link rel="stylesheet" href="../assets/vendor/summernote/summernote.css" />
+		<link rel="stylesheet" href="../assets/vendor/summernote/summernote-bs3.css" />
+		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" /> 
+
+
 
 		<?php include('../component/csslink.php'); ?>
-    <!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="../assets/vendor/summernote/summernote.css" />
-
-		<?php include('../component/cssthemelink.php'); ?>
 
 	</head>
 	<body>
@@ -36,7 +56,7 @@
 									</a>
 								</li>
 								<li><span>Barangay Issue</span></li>
-								<li><span>Add New User</span></li>
+								<li><span>Add New Issue</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -54,64 +74,67 @@
 								<h2 class="panel-title">Add New Issue</h2>
 							</header>
 							<div class="panel-body">
-                <form class="form-horizontal form-bordered">
-                 <div class="row">
-                    <div class="col-sm-5">
-                      <div class="form-group">
-												<label class="col-md-5 control-label" for="Complained">Complained</label>
-												<div class="col-md-7">
-													<select id="Complained" name="complained" class="form-control" required>
-                            <option value="">Choose Complained</option>
-                            <? for($i=1;$i<=5;$i++){?>
-                            <option value="Person <? echo $i; ?>">Person <? echo $i; ?></option>
-                            <? } ?>
-													</select>
-												</div>
-                      </div>
-                      <div class="form-group">
-												<label class="col-md-5 control-label" for="ComplainedResident">Complained Resident</label>
-												<div class="col-md-7">
-													<select id="ComplainedResident" name="complained_resident" class="form-control " required>
-                            <option value="">Choose Complained</option>
-                            <? for($i=1;$i<=5;$i++){?>
-                            <option value="Person <? echo $i; ?>">Person <? echo $i; ?></option>
-                            <? } ?>
-													</select>
-												</div>
-                      </div>
-                      <div class="form-group">
-												<label class="col-md-5 control-label" for="Status">Status</label>
-												<div class="col-md-7">
-													<select id="Status" name="status" class="form-control mb-md " disabled>
-                            <option value="Pending">Pending</option>
-                            <option value="Ongoing">Ongoing</option>
-                            <option value="Resolve">Resolve Issue</option>
-													</select>
-												</div>
-                      </div>
-                    </div>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-												<label class="col-sm-2 control-label " for="description">Description</label>
-												<div class="col-sm-12">
-													<div class="summernote" id="description" name="description" data-plugin-summernote data-plugin-options='{ "height": 250, "codemirror": { "theme": "ambiance" } }'>
-                            Description here . . .
-                          </div>
-												</div>
+                <form id="issue-form" class="form-horizontal form-bordered" novalidate="novalidate">
+                 	<div class="row">
+										<div class="form-group">
+											<label class="col-md-3 control-label">complainant </label>
+											<div class="col-md-5">
+												<select id="complainant"  data-plugin-selectTwo class="form-control populate placeholder" data-plugin-options='{ "placeholder": "Select a State", "allowClear": true }' required="required">
+											<?php 
+												while ($row = $complained->fetch(PDO::FETCH_ASSOC))
+												{?>
+													<option value="<?php echo $row['person_id'] ?>"><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']  ?></option>
+											<?php
+												}
+											?>
+													
+												</select>
 											</div>
-                    </div>
-                  </div>
-                  
-                
-              </div>
-              <div class="panel-footer">
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-                  </div>
-                </div>
-              </div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label" for="complained_resident">Complaineds Resident</label>
+											<div class="col-md-5">
+												<select id="complained_resident"  data-plugin-selectTwo class="form-control populate placeholder" data-plugin-options='{ "placeholder": "Select a State", "allowClear": true }' required="required">>
+												
+											<?php 
+												$counter=1;
+												while ($row = $complained_resident->fetch(PDO::FETCH_ASSOC))
+												{?>
+													<option value="<?php echo $row['person_id'] ?>"><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']  ?></option>
+											<?php
+												}
+											?>
+													
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label" for="status">Status</label>
+											<div class="col-md-5">
+												<select id="status" name="status" class="form-control mb-md " disabled>
+													<option value="Pending">Pending</option>
+													<option value="Ongoing">Ongoing</option>
+													<option value="Resolve">Resolve Issue</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="desc">
+											<label id="description-label" class="col-md-3 control-label" for="description">Description</label>
+											<div class="col-md-8">
+												<div id="description" class="summernote" data-plugin-summernote data-plugin-options='{ "height": 300, "codemirror": { "theme": "ambiance" } }'></div>
+												<label class="error" id="description_err"></label>
+											</div>
+											
+										</div>
+									</div>
+							</div>
+							<div class="panel-footer">
+								<div class="row" style="display: block;">
+									<div class="col-sm-12 text-right">
+										<button type="button" id="add_new_issue" class="btn btn-primary mb-xs mt-xs mr-xs ">Submit</button>
+									</div>
+								</div>
+							</div>
 						</section>
 						
 					<!-- end: page -->
@@ -121,13 +144,15 @@
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
 
-		<?php  include('../component/jslink.php'); ?>
+		<?php include('../component/jslink.php');  ?>
 		<!-- Specific Page Vendor -->
+		<script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
+		<script src="../assets/vendor/select2/select2.js"></script>
 		<script src="../assets/vendor/summernote/summernote.js"></script>
-		
-		<?php include('../component/themejslink.php'); ?>
 
-		<!-- Examples -->
-		<script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
+		<?php include('../component/themejslink.php');  ?>
+		
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 		</body>
 </html>
