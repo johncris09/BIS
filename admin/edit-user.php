@@ -9,8 +9,8 @@
   $barangay = new Barangay($db);
   
   // Ternary Operator
-  $account_id = isset($_SESSION['edit_account_id'])?$_SESSION['edit_account_id']: null ;
-  $user_id =isset($_SESSION['edit_user_id'])?$_SESSION['edit_user_id']: null ;
+  $edit_account_id  = isset($_SESSION['edit_account_id'])?$_SESSION['edit_account_id']: null ;
+  $edit_user_id     =isset($_SESSION['edit_user_id'])?$_SESSION['edit_user_id']: null ;
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,9 +96,9 @@
                       <div id="w4-profile" class="tab-pane active ">
                         <!-- this fields is used to edit and update the user account -->
                         <!-- account_id -->
-                        <input type="hidden" value="<?php echo $account_id ?>" id="account_id">
+                        <input type="hidden" value="<?php echo $edit_account_id ?>" id="account_id">
                         <!-- user_id -->
-                        <input type="hidden" value="<?php echo $user_id ?>" id="user_id">
+                        <input type="hidden" value="<?php echo $edit_user_id ?>" id="user_id">
                         
                         <div class="form-group">
                           <label class="col-sm-3 control-label" for="first-name">First Name</label>
@@ -136,7 +136,7 @@
                           <label class="col-sm-3 control-label" for="civil_status">Status</label>
                           <div class="col-sm-4">
                             <select id="civil_status" name="status" class="form-control" required="">
-                            <option value="">Choose Status</option>
+                              <option value="">Choose Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
                               <option value="Widowed">Widowed</option>
@@ -151,21 +151,7 @@
                             <input type="text" id="citizenship" class="form-control"   placeholder="Citizenship" name="citizenship"  required="">
                           </div>
                         </div>
-                        <!-- <div class="form-group">
-                          <label class="col-sm-3 control-label" for="w4-profile-pic">Profile Picture</label>
-                          <div class="row">
-                            <div class="col-md-4 col-xs-8 col-lg-3">
-                              <section class="panel">
-                                <div class="panel-body">
-                                  <div class="thumb-info mb-md">
-                                    <img src="../assets/images/sample-user.jpg" name="profiel_pic" height="145" width="145" class="rounded img-responsive" alt="Sample User">
-                                    <input type="file" class="btn btn-block btn-default mb-xs mt-xs mr-xs ">
-                                  </div>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div> -->
+                        
                       </div>
                       
                       <!-- Barangay Staff Position -->
@@ -288,8 +274,7 @@
                       <a><i class="fa fa-angle-left"></i> Previous</a>
                     </li>
                     <li class="finish hidden pull-right">
-                      <!-- <button class="btn btn-primary">Finnish</button> -->
-                      <a>Finnish</a>
+                      <a>Finish</a>
                     </li>
                     <li class="next">
                       <a>Next <i class="fa fa-angle-right"></i></a>
