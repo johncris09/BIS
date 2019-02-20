@@ -106,6 +106,9 @@
       $conn= NULL;
     }
 
+
+
+    // Update User Account
     public function updateUserAccount($account_id,$username,$password,$role,$email,$user_id)
     {
       $sql = "
@@ -164,9 +167,17 @@
     // Select all User
     public function getAllUser(){
       $sql = "
-        SELECT  account.account_id,CONCAT(user.first_name,' ',user.middle_name,' ', user.last_name) as Name, account.username, account.email, account.registered, account.status 
-        FROM ".$this->table_name.", user 
-        where account.user_id = user.user_id";
+        SELECT  
+          account.account_id,
+          CONCAT(user.first_name,' ',user.middle_name,' ', user.last_name) as Name,
+          account.username,
+          account.email,
+          account.registered,
+          account.status 
+        FROM 
+          ".$this->table_name.", user 
+        WHERE
+          account.user_id = user.user_id";
       
       $stmnt = $this->conn->prepare($sql);
   
@@ -175,6 +186,46 @@
       return $stmnt;
       $db_conn = NULL;
       
+    }
+
+
+    // Login User
+    public function  loginUser($username,$password)
+    {
+      $sql = "
+        SELECT 
+          user.user_id, 
+          user.last_name, 
+          user.first_name, 
+          user.middle_name, 
+          user.gender, 
+          user.civil_status, 
+          user.citizenship, 
+          user.barangay_id, 
+          user.position_id, 
+          account.account_id, 
+          account.username, 
+          account.password, 
+          account.status,
+          account.email
+        FROM 
+          account, user  
+        WHERE 
+          account.user_id = user.user_id AND 
+          (account.username = :username AND  account.password= PASSWORD(:password))";
+      
+
+      $stmnt = $this->conn->prepare($sql);
+      
+      $stmnt->bindParam(':username',$username);
+      $stmnt->bindParam(':password',$password);
+
+      $stmnt->execute();
+  
+      return $stmnt;
+      $conn= NULL;
+
+    
     }
 
 
@@ -191,6 +242,26 @@
       where account.user_id = user.user_id";
                 
       $stmnt = $this->conn->prepare($sql);
+      $stmnt->execute();
+      return $stmnt;
+      $conn= NULL;
+    }
+
+    // Use to check Password
+    public function checkPassword($account_id,$user_id,$old_password){
+      $sql = "
+      SELECT 
+        password
+      FROM 
+        account 
+      WHERE 
+        account_id = :account_id AND user_id = :user_id AND password = PASSWORD(:old_password)";
+                
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->bindParam(':account_id',$account_id);
+      $stmnt->bindParam(':user_id',$user_id);
+      $stmnt->bindParam(':old_password',$old_password);
+      
       $stmnt->execute();
       return $stmnt;
       $conn= NULL;
