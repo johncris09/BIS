@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html class="fixed">
 	<head>
@@ -70,7 +71,7 @@
 										<footer class="panel-footer" style="display: block;">
 											<div class="row">
 												<div class="col-sm-12 text-right">
-													<button type="button" name="update_barangay" id="update_barangay" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													<span id="update-barangay"></span>
 													<button type="button" name="add_new_barangay" id="add_new_barangay" class="btn btn-primary   mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
 													<button type="button" id="reset_barangay" class="btn btn-default  mb-xs mt-xs mr-xs "> Reset</button>
 												</div>
