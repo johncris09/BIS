@@ -1,3 +1,15 @@
+<?php
+  session_start();
+  if(isset($_SESSION['login_account_id'])){
+    if($_SESSION['status'] == 0){
+      header('location: admin/index.php');
+    }else{
+      header('location: staff/index.php');
+    }
+  }
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,49 +45,70 @@
           <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>
         </div>
         <div class="panel-body">
-          <form action="admin/" method="post">
+          
+          <form  method="post">
             <div class="form-group mb-lg">
-              <label>Username</label>
+              <label for="username" id="label-username">Username</label>
               <div class="input-group input-group-icon">
-                <input name="username" type="text" class="form-control input-lg" autofocus required/>
+                <input id="username" type="text" class="form-control input-lg" autofocus/>
                 <span class="input-group-addon">
                   <span class="icon icon-lg">
                     <i class="fa fa-user"></i>
                   </span>
                 </span>
               </div>
+              <label id="err_username" class="error"></label>
             </div>
 
             <div class="form-group mb-lg">
-              <div class="clearfix">
-                <label class="pull-left">Password</label>
-                <a href="pages-recover-password.html" class="pull-right">Lost Password?</a>
-              </div>
+              <label for="password" id="label-password">Password</label>
               <div class="input-group input-group-icon">
-                <input name="pwd" type="password" class="form-control input-lg" required/>
+                <input id="password" type="password" class="form-control input-lg"/>
                 <span class="input-group-addon">
                   <span class="icon icon-lg">
                     <i class="fa fa-lock"></i>
                   </span>
                 </span>
               </div>
+              <label id="err_password" class="error"></label>
             </div>
 
             <div class="row">
               <div class="col-sm-8">
                 <div class="checkbox-custom checkbox-default">
-                  <input id="RememberMe" name="rememberme" type="checkbox"/>
-                  <label for="RememberMe">Remember Me</label>
+                  <input id="remember_me" name="rememberme" type="checkbox"/>
+                  <label for="remember_me">Remember Me</label>
                 </div>
               </div>
               
               <div class="col-sm-4 text-right">
-                <button type="submit" class="btn btn-primary hidden-xs"><i class="fa fa-user"></i> Sign In</button>
-                <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg"><i class="fa fa-user"></i>  Sign In</button>
+                <button type="button" id="log_in" class="btn btn-primary mt-lg btn-lg	 btn-block "><i class="fa fa-user"></i>  Log In</button>
               </div>
               
             </div>
           </form>
+          <!-- Modal -->
+          <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <div class="modal-wrapper">
+                    <div class="modal-icon center ">
+                      <i class="text-danger fa fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="modal-text text-center">
+                      <h4>Log In Failed</h4>
+                      <p>Invalid Username/Password, Please Try Again</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -87,5 +120,7 @@
   
 
   <?php include('assets/jslink.php');  ?>
+  <script src="assets/login.js"></script>
+  <script src="assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 </body>
 </html>
