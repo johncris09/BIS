@@ -1,5 +1,5 @@
 
-
+<?php session_start(); ?>
  
 <!DOCTYPE html>
 <html class="fixed">
@@ -71,7 +71,7 @@
 										<footer class="panel-footer" style="display: block;">
 											<div class="row">
 												<div class="col-sm-12 text-right">
-													<button type="button" name="update_position" id="update_position" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													<span id="update-position"></span>
 													<button type="button" name="add_position" id="add_new_position" class="btn btn-primary   mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
 													<button type="button" id="reset_position" class="btn btn-default  mb-xs mt-xs mr-xs "> Reset</button>
 												</div>
