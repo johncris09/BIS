@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 	// Include all database and object files
 	include_once '../classes/Database.php';
@@ -95,7 +96,7 @@
 										<footer class="panel-footer" style="display: block;">
 											<div class="row">
 												<div class="col-sm-12 text-right">
-													<button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													<span id="update-barangay-street"></span>
 													<button type="button" id="add_new_barangay_street" class="btn btn-primary   mb-xs mt-xs mr-xs "><i class="fa fa-save"></i> Save</button>
 													<button type="button" id="reset_barangay_street" class="btn btn-default  mb-xs mt-xs mr-xs "> Reset</button>
 												</div>
