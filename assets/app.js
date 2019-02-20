@@ -7,17 +7,111 @@ $(document).ready(function(){
   $( "section div.row").hide();
   $( "section div.row").slideDown(900);
 
+  try{
+    //  Pull the file name from the URL
+    var filename = window.location.pathname.match(/.*\/([^/]+)\.([^?]+)/i)[1];
+    filename = filename.toLocaleLowerCase();
+  }catch(ex){
+    filename ="index";
+  }
 
-  //  Pull the file name from the URL
-  var filename = window.location.pathname.match(/.*\/([^/]+)\.([^?]+)/i)[1];
-  filename = filename.toLocaleLowerCase();
-  // console.info(filename == "Bsasdfrangay") 
+  ChnageInfo();
+  //  log_out
+  $('#log_out').click(function() 
+  {
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'log_out':1
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        if(response.msg == true){
+          window.location.replace("../index.php");
+        }
+      }
+    });    
+  });
 
+
+  function ChnageInfo(){
+
+    // this function will automatically change the information display about the user who login in this system
+    var login_account_id = $('#login_account_id').val();
+    var login_user_id = $('#login_user_id').val();
+    
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'edit_user_account':1,
+        'account_id':login_account_id,
+        'user_id':login_user_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        $('.name').text(response.first_name + " " + response.middle_name + " " + response.last_name );
+        $('.role').text(response.status==0?"Administration": "Staff");
+        
+      },
+
+      // Error Handler
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+
+    });
+
+  }
+  
+  
+
+
+  /*********************************************************** 
+  *
+  * Back up Database
+  *
+  ***********************************************************/
+ if(filename == "back-up-records"){
+   $('#back-up').click(function() {
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'admin_backup':1,
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        new PNotify({
+          title: 'Back Up',
+          text: 'New Record Successfully Backuped.',
+          type: 'success'
+        });
+        
+      },
+
+      // Error Handler
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+
+    });
+   });
+
+ }
+ 
+  
   /*********************************************************** 
   *
   * User Account with Ajax
   *
   ***********************************************************/
+
+  
 
   if(filename == "all-users"){
     viewAllUser();
@@ -98,12 +192,9 @@ $(document).ready(function(){
         async: true,
         dataType: 'JSON',
         success: function(response,data){
-
-          // Successful Delete
           if(response.msg == true){
             msg_SuccessfulDelete();
           }else{
-            console.info(response);
             msg_FailedToDelete();
           }
           viewAllUser();
@@ -116,7 +207,189 @@ $(document).ready(function(){
     });
 
   }
+
+  if(filename=="profile"){
+    
+    profile();
+    function profile(){
+      var account_id = $('#login_account_id').val();
+      var user_id = $('#login_user_id').val();
   
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'edit_user_account':1,
+          'user_id': user_id,
+          'account_id': account_id
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          $('#first_name').val(response.first_name);
+          $('#middle_name').val(response.middle_name);
+          $('#last_name').val(response.last_name);
+          response.gender == "Male" ? $('#male').attr('checked','checked') :$('#female').attr('checked','checked');
+          $('#civil_status').val(response.civil_status);
+          $('#citizenship').val(response.citizenship);
+          $('#barangay-list').val(response.barangay_id);
+          $('#position-list').val(response.position_id);
+          $('#username').val(response.username);
+          // $('#password').val(response.password);
+          $('#role').val(response.status);
+          $('#email').val(response.email);
+          
+        },
+  
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+  
+      });
+    }
+    
+    // Use to check the inputted value if it is match to the curret password
+    $('#check_password').click(function(){
+      var old_password = $('#old_password').val();
+      var login_account_id = $('#login_account_id').val();
+      var login_user_id = $('#login_user_id').val();
+      
+
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'check_password':1,
+          'old_password': old_password,
+          'login_account_id': login_account_id,
+          'login_user_id':login_user_id
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          if(old_password.length>0){
+            
+              
+            if(response.msg == true){
+              $('label#err_password').empty();
+              $('#old-password-form').effect("blind",250);
+              // Create Element
+              new_password_form   =   '<div class="form-group">';
+              new_password_form   +=  ' <label class="col-sm-3 control-label" for="password">New Password</label>';                       
+              new_password_form   +=  ' <div class="col-sm-7">';
+              new_password_form   +=  '  <div class="input-group input-group-icon">';
+              new_password_form   +=  '   <span class="input-group-addon">';
+              new_password_form   +=  '    <span class="icon"><i class="fa fa-key"></i></span>';
+              new_password_form   +=  '   </span>';
+              new_password_form   +=  '   <input type="password" id="new_password" class="form-control" placeholder="Password" name="password" >';
+              new_password_form   +=  '  </div>';
+              new_password_form   +=  ' </div>';
+              new_password_form   +=  '</div>';
+              new_password_form   +=  '<div class="form-group">';
+              new_password_form   +=  ' <div class="col-sm-3"></div> ';   
+              new_password_form   +=  '  <div class="col-sm-9"> ';
+              new_password_form   +=  '   <div class="checkbox-custom">';
+              new_password_form   +=  '    <input type="checkbox"  name="show_password" id="show-password">';
+              new_password_form   +=  '    <label for="show-password">Show Password</label> ';
+              new_password_form   +=  '   </div>';
+              new_password_form   +=  '  </div>';
+              new_password_form   +=  '</div>';
+              $('#new-password-form').append(new_password_form);
+              $('#new_password').focus();
+
+              // show-password
+              $('#show-password').click(function(){
+                // Check if the checkbox is checked
+                $('input[name=show_password]').is(':checked') ? $('#new_password').attr("type","text"):$('#new_password').attr("type","password");
+                
+              });
+            }else{
+              
+              $('label#err_password').text('Password not match')
+            }
+          }else{
+            $('#old_password').focus();
+            $('label#err_password').text('Please Enter your old password')
+            
+          }
+
+        },
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      
+      });
+    });
+
+    $('#update_profile').click(function(){
+      var user_id = $('#login_user_id').val(); 
+      var account_id = $('#login_account_id').val(); 
+
+      // Personal iformation
+      var first_name = $('#first_name').val();
+      var middle_name = $('#middle_name').val();
+      var last_name = $('#last_name').val();
+      var gender = $('input[name="gender"]:checked').val();
+      var civil_status = $('#civil_status').val();
+      var citizenship = $('#citizenship').val();
+
+      // Account info
+      var username = $('#username').val();
+      var password = $('#new_password').val();
+      if(password == undefined){
+        password = "";
+      }
+        
+
+      // role type
+      var role = $('#role').val();
+
+      // email
+      var email = $('#email').val();
+
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'update_profile':1,
+          'user_id': user_id,
+          'account_id': account_id,
+          'first_name':first_name,
+          'middle_name':middle_name,
+          'last_name':last_name,
+          'gender':gender,
+          'civil_status':civil_status,
+          'citizenship':citizenship,
+          'username':username,
+          'password':password,
+          'role':role,
+          'email':email
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          if(response.msg){
+            msg_SuccessfulUpdate();
+          }else{
+            msg_FailedToUPdate();
+          }
+          ChnageInfo();
+          
+        },
+
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+
+      });
+
+    });
+    
+  }
+
 
   if(filename=="edit-user"){
     editUserAccount();
@@ -238,6 +511,7 @@ $(document).ready(function(){
           success: function(response,data){
             if(response.msg_user == true && response.msg_user_account == true){
               msg_SuccessfulUpdate();
+              ChnageInfo();
             }else{
               msg_FailedToUPdate();
             }
@@ -247,13 +521,6 @@ $(document).ready(function(){
             console.info(xhr.responseText);
           }
         });
-        // new PNotify({
-        // 	title: 'Congratulations',
-        // 	text: 'You completed the wizsdfsdfard form.',
-        // 	type: 'custom',
-        // 	addclass: 'notification-success',
-        // 	icon: 'fa fa-check'
-        // });
       }
     });
 
@@ -381,11 +648,11 @@ $(document).ready(function(){
           async: true,
           dataType: 'JSON',
           success: function(response,data){
-            console.info(response);
-            if(response.msg_user == true && response.msg_user_account == true){
-              msg_SuccessfulUpdate();
+            if(response.msg == true ){
+              msg_SuccessfulSave();
+                
             }else{
-              msg_FailedToUPdate();
+              msg_FailedToSave();
             }
           },
           // Error Handler
@@ -448,24 +715,26 @@ $(document).ready(function(){
   
   if(filename == "street"){
     viewBarangayStreet();
-    $('#update_barangay_street').hide();
+    // <button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
+													
     // Barangay Street List
     function viewBarangayStreet(){
       $.get("view_barangay_street.php", function(data) {
         // list of all street within the barangay
         $("#list_of_barangay_street").html(data);
+        var click_Count = 0;
         // Edit Barangay Street
         $('.edit-barangay-street').click(function() {
-          $('#barangay_street').focus();
-          $('#barangay_streey').css("border-color","");
+          $('#barangay_street').css("border-color","").focus();
           $('#label').css("color","");
           $('#err_msgs').empty();
           
           var barangay_street_id = $(this).attr('id');  
-
-          $('#update_barangay_street').hide();
-          $('#update_barangay_street').slideDown(500);
           $('#add_new_barangay_street').hide();
+          if(click_Count<=0){
+            $('#update-barangay-street').append('<button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
+            click_Count++;
+          }
           $('#barangay-list').val();
           
           $.ajax({
@@ -478,13 +747,11 @@ $(document).ready(function(){
             async: true,
             dataType: 'JSON',
             success: function(response,data){
-              // console.info(JSON.parse(JSON.stringify(data))); 
               
               // Pass the response value in an element
               $('#barangay-list').val(response.barangay_id);
               $('#barangay_street_id').val(response.barangay_street_id);
-              $('#barangay_street').val(response.barangay_street);
-              $('#barangay_street').focus();
+              $('#barangay_street').val(response.barangay_street).focus();
               $('.panel-title#panel-title').text('Update Street');
             },
 
@@ -499,13 +766,21 @@ $(document).ready(function(){
         // Call Modal to Delete Barangay Street
         $('.delete-barangay-street').click(function() {
           var barangay_street_id = $(this).attr('id');
-          $('#delete_barangay_street_id').text(barangay_street_id);
-          $('#delete_barangay_street_id').hide();
+          $('#delete_barangay_street_id').text(barangay_street_id).hide();
           $('#deleteBarangayStreetModal').modal('show');
         });
 
+        
+
       });
     }
+
+    $('#barangay_street').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#add_new_barangay_street').click();
+      }
+    });
     
     // Add New Barangay Street
     $(document).on('click','#add_new_barangay_street',function(){
@@ -545,10 +820,15 @@ $(document).ready(function(){
           console.info(xhr.responseText);
         }
       });
-
-
     });
 
+
+    $('#barangay_street').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#update_barangay_street').click();
+      }
+    });
 
     //  Update Selected Barangay Street
     $(document).on('click','#update_barangay_street',function(){
@@ -593,7 +873,15 @@ $(document).ready(function(){
         }
       });
     });
+    
+    $('#confirm-delete-Barangay-Street').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#confirm-delete-Barangay-Street').click();
+      }
+    });
 
+    
 
     // Delete Selected Barangay
     $('#confirm-delete-Barangay-Street').click(function() {
@@ -629,32 +917,26 @@ $(document).ready(function(){
     // fields is required Function
     function isBarangayRequiredForStreet(){
       if($('#barangay-list').val() == ""){
-        $('#err_msgs_barangay_list').text('This field is required');
-        $('#barangay-list').focus();
-        $('#barangay-list').css("border-color", "red");
-        $('#label_barangay').css("color", "red");
-        $( "#barangay-list" ).effect( "shake", 500 );
+        $('#err_msgs_barangay_list').text('This field is required').effect( "shake", 500 );
+        $('#barangay-list').css("border-color", "red").effect( "shake", 500 ).focus();
+        $('#label_barangay').css("color", "red").effect( "shake", 500 );
         return true;
       }else{
         $('#err_msgs_barangay_list').empty();
-        $('#barangay-list').focus();
-        $('#barangay-list').css("border-color","");
+        $('#barangay-list').css("border-color","").focus();
         $('#label_barangay').css("color","");
         return false;
       }
     }
     function isBarangayStreetRequired(){
       if($('#barangay_street').val().length<1){
-        $('#err_msgs').text('This field is required');
-        $('#barangay_street').focus();
-        $('#barangay_street').css("border-color", "red");
-        $('#label_barangay_street').css("color", "red");
-        $( "#barangay_street" ).effect( "shake", 500 );
+        $('#err_msgs').text('This field is required').effect( "shake", 500 );
+        $('#barangay_street').css("border-color", "red").focus().effect( "shake", 500 );
+        $('#label_barangay_street').css("color", "red").effect( "shake", 500 );
         return true;
       }else{
         $('#err_msgs').empty();
-        $('#barangay_street').focus();
-        $('#barangay_street').css("border-color","");
+        $('#barangay_street').css("border-color","").focus();
         $('#label_barangay_street').css("color","");
         return false;
       }
@@ -668,20 +950,16 @@ $(document).ready(function(){
   
     // Reset fields
     $(document).on('click','#reset_barangay_street',function(){
-      $('#barangay-list').val(''); 
       $('#err_msgs_barangay_list').empty();
-      $('#barangay-list').focus();
-      $('#barangay-list').css("border-color","");
+      $('#barangay-list').val('').css("border-color","").focus();
       $('#label_barangay').css("color","");
-      $('#barangay_street').val('');
+      $('#barangay_street').val('').css("border-color","").focus();
       $('#err_msgs').empty();
-      $('#barangay_street').focus();
-      $('#barangay_street').css("border-color","");
       $('#label_barangay_street').css("color","");
 
     });
-    
   }
+    
 
  
   /*********************************************************** 
@@ -692,11 +970,11 @@ $(document).ready(function(){
 
   if(filename == "barangay"){
     viewBarangay();
-    $('#update_barangay').hide();
     function viewBarangay(){
       $.get("view_barangay.php", function(data) {
         // list of all Barangay  
         $("#list_of_barangay").html(data);
+        var click_Count = 0;
         // Edit Barangay
         $('.edit-barangay').click(function() {
           $('#barangay').focus();
@@ -705,10 +983,11 @@ $(document).ready(function(){
           $('#err_msgs').empty();
           
           var barangay_id = $(this).attr('id');
-  
-          $('#update_barangay').hide();
-          $('#update_barangay').slideDown(500);
           $('#add_new_barangay').hide();
+          if(click_Count<=0){
+            $('#update-barangay').append('<button type="button" name="update_barangay" id="update_barangay" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
+            click_Count++;
+          }
           
           $.ajax({
             url: '../classes/main.php',
@@ -723,8 +1002,7 @@ $(document).ready(function(){
   
               // Pass the response value in an element
               $('#barangay_id').val(response.barangay_id);
-              $('#barangay').val(response.barangay_name);
-              $('#barangay').focus();
+              $('#barangay').val(response.barangay_name).focus();
               $('.panel-title#panel-title-barangay').text('Update Barangay');
             },
   
@@ -737,20 +1015,26 @@ $(document).ready(function(){
               });
             }
           });
-          
         });
-  
         // Call Modal to Delete Barangay
         $('.delete-barangay').click(function() {
           var delete_id = $(this).attr('id');
-          $('#delete_barangay_id').text(delete_id);
-          $('#delete_barangay_id').hide();
+          $('#delete_barangay_id').text(delete_id).hide();
           $('#deleteBarangayModal').modal('show');
         });
-  
+
+        
       });
     }
   
+
+    // KeyPress
+    $('#barangay').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#add_new_barangay').click();
+      }
+    });
     // Add New Barangay
     $(document).on('click','#add_new_barangay',function(){
   
@@ -819,6 +1103,14 @@ $(document).ready(function(){
       });
     });
   
+    // Keypres
+    $('#barangay').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#update_barangay').click();
+      }
+    });
+
     // Update Selected Barangay
     $(document).on('click','#update_barangay',function(){
   
@@ -847,11 +1139,7 @@ $(document).ready(function(){
           if(response.msg == true){
             msg_SuccessfulUpdate();
           }else{
-            new PNotify({
-              title: 'Error!',
-              text: response.msg,
-              type: 'error'
-            });
+            msg_FailedToUPdate();
           }
           viewBarangay();
         },
@@ -863,20 +1151,16 @@ $(document).ready(function(){
     // fields is required Function
     function isBarangayRequired(){
       if($('#barangay').val().length<1){
-        $('#err_msgs').text('This field is required');
-        $('#barangay').focus();
-        $('#barangay').css("border-color", "red");
-        $('#label').css("color", "red");
-        $( "#barangay" ).effect( "shake", 500 );
+        $('#err_msgs').text('This field is required').effect( "shake", 1000 );
+        $('#barangay').css("border-color", "red").effect( "shake", 1000 ).focus();
+        $('#label').css("color", "red").effect( "shake", 1000 );
         return true;
       }
     }
     // do this after an actions
     function afterBarangayAction(){
-      $('#barangay').val('');
       $('#err_msgs').empty();
-      $('#barangay').focus();
-      $('#barangay').css("border-color","");
+      $('#barangay').val('').css("border-color","").focus();;
       $('#label').css("color","");
     }
    
@@ -900,16 +1184,20 @@ $(document).ready(function(){
   ***********************************************************/
   
   if(filename == "position"){
-    viewPosition();
-    $('#update_position').hide();
     
+    viewPosition();
+    // $('#update_position').hide();
+
     // Functions for some purposes
 
     // purposed of this function is to view, edit, delete the data
+    
     function viewPosition(){
       $.get("view_position.php", function(data) {
         // list of all position  
         $("#list_of_position").html(data);
+        
+        var click_Count = 0; 
         // Edit Position
         $('.edit-position').click(function() {
           $('#position').focus();
@@ -918,10 +1206,12 @@ $(document).ready(function(){
           $('#err_msgs').empty();
           
           var edit_id = $(this).attr('id');
-    
-          // $('#update_position').show();
-          $('#update_position').hide();
-          $('#update_position').slideDown(500);
+          if(click_Count<=0){
+            $("#update-position").append('<button type="button" name="update_position" id="update_position" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
+            
+            click_Count++;
+          }
+          
           $('#add_new_position').hide();
           
           $.ajax({
@@ -949,10 +1239,10 @@ $(document).ready(function(){
         // Call Modal to Delete  Position
         $('.delete-position').click(function() {
           var delete_id = $(this).attr('id');
-          $('#delete_position_id').text(delete_id);
-          $('#delete_position_id').hide();
+          $('#delete_position_id').text(delete_id).hide();
           $('#deletePositionModal').modal('show');
         });
+
     
       });
     }
@@ -961,23 +1251,28 @@ $(document).ready(function(){
     // fields is required Function
     function isPositionRequired(){
       if($('#position').val().length<1){
-        $('#err_msgs').text('This field is required');
-        $('#position').focus();
-        $('#position').css("border-color", "red");
-        $('#label').css("color", "red");
-        $( "#position" ).effect( "shake", 500 );
+        $('#err_msgs').text('This field is required').effect( "shake", 900 );
+        $('#position').css("border-color", "red").effect( "shake", 900 ).focus();
+        $('#label').css("color", "red").effect( "shake", 900 );
         return true;
       }
     }
     
     // do this after an actions
     function afterPositionAction(){
-      $('#position').val('');
       $('#err_msgs').empty();
-      $('#position').focus();
-      $('#position').css("border-color","");
+      $('#position').val('').css("border-color","").focus();
       $('#label').css("color","");
     }
+
+
+    // Using keypress
+    $('#position').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#add_new_position').click();
+      }
+    });
 
     // Add new Position
     $(document).on('click','#add_new_position',function(){
@@ -1018,6 +1313,14 @@ $(document).ready(function(){
           console.info(textStatus);
         }
       });
+    });
+
+
+    $('#position').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#update_position').click();
+      }
     });
 
     // update position
@@ -1092,9 +1395,7 @@ $(document).ready(function(){
 
     // Reset fields
     $(document).on('click','#reset_position',function(){
-      $('#position').val('');
-      $('#position').focus();
-      $('#position').css("border-color","");
+      $('#position').css("border-color","").val('').focus();
       $('#err_msgs').empty();
       $('#label').css("color","");
 
@@ -1158,6 +1459,32 @@ $(document).ready(function(){
       type: 'error'
     });
   }
+
+  /*********************************************************** 
+  *
+  * Change Layout
+  *
+  ***********************************************************/
+  
+  // Default Layout
+  $(document).on('click','#layout-default',function(){
+    $('html').attr("class","fixed")
+  });
+
+  // Boxed Layout
+  $(document).on('click','#layout-boxed',function(){
+    $('html').attr("class","boxed")
+  });
+
+  // Menu Collapsed Layout
+  $(document).on('click','#layout-menu-collapsed',function(){
+    $('html').attr("class","fixed sidebar-left-collapsed")
+  });
+  
+  // Scroll Layout
+  $(document).on('click','#layouts-scroll',function(){
+    $('html').attr("class","scroll sidebar-left-collapsed")
+  });
 
 });
 
