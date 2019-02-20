@@ -42,7 +42,7 @@
         $stmnt = $this->conn->prepare($sql);
         $stmnt->bindParam(':id', $position_id);
         $stmnt->execute();
-  
+
         return $stmnt;
         $conn= NULL;
         
@@ -90,17 +90,26 @@
     
     // Select all Positon
     public function getAllPosition(){
-      $sql = "
-        SELECT *
-        FROM " . $this->table_name;
+      $sql = "SELECT *
+              FROM " . $this->table_name;
       
       $stmnt = $this->conn->prepare($sql);
-  
+
       $stmnt->execute();
-  
+
       return $stmnt;
       $db_conn = NULL;
       
+    }
+
+    public function getPositionFieldName(){
+      $sql = "SELECT position as Position
+              FROM " . $this->table_name;
+                
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->execute();
+      return $stmnt;
+      $conn= NULL;
     }
   }
 
