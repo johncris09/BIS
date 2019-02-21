@@ -188,6 +188,28 @@
       
     }
 
+    //Unlock
+
+    public function unlock($account_id,$password){
+      $sql = "
+      SELECT * 
+      FROM account 
+      WHERE 
+        account_id = :account_id AND
+        password = PASSWORD(:password)";
+      
+
+      $stmnt = $this->conn->prepare($sql);
+      
+      $stmnt->bindParam(':account_id',$account_id);
+      $stmnt->bindParam(':password',$password);
+
+      $stmnt->execute();
+  
+      return $stmnt;
+      $conn= NULL;
+    }
+
 
     // Login User
     public function  loginUser($username,$password)
