@@ -74,14 +74,8 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-8">
-                <div class="checkbox-custom checkbox-default">
-                  <input id="remember_me" name="rememberme" type="checkbox"/>
-                  <label for="remember_me">Remember Me</label>
-                </div>
-              </div>
               
-              <div class="col-sm-4 text-right">
+              <div class="col-sm-12 text-right">
                 <button type="button" id="log_in" class="btn btn-primary mt-lg btn-lg	 btn-block "><i class="fa fa-user"></i>  Log In</button>
               </div>
               
