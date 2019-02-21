@@ -34,8 +34,15 @@ $(document).ready(function(){
       }
     });    
   });
+
+  $('#pwd').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+      $('#unlock').click();
+    }
+  });
   
-  
+  // Unlock Screen
   $('#unlock').click(function() 
   {
     var password = $('#pwd').val();
@@ -56,7 +63,7 @@ $(document).ready(function(){
       async: true,
       dataType: 'JSON',
       success: function(response,data){
-        (response.msg > 0) ? $.magnificPopup.close():$('#password_err').text("Invalid Password");;
+        (response.msg > 0) ? $.magnificPopup.close():$('#password_err').text("Invalid Password");
       },
       error: function(xhr, textStatus, error){
         console.info(xhr.responseText);
