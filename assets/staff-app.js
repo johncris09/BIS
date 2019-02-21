@@ -35,6 +35,71 @@ $(document).ready(function(){
     });    
   });
 
+  $('#pwd').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+      $('#unlock').click();
+    }
+  });
+  
+  // Unlock Screen
+  $('#unlock').click(function() 
+  {
+    var password = $('#pwd').val();
+    if(password == ""){
+      $('#pwd').css('border','1px solid red').focus();
+      $('.icon.icon-lg>.fa.fa-lock').css('color','red');
+      $('#password_err').text("This field is required");
+      $('.form-group.mb-lg').effect("shake",1000);
+      return;
+    }
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'unlock':1,
+        'password':password
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        (response.msg > 0) ? $.magnificPopup.close():$('#password_err').text("Invalid Password");
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+
+    });    
+  });
+
+  
+
+  $('#logout').click(function() 
+  {
+    $('#log_out').click();
+  });
+
+
+  $('#lock_screen').magnificPopup({
+		type: 'inline',
+
+		fixedContentPos: false,
+		fixedBgPos: true,
+
+		overflowY: 'auto',
+
+		closeBtnInside: true,
+		preloader: false,
+		
+		midClick: true,
+		removalDelay: 300,
+		mainClass: 'my-mfp-slide-bottom',
+    modal: true
+    
+	});
+  
+
+
 
   function ChnageInfo(){
 
@@ -146,23 +211,41 @@ $(document).ready(function(){
           
         });
 
-        // // Call Modal to Delete Barangay Street
-        // $('.delete-barangay-street').click(function() {
-        //   var barangay_street_id = $(this).attr('id');
-        //   $('#delete_barangay_street_id').text(barangay_street_id).hide();
-        //   $('#deleteBarangayStreetModal').modal('show');
-        // });
-
-        
-
+        // Call Modal to Delete Barangay Street
+        $('.delete-person').click(function() {
+          var person_id = $(this).attr('id');
+          $('#delete_residence_household_id').text(person_id);
+          $('#deleteResidenceHouseholdModal').modal('show');
+        });
       });
     }
 
-    
+    $('#confirm-delete-residen').click(function() {
+      var person_id = $('#delete_residence_household_id').text();
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'delete_resident':1,
+          'person_id': person_id
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          console.info(response)
+        },
 
-
-
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr);
+        }
+      });
+    });
   }
+
+
+
+  
 
   /*********************************************************** 
   *
@@ -251,21 +334,6 @@ $(document).ready(function(){
         var household_id	    = $('#household_id').val();
 
         
-        // console.info('person_id' + person_id);
-        // console.info('first_name' + first_name);
-        // console.info('middle_name' + middle_name);
-        // console.info('last_name' + last_name);
-        // console.info('extension' + extension);
-        // console.info('house_number' + house_number);
-        // console.info('birthplace' + birthplace);
-        // console.info('birthdate' + birthdate);
-        // console.info('gender' + gender);
-        // console.info('status' + status);
-        // console.info('citizenship' + citizenship);
-        // console.info('occupation' + occupation);
-        // console.info('street' + street);
-        // console.info('household_number' + household_number);
-        // console.info('household_id ' + household_id);
 
         $.ajax({
           url: '../classes/main.php',
@@ -297,20 +365,6 @@ $(document).ready(function(){
             }else{
               msg_FailedToUPdate();
             }
-            // $('#first_name').val('').focus();
-            // $('#middle_name').val('');
-            // $('#last_name').val('');
-            // $('#extension').val('');
-            // $('#house_number').val('');
-            // $('#birthplace').val('');
-            // $('#birthdate').val('');
-            // $('#female').removeAttr('checked');
-            // $('#male').removeAttr('checked');
-            // $('#status').val('Single');
-            // $('#citizenship').val('');
-            // $('#occupation').val('Student');
-            // $('#street').val('Purok 2');
-            // $('#household_number').val('');
 
           },
     
@@ -409,19 +463,6 @@ $(document).ready(function(){
         var street            = $('#street').val();
         var household_number  = $('#household_number').val();
 
-        // console.info('first_name' + first_name);
-        // console.info('middle_name' + middle_name);
-        // console.info('last_name' + last_name);
-        // console.info('extension' + extension);
-        // console.info('house_number' + house_number);
-        // console.info('birthplace' + birthplace);
-        // console.info('birthdate' + birthdate);
-        // console.info('gender' + gender);
-        // console.info('status' + status);
-        // console.info('citizenship' + citizenship);
-        // console.info('occupation' + occupation);
-        // console.info('street' + street);
-        // console.info('household_number' + household_number);
 
         $.ajax({
           url: '../classes/main.php',
