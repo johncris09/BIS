@@ -34,6 +34,63 @@ $(document).ready(function(){
       }
     });    
   });
+  
+  
+  $('#unlock').click(function() 
+  {
+    var password = $('#pwd').val();
+    if(password == ""){
+      $('#pwd').css('border','1px solid red').focus();
+      $('.icon.icon-lg>.fa.fa-lock').css('color','red');
+      $('#password_err').text("This field is required");
+      $('.form-group.mb-lg').effect("shake",1000);
+      return;
+    }
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'unlock':1,
+        'password':password
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        (response.msg > 0) ? $.magnificPopup.close():$('#password_err').text("Invalid Password");;
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+
+    });    
+  });
+
+  
+
+  $('#logout').click(function() 
+  {
+    $('#log_out').click();
+  });
+
+
+  $('#lock_screen').magnificPopup({
+		type: 'inline',
+
+		fixedContentPos: false,
+		fixedBgPos: true,
+
+		overflowY: 'auto',
+
+		closeBtnInside: true,
+		preloader: false,
+		
+		midClick: true,
+		removalDelay: 300,
+		mainClass: 'my-mfp-slide-bottom',
+    modal: true
+    
+	});
+  
 
 
   function ChnageInfo(){
@@ -977,17 +1034,6 @@ $(document).ready(function(){
         var click_Count = 0;
         // Edit Barangay
         $('.edit-barangay').click(function() {
-          $('#barangay').focus();
-          $('#barangay').css("border-color","");
-          $('#label').css("color","");
-          $('#err_msgs').empty();
-          
-          var barangay_id = $(this).attr('id');
-          $('#add_new_barangay').hide();
-          if(click_Count<=0){
-            $('#update-barangay').append('<button type="button" name="update_barangay" id="update_barangay" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
-            click_Count++;
-          }
           
           $.ajax({
             url: '../classes/main.php',
