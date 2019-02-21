@@ -50,6 +50,8 @@
    
  
 
+  // logout
+
   if(isset($_POST['log_out']))
   {
     if(session_destroy()) 
@@ -59,6 +61,17 @@
     echo json_encode($data);
   }
 
+
+  // unlock
+  if(isset($_POST['unlock']))
+  {
+    $account_id   = $_SESSION['login_account_id'];
+    $password     = $_POST['password'];
+    $result       = $account->unlock($account_id,trim($password));
+    $data['msg']  = $result->Rowcount();
+    echo json_encode($data);
+  }
+  // login
   if(isset($_POST['log_in']))
   {
     $username   = $_POST['username'];
@@ -593,4 +606,14 @@
     }
     echo json_encode($data);
   }
- 
+
+
+  // View the selected barangay Issue
+  if(isset($_POST['delete_resident']))
+  {
+    $person_id = $_POST['person_id'];
+    $sql = "Delete from person where person_id =".$person_id;
+    $data['message'] = $sql;
+    echo json_encode($data);
+  }
+
