@@ -19,6 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <?php include('assets/csslink.php'); ?>
+  <link rel="stylesheet" href="assets/stylesheets/animate.css">
   <link href="https://fonts.googleapis.com/css?family=Coiny|Lato|Montserrat|Open+Sans|Raleway|Roboto|Sarabun" rel="stylesheet">
   
   <style>
@@ -27,12 +28,29 @@
     }
   </style>
 
+  <!-- Animate -->
+  <script>
+    function animateCss(element, animationName, callback) {
+      const node = document.querySelector(element)
+      node.classList.add('animated', animationName)
+
+      function handleAnimationEnd() {
+          node.classList.remove('animated', animationName)
+          node.removeEventListener('animationend', handleAnimationEnd)
+
+          if (typeof callback === 'function') callback()
+      }
+
+      node.addEventListener('animationend', handleAnimationEnd)
+    }
+  </script>
+
 
 </head>
 <body>
   
 		<!-- start: page -->
-  <section class="body-sign">
+  <section  class="body-sign animated zoomInDown ">
     <div class="center-sign">
       <div class="logo pull-left">
         <h3 class=" text-primary ">Barangay Information System</h3>
