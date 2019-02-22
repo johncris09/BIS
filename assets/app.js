@@ -313,6 +313,13 @@ $(document).ready(function(){
       });
     }
     
+    $('#old_password').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#check_password').click();
+      }
+    });
+
     // Use to check the inputted value if it is match to the curret password
     $('#check_password').click(function(){
       var old_password = $('#old_password').val();
@@ -351,8 +358,8 @@ $(document).ready(function(){
               new_password_form   +=  ' </div>';
               new_password_form   +=  '</div>';
               new_password_form   +=  '<div class="form-group">';
-              new_password_form   +=  ' <div class="col-sm-3"></div> ';   
-              new_password_form   +=  '  <div class="col-sm-9"> ';
+              new_password_form   +=  ' <div class="col-md-3"></div> ';   
+              new_password_form   +=  '  <div class="col-md-9"> ';
               new_password_form   +=  '   <div class="checkbox-custom">';
               new_password_form   +=  '    <input type="checkbox"  name="show_password" id="show-password">';
               new_password_form   +=  '    <label for="show-password">Show Password</label> ';

@@ -94,25 +94,25 @@
 										<form class="form-horizontal" method="post">
 											<fieldset>
 												<div class="form-group">
-													<label class="col-md-3 control-label" for="first_name">First Name</label>
-													<div class="col-md-8">
+													<label class="col-sm-3 control-label" for="first_name">First Name</label>
+													<div class="col-sm-8">
 														<input type="text" id="first_name" class="form-control" name="first_name" placeholder="First Name" required>
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="col-md-3 control-label" for="middle_name">Middle Name</label>
-													<div class="col-md-8">
+													<label class="col-sm-3 control-label" for="middle_name">Middle Name</label>
+													<div class="col-sm-8">
 														<input type="text" class="form-control" name="middle_name" id="middle_name"  placeholder="Middle Name">
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="col-md-3 control-label" for="last_name">Last Name</label>
-													<div class="col-md-8">
+													<label class="col-sm-3 control-label" for="last_name">Last Name</label>
+													<div class="col-sm-8">
 														<input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" required>
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="col-md-3 control-label" for="profileGender">Gender</label>
+													<label class="col-sm-3 control-label" for="profileGender">Gender</label>
 													<div class="col-sm-9">
                             <div class="radio-custom radio-primary">
                               <input id="male" name="gender" type="radio" value="Male" required="" checked="checked">
