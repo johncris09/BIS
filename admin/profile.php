@@ -163,7 +163,8 @@
 											</fieldset>
 
 											<!-- Role Managament -->
-											<hr class="dotted tall">
+											<input type="hidden" id="role" value="0">
+											<!-- <hr class="dotted tall">
 											<h4 class="mb-xlg">Role Management</h4>
 											<fieldset>
 												<div class="form-group">
@@ -175,7 +176,7 @@
                             </select>
                           </div>
 												</div>
-											</fieldset>
+											</fieldset> -->
 
 											<!-- Account Information -->
 											<hr class="dotted tall">
@@ -255,6 +256,7 @@
 		<script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
 		<script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
+		
 
 
 		<?php include('../component/themejslink.php');  ?>
