@@ -121,6 +121,26 @@
           // return false;
         }
     }
+    
+
+    // Delete Selected Person
+    public function deletePerson($person_id){
+      $sql ="
+        DELETE FROM person 
+        WHERE person_id = :person_id
+      ";
+
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->bindParam(':person_id',$person_id);
+      // execute the query
+      if ($stmnt->execute()) {
+        return true;
+      } else {
+        return $stmnt->errorInfo()[2];
+        // return false;
+      }
+      
+    }
 
     
     
