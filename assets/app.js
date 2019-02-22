@@ -63,7 +63,24 @@ $(document).ready(function(){
       async: true,
       dataType: 'JSON',
       success: function(response,data){
-        (response.msg > 0) ? $.magnificPopup.close():$('#password_err').text("Invalid Password");
+        
+
+        if(response.msg > 0){
+          $.magnificPopup.close()
+          $('#pwd').val('');
+          $('#lockScreen').effect("expload",callback());
+          function callback(){
+            setTimeout(function() {
+              $( "#lockScreen" ).removeAttr( "style" ).hide().fadeIn();
+            }, 3000 );
+      
+          }
+          $('#password_err').text('');
+        }else{
+          $('#password_err').text("Invalid Password")
+        }
+        
+        
       },
       error: function(xhr, textStatus, error){
         console.info(xhr.responseText);
@@ -146,6 +163,9 @@ $(document).ready(function(){
       success: function(response,data){
         $('.name').text(response.first_name + " " + response.middle_name + " " + response.last_name );
         $('.role').text(response.status==0?"Administration": "Staff");
+        $('#LockUserEmail').text(response.email);
+        $('#logout').text("Not "+response.first_name + " " + response.middle_name + " " + response.last_name +"?" );
+        $('#LockUserName').text(response.first_name + " " + response.middle_name + " " + response.last_name );
         
       },
 
