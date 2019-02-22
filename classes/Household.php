@@ -86,6 +86,24 @@
       }
       
     }
+
+    // Delete Selected  Household
+    public function deleteHousehold($household_id){
+      $sql = "
+        DELETE FROM household 
+        WHERE household_id = :household_id";
+
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->bindParam(':household_id',$household_id);
+      
+      // execute the query
+      if ($stmnt->execute()) {
+        return true;
+      } else {
+        return $stmnt->errorInfo()[2];
+        // return false;
+      }
+    }
     
   }
 
