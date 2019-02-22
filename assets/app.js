@@ -313,13 +313,14 @@ $(document).ready(function(){
       });
     }
     
+
     $('#old_password').keypress(function(event){
       var keycode = (event.keyCode ? event.keyCode : event.which);
       if(keycode == '13'){
         $('#check_password').click();
       }
     });
-
+    
     // Use to check the inputted value if it is match to the curret password
     $('#check_password').click(function(){
       var old_password = $('#old_password').val();
