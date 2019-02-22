@@ -80,23 +80,50 @@ $(document).ready(function(){
   });
 
 
-  $('#lock_screen').magnificPopup({
-		type: 'inline',
+  $('.lockMe').click(function() 
+  {
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'lockMe':1,
+      },
+      success: function(response,data){
+        lock();
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
 
-		fixedContentPos: false,
-		fixedBgPos: true,
+    }); 
+  });
 
-		overflowY: 'auto',
+  lock();
+  var lock_screen = $('#lock-screen').val();
+  if(lock_screen==1){
+    $('.lockMe').click();
+  }
 
-		closeBtnInside: true,
-		preloader: false,
-		
-		midClick: true,
-		removalDelay: 300,
-		mainClass: 'my-mfp-slide-bottom',
-    modal: true
-    
-	});
+
+
+  function lock(){
+    $('#lock_screen').magnificPopup({
+      type: 'inline',
+  
+      fixedContentPos: false,
+      fixedBgPos: true,
+  
+      overflowY: 'auto',
+  
+      closeBtnInside: true,
+      preloader: false,
+      
+      midClick: true,
+      removalDelay: 300,
+      mainClass: 'my-mfp-slide-bottom',
+      modal: true
+    });
+  }
   
 
 
@@ -320,7 +347,7 @@ $(document).ready(function(){
         $('#check_password').click();
       }
     });
-    
+
     // Use to check the inputted value if it is match to the curret password
     $('#check_password').click(function(){
       var old_password = $('#old_password').val();

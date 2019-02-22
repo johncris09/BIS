@@ -79,24 +79,54 @@ $(document).ready(function(){
     $('#log_out').click();
   });
 
+  
+  $('.lockMe').click(function() 
+  {
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'lockMe':1,
+      },
+      success: function(response,data){
+        lock();
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
 
-  $('#lock_screen').magnificPopup({
-		type: 'inline',
+    }); 
+  });
 
-		fixedContentPos: false,
-		fixedBgPos: true,
+  lock();
+  var lock_screen = $('#lock-screen').val();
+  if(lock_screen==1){
+    $('.lockMe').click();
+  }
 
-		overflowY: 'auto',
 
-		closeBtnInside: true,
-		preloader: false,
-		
-		midClick: true,
-		removalDelay: 300,
-		mainClass: 'my-mfp-slide-bottom',
-    modal: true
-    
-	});
+
+  function lock(){
+    $('#lock_screen').magnificPopup({
+      type: 'inline',
+  
+      fixedContentPos: false,
+      fixedBgPos: true,
+  
+      overflowY: 'auto',
+  
+      closeBtnInside: true,
+      preloader: false,
+      
+      midClick: true,
+      removalDelay: 300,
+      mainClass: 'my-mfp-slide-bottom',
+      modal: true
+    });
+  }
+
+  
+  
   
 
 
@@ -118,8 +148,12 @@ $(document).ready(function(){
       async: true,
       dataType: 'JSON',
       success: function(response,data){
+        
         $('.name').text(response.first_name + " " + response.middle_name + " " + response.last_name );
         $('.role').text(response.status==0?"Administration": "Staff");
+        $('#LockUserEmail').text(response.email);
+        $('#logout').text("Not "+response.first_name + " " + response.middle_name + " " + response.last_name +"?" );
+        
         
       },
 
@@ -610,6 +644,13 @@ $(document).ready(function(){
   
       });
     }
+
+    $('#old_password').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $('#check_password').click();
+      }
+    });
     
     // Use to check the inputted value if it is match to the curret password
     $('#check_password').click(function(){
