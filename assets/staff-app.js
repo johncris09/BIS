@@ -214,7 +214,7 @@ $(document).ready(function(){
         // Call Modal to Delete Barangay Street
         $('.delete-person').click(function() {
           var person_id = $(this).attr('id');
-          $('#delete_residence_household_id').text(person_id);
+          $('#delete_residence_household_id').text(person_id).hide();
           $('#deleteResidenceHouseholdModal').modal('show');
         });
       });
@@ -232,12 +232,18 @@ $(document).ready(function(){
         async: true,
         dataType: 'JSON',
         success: function(response,data){
-          console.info(response)
+          if(response.msg==true){
+            msg_SuccessfulDelete();
+          }else{
+            msg_FailedToDelete();
+          } 
+          $('#deleteResidenceHouseholdModal').modal('hide');
+          fetchAllPerson();
         },
 
         // Error Handler
         error: function(xhr, textStatus, error){
-          console.info(xhr);
+          console.info(xhr.responseText)
         }
       });
     });
