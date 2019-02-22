@@ -62,12 +62,20 @@
   }
 
 
+  // LockScreen
+  if(isset($_POST['lockMe']))
+  {
+    $_SESSION['lock_screen']= true;
+  }
+
+
   // unlock
   if(isset($_POST['unlock']))
   {
     $account_id   = $_SESSION['login_account_id'];
     $password     = $_POST['password'];
     $result       = $account->unlock($account_id,trim($password));
+    unset($_SESSION['lock_screen']);
     $data['msg']  = $result->Rowcount();
     echo json_encode($data);
   }
@@ -612,8 +620,32 @@
   if(isset($_POST['delete_resident']))
   {
     $person_id = $_POST['person_id'];
-    $sql = "Delete from person where person_id =".$person_id;
-    $data['message'] = $sql;
+    $prep_state = $barangay_issue->hasIssue($person_id);
+    $numRows = $prep_state->Rowcount();
+    if($numRows>0){
+      $data['msg'] = false;
+    }else{
+      // Get first the household_id in residence household by using person_id
+      $prep_state = $residence_household->getHouseholdID($person_id);
+      $row = $prep_state->fetch(PDO::FETCH_ASSOC);
+      $household_id = $row['household_id'];
+
+      // Delete Selected Residence Household
+      $delete_residence = $residence_household->deleteResidennceHousehold($household_id,$person_id);
+      // Delete Selected Household
+      $delete_household = $household->deleteHousehold($household_id);
+      // Delete Selected Person
+      $delete_person = $person->deletePerson($person_id);
+
+      if($delete_residence &&  $delete_household &&  $delete_person){
+        $data['msg'] = true;
+
+      }else{
+        $data['msg'] = false;
+      }
+      
+    }
+    
     echo json_encode($data);
   }
 
