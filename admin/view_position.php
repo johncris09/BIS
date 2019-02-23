@@ -48,6 +48,7 @@
 ?>
 
 		<script src=" ../assets/vendor/jquery/jquery.js"></script>
+		<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
 		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
 		<script src="../assets/vendor/jquery-datatables-bs3/examples/js/datatables.js"></script>
 		<script type="text/javascript">
