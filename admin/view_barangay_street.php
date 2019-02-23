@@ -1,3 +1,4 @@
+
 <?php
   
   include_once '../classes/Database.php';
@@ -11,7 +12,7 @@
   $fields = array_keys($fieldname->fetch(PDO::FETCH_ASSOC));  
   $counter=1;
   $list = '
-    <table class="table table-bordered table-striped mb-none" id="datatable-default" >
+    <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">		
       <thead>
         <tr>
           <th>#</th>
@@ -48,7 +49,27 @@
   echo $list;
 
 ?>
-  
 
-		<script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
-		
+		<script src=" ../assets/vendor/jquery/jquery.js"></script>
+		<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="../assets/vendor/jquery-datatables-bs3/examples/js/datatables.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('.datatable').dataTable({
+        "sPaginationType": "bs_normal",
+        "scrollY": 400,
+          "scrollX": true
+			});	
+			$('.datatable').each(function(){
+				var datatable = $(this);
+				// SEARCH - Add the placeholder for Search and Turn this into in-line form control
+				var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+				search_input.attr('placeholder', 'Search');
+				search_input.addClass('form-control input-sm');
+				// LENGTH - Inline-Form control
+				var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+				length_sel.addClass('form-control input-sm');
+			});
+    });
+   
