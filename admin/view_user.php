@@ -1,3 +1,4 @@
+
 <?php
   
   include_once '../classes/Database.php';
@@ -11,7 +12,7 @@
   // $fields = array_keys($fieldname->fetch(PDO::FETCH_ASSOC)); 
   $counter=1;
   $list = '
-    <table class="table table-bordered table-striped mb-none" id="datatable-default" >
+    <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">
       <thead>
         <tr>
           <th>#</th>
@@ -57,21 +58,10 @@
     </table>
   ';
 
-  // $no_record = '
-  //   <div class="alert alert-info">
-  //     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-  //     <strong>No record to display!</strong>  Click Add New User to Add.
-  //   </div>
-  // ';
-
   echo $list;
   
-
-  // echo (!($fieldname->rowCount()<1)) ?$list: $no_record ;
 ?>
-  
 
-		<script src="../assets/javascripts/tables/examples.datatables.default.js"></script>
-    
-    <!-- <script src="../../assets/app.js"></script> -->
-		
+
+
+<?php include('../component/data-table.php');?>

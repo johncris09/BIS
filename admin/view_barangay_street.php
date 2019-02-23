@@ -50,26 +50,5 @@
 
 ?>
 
-		<script src=" ../assets/vendor/jquery/jquery.js"></script>
-		<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables-bs3/examples/js/datatables.js"></script>
-		<script type="text/javascript">
-		$(document).ready(function() {
-			$('.datatable').dataTable({
-        "sPaginationType": "bs_normal",
-        "scrollY": 400,
-          "scrollX": true
-			});	
-			$('.datatable').each(function(){
-				var datatable = $(this);
-				// SEARCH - Add the placeholder for Search and Turn this into in-line form control
-				var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-				search_input.attr('placeholder', 'Search');
-				search_input.addClass('form-control input-sm');
-				// LENGTH - Inline-Form control
-				var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-				length_sel.addClass('form-control input-sm');
-			});
-    });
-   
+
+<?php include('../component/data-table.php');?>
