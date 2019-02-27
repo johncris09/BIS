@@ -7,6 +7,9 @@ $(document).ready(function(){
   $( "section div.row").hide();
   $( "section div.row").slideDown(900);
 
+  // Animation from animte.css
+  // $('section.body').addClass('animated rubberBand')
+
   try{
     //  Pull the file name from the URL
     var filename = window.location.pathname.match(/.*\/([^/]+)\.([^?]+)/i)[1];
@@ -68,7 +71,7 @@ $(document).ready(function(){
         if(response.msg > 0){
           $.magnificPopup.close()
           $('#pwd').val('');
-          $('#lockScreen').effect("expload",callback());
+          $('#lockScreen').effect("explode",callback());
           function callback(){
             setTimeout(function() {
               $( "#lockScreen" ).removeAttr( "style" ).hide().fadeIn();
@@ -96,7 +99,7 @@ $(document).ready(function(){
     $('#log_out').click();
   });
 
-  
+
   $('.lockMe').click(function() 
   {
     $.ajax({
@@ -141,7 +144,7 @@ $(document).ready(function(){
       modal: true
     });
   }
-
+  
   
   
   
@@ -182,6 +185,37 @@ $(document).ready(function(){
 
     });
 
+  }
+
+  /*********************************************************** 
+  *
+  * Staff Dashboard
+  *
+  ***********************************************************/
+
+  if(filename == "index"){ 
+     
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'staff_dashboard':1,
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        // {residence_household_num: 12, male_num: 7, female_num: 5}
+        $('#residence_household_num').text(response.residence_household_num)
+        $('#male_num').text(response.male_num)
+        $('#female_num').text(response.female_num)
+        $('#issue_num').text(response.issue_num)
+      },
+      // Error Handler
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+
+    }); 
   }
   
   
@@ -228,49 +262,61 @@ $(document).ready(function(){
   ***********************************************************/
 
   if(filename == "all-resident"){
-
     fetchAllPerson();
     function fetchAllPerson(){
-      $.get("view-resident.php", function(data) {
-        // list of all street within the barangay
-        $("#lisf-of-resident").html(data);
-        // var click_Count = 0;
-        // Edit Person
-        $('.edit-person').click(function() {
-          
-          
-          var person_id = $(this).attr('id');
-          
-          $.ajax({
-            url: '../classes/main.php',
-            type: 'POST',
-            data:{
-              'set_session_person_id':1,
-              'person_id': person_id
-            },
-            // async: true,
-            // dataType: 'JSON',
-            success: function(response,data){
-              window.location.replace("../staff/edit-resident.php");
-            },
+      var table = $('#example').DataTable( {
+        "destroy": true,    // Destroy after event
+        "retrieve":true,    // retrieve after event
+        "paging": true,     // pagination
+        "ajax":"view-resident.php",  // data
+        "bDestroy": true,   // destro after event
+        "columnDefs": [ {   // define the column
+            "targets": -1,
+            "data": null,
+            "defaultContent": 
+                `<a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+                <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+        } ],
+        "scrollY": 400,     // scroll vertical
+        "scrollX": true	    // scroll horizontal
+      } );
 
-            // Error Handler
-            error: function(xhr, textStatus, error){
-              console.info(xhr);
-            }
-          });
-          
-        });
+      var column = table.column(0);
+      // Get the column API object
+      // Hide the  ID
 
-        // Call Modal to Delete Barangay Street
-        $('.delete-person').click(function() {
-          var person_id = $(this).attr('id');
-          $('#delete_residence_household_id').text(person_id).hide();
-          $('#deleteResidenceHouseholdModal').modal('show');
+      // Toggle the visibility
+      column.visible( ! column.visible() );
+
+      $('#example tbody').on( 'click', '#edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'set_session_person_id':1,
+            'person_id': data[0]
+          },
+          // async: true,
+          // dataType: 'JSON',
+          success: function(response,data){
+            window.location.replace("../staff/edit-resident.php");
+          },
+
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr);
+          }
         });
       });
-    }
 
+      $('#example tbody').on( 'click', '#delete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $('#delete_residence_household_id').text(data[0]).hide();
+          $('#deleteResidenceHouseholdModal').modal('show');
+      });
+      
+    }
     $('#confirm-delete-residen').click(function() {
       var person_id = $('#delete_residence_household_id').text();
       $.ajax({
@@ -288,8 +334,8 @@ $(document).ready(function(){
           }else{
             msg_FailedToDelete();
           } 
+          $('#example').DataTable().ajax.reload()
           $('#deleteResidenceHouseholdModal').modal('hide');
-          fetchAllPerson();
         },
 
         // Error Handler
@@ -519,7 +565,21 @@ $(document).ready(function(){
         var occupation        = $('#occupation').val();
         var street            = $('#street').val();
         var household_number  = $('#household_number').val();
-
+        
+        // console.info('first_name'+first_name);
+        // console.info('middle_name'+middle_name);
+        // console.info('last_name'+last_name);
+        // console.info('extension'+extension);
+        // console.info('house_number'+house_number);
+        // console.info('birthplace'+birthplace);
+        // console.info('birthdate'+birthdate);
+        // console.info('gender'+gender);
+        // console.info('status'+status);
+        // console.info('citizenship'+citizenship);
+        // console.info('occupation'+occupation);
+        // console.info('street'+street);
+        // console.info('household_number'+household_number);
+        
 
         $.ajax({
           url: '../classes/main.php',
@@ -543,27 +603,15 @@ $(document).ready(function(){
           async: true,
           dataType: 'JSON',
           success: function(response,data){
+
+            // console.info(response)
             
             if(response.msg == true){
               msg_SuccessfulSave();
             }else{
               msg_FailedToSave();
             }
-            // $('#first_name').val('').focus();
-            // $('#middle_name').val('');
-            // $('#last_name').val('');
-            // $('#extension').val('');
-            // $('#house_number').val('');
-            // $('#birthplace').val('');
-            // $('#birthdate').val('');
-            // $('#female').removeAttr('checked');
-            // $('#male').removeAttr('checked');
-            // $('#status').val('Single');
-            // $('#citizenship').val('');
-            // $('#occupation').val('Student');
-            // $('#street').val('Purok 2');
-            // $('#household_number').val('');
-
+            getMaxHouseholdNumber();
           },
     
           // Error Handler
@@ -611,6 +659,34 @@ $(document).ready(function(){
         tab.nextAll().removeClass('completed');
       }
     });
+
+    
+
+    getMaxHouseholdNumber();
+    // get the maximum household number
+    function getMaxHouseholdNumber(){
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'get_maxNum_household_number':1
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          $('#household_number').val(Number(response.msg) + 1)
+          // $('#household_number').attr('value',(Number(response.msg) + 1));
+          
+        },
+  
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      });
+    }
+    
+    
 
 
   }
@@ -816,103 +892,118 @@ $(document).ready(function(){
   * Barangay Issue
   *
   ***********************************************************/
- 
+
   if(filename == "all-issue"){
-
-
     fetchAllIssue();
-    
     function fetchAllIssue(){
-      $.get("view-issue.php", function(data) {
-        // list of all issue within the barangay
-        $("#lisf-of-issue").html(data);
-        // var click_Count = 0;
-        // Edit Issue
-        $('.edit-issue').click(function() {
-          
-          
-          var issue_id = $(this).attr('id');
-          
-          $.ajax({
-            url: '../classes/main.php',
-            type: 'POST',
-            data:{
-              'set_issue_id':1,
-              'issue_id': issue_id
-            },
-            // async: true,
-            // dataType: 'JSON',
-            success: function(response,data){
-              window.location.replace("../staff/edit-issue.php");
-            },
+      var table = $('#example').DataTable( {
+        "destroy": true,    // Destroy after event
+        "retrieve":true,    // retrieve after event
+        "paging": true,     // pagination
+        "ajax":"view-issue.php",  // data
+        "bDestroy": true,   // destro after event
+        "columnDefs": [ {   // define the column
+            "targets": -1,
+            "data": null,
+            "defaultContent": 
+                `<a style="cursor: pointer" href="#viewIssue" class="text-primary view-issue"> <i class="fa fa-eye" aria-hidden="true"></i> View </a>
+                <a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+                <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+        } ],
+        "scrollY": 400,     // scroll vertical
+        "scrollX": true	    // scroll horizontal
+      } );
 
-            // Error Handler
-            error: function(xhr, textStatus, error){
-              console.info(xhr.responseText);
-            }
-          });
-          
-        });
+      var column = table.column(0);
+      // Get the column API object
+      // Hide the  ID
 
-        // Call Modal to Delete Barangay Street
-        $('.delete-issue').click(function() {
-          var issue_id = $(this).attr('id');
-          $('#delete_barangay_issue_id').text(issue_id);
-          $('#deleteBarangayIssueModal').modal('show');
+      // Toggle the visibility
+      column.visible( ! column.visible() );
+
+      $('#example tbody').on( 'click', '#edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'set_issue_id':1,
+            'issue_id': data[0]
+          },
+          // async: true,
+          // dataType: 'JSON',
+          success: function(response,data){
+            window.location.replace("../staff/edit-issue.php");
+          },
+
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr.responseText);
+          }
         });
         
-        // View Selected Issue
-        $('.view-issue').click(function() {
-          var issue_id = $(this).attr('id');
-          $.ajax({
-            url: '../classes/main.php',
-            type: 'POST',
-            data:{
-              'view_selected_issue':1,
-              'issue_id': issue_id
-    
-            },
-            async: true,
-            dataType: 'JSON',
-            success: function(response,data){
-              
-              $('#complainant').text(response.complainant);
-              $('#complained_resident').text(response.complained_resident);
-              $('#datefilled').text(response.date_of_filling);
-              $('#description').text(response.description);
-              $('#oic').text(response.oic);
-              $('#status').text(response.status);
-            },
-    
-            // Error Handler
-            error: function(xhr, textStatus, error){
-              console.info(xhr.responseText);
-            }
-          });
-          
-        });
-        $('.view-issue').magnificPopup({
-          
-          type: 'inline',
-
-          fixedContentPos: false,
-          fixedBgPos: true,
-
-          overflowY: 'auto',
-
-          closeBtnInside: true,
-          preloader: false,
-          
-          midClick: true,
-          removalDelay: 300,
-          mainClass: 'my-mfp-zoom-in',
-          modal: true
-        });
       });
+
+      $('#example tbody').on( 'click', '#delete', function () {
+        
+        var data = table.row( $(this).parents('tr') ).data();
+        $('#delete_barangay_issue_id').text(data[0]).hide();
+        $('#deleteBarangayIssueModal').modal('show');
+        
+      });
+
+      $('#example tbody').on( 'click', '.view-issue', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'view_selected_issue':1,
+            'issue_id': data[0]
+
+          },
+          async: true,
+          dataType: 'JSON',
+          success: function(response,data){
+            
+            $('#complainant').text(response.complainant);
+            $('#complained_resident').text(response.complained_resident);
+            $('#datefilled').text(response.date_of_filling);
+            $('#description').text(response.description);
+            $('#oic').text(response.oic);
+            $('#status').text(response.status);
+          },
+
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr.responseText);
+          }
+        });
+        
+      });
+      $('.view-issue').magnificPopup({
+          
+        type: 'inline',
+
+        fixedContentPos: false,
+        fixedBgPos: true,
+
+        overflowY: 'auto',
+
+        closeBtnInside: true,
+        preloader: false,
+        
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in',
+        modal: true
+      });
+    
     }
+
     /*
-    Modal Dismiss
-    */
+      Modal Dismiss
+      */
     $(document).on('click', '.modal-dismiss', function (e) {
       e.preventDefault();
       $.magnificPopup.close();
@@ -952,8 +1043,9 @@ $(document).ready(function(){
           }else{
             msg_FailedToDelete();
           } 
+          $('#example').DataTable().ajax.reload()
           $('#deleteBarangayIssueModal').modal('hide');
-          fetchAllIssue();
+          
         },
 
         // Error Handler
@@ -963,8 +1055,8 @@ $(document).ready(function(){
       });
       
     });
-    
   }
+  
 
 
   // 
