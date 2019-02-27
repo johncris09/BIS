@@ -4,8 +4,38 @@ $(document).ready(function(){
   // Main Content Animation
   
   $( "section.content-body").effect( "slide", 1000);
-  $( "section div.row").hide();
-  $( "section div.row").slideDown(900);
+  $( "header.header").fadeIn();
+  // $( "section div.row").hide();
+  // $( "section div.row").slideDown(900);
+
+  // Animation from animte.css
+  // $( "header.header").addClass('animated fadeInLeft');
+  // $( "header.header").removeClass('animated fadeInLeft');
+  // $( "header.page-header").addClass('animated fadeInRight');
+  
+  // $( "div.right-wrapper.pull-right").addClass('animated wobble delay-2s ');
+  // $( "aside#sidebar-left").addClass('animated fadeInUp');
+  $( "h4#brandName").addClass('animated rubberBand infinite ');
+  // $( "nav ul li").addClass('animated tada ');
+  // $( ".sidebar-toggle.hidden-xs").addClass('animated jackInTheBox ');
+
+  $( "section.content-body .row").addClass('animated zoomIn ');
+  $( "section.panel.panel-featured.panel-featured-primary").addClass('animated zoomIn ');
+  $( "section div.col-md-12").addClass('animated zoomIn ');
+  
+
+    
+
+  $( "div.modal-icon.center").addClass('animated shake infinite ');
+  
+
+  // $( "div.ui-pnotify").addClass('animated rotateInDownRight ');
+
+   
+
+  
+  
+  // $('section.body').addClass('animated pulse')
 
   try{
     //  Pull the file name from the URL
@@ -39,6 +69,7 @@ $(document).ready(function(){
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
       $('#unlock').click();
+      
     }
   });
   
@@ -68,7 +99,7 @@ $(document).ready(function(){
         if(response.msg > 0){
           $.magnificPopup.close()
           $('#pwd').val('');
-          $('#lockScreen').effect("expload",callback());
+          $('#lockScreen').effect("explode",callback());
           function callback(){
             setTimeout(function() {
               $( "#lockScreen" ).removeAttr( "style" ).hide().fadeIn();
@@ -76,6 +107,7 @@ $(document).ready(function(){
       
           }
           $('#password_err').text('');
+          
         }else{
           $('#password_err').text("Invalid Password")
         }
@@ -178,6 +210,35 @@ $(document).ready(function(){
 
   }
   
+
+  /*********************************************************** 
+  *
+  * Admin Dashboard
+  *
+  ***********************************************************/
+
+  if(filename == "index"){
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'admin_dashboard':1
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        
+        $('#user_num').text(response.num_user)
+        $('#barangay_num').text(response.num_barangay)
+        $('#barangay_street_num').text(response.num_street)
+        $('#position_num').text(response.num_position)
+      },
+      // Error Handler
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+    });
+  }
   
 
 
@@ -222,73 +283,90 @@ $(document).ready(function(){
   *
   ***********************************************************/
 
-  
-
   if(filename == "all-users"){
     viewAllUser();
-    //  list_of_user
+    var click_Count = 0;
     function viewAllUser(){
-      $.get("view_user.php", function(data) {
-        // list of all street within the barangay
-        $("#list_of_user").html(data);
-        // Edit user account
-        $('.edit-account').click(function() {
-          var account_id = $(this).attr('id');
-          
-          $.ajax({
-            url: '../classes/main.php',
-            type: 'POST',
-            data:{
-              'edit_account':1,
-              'account_id': account_id
-            },
-            // async: true,
-            // dataType: 'JSON',
-            success: function(response,data){
-              window.location.replace("../admin/edit-user.php");
-              
-            },
+      
+      var table = $('#example').DataTable( {
+        "destroy": true,    // Destroy after event
+        "retrieve":true,    // retrieve after event
+        "paging": true,     // pagination
+        "ajax":"view_user.php",  // data
+        "bDestroy": true,   // destro after event
+        "columnDefs": [ {   // define the column
+            "targets": -1,
+            "data": null,
+            "defaultContent": 
+                `<a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+                <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+        } ],
+        "scrollY": 400,     // scroll vertical
+        "scrollX": true	    // scroll horizontal
+      } );
 
-            // Error Handler
-            error: function(xhr, textStatus, error){
-              console.info(xhr);
-            }
-          });
-          
+      var column = table.column(0);
+      // Get the column API object
+      // Hide the  ID
+ 
+      // Toggle the visibility
+      column.visible( ! column.visible() );
+      
+
+      // Edit Barangay
+      
+      $('#example tbody').on( 'click', '#edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $.ajax({
+          url: '../classes/main.php',
+          type: 'POST',
+          data:{
+            'edit_account':1,
+            'account_id': data[0]
+          },
+          // async: true,
+          // dataType: 'JSON',
+          success: function(response,data){
+            window.location.replace("../admin/edit-user.php");
+            
+          },
+
+          // Error Handler
+          error: function(xhr, textStatus, error){
+            console.info(xhr);
+          }
         });
-
-        // Call Modal to Delete User Account
-        $('.delete-account').click(function() {
-          var account_id = $(this).attr('id');
+      });
+  
+          
+      $('#example tbody').on( 'click', '#delete', function () {
+          var data = table.row( $(this).parents('tr') ).data();
           
           $.ajax({
             url: '../classes/main.php',
             type: 'POST',
             data:{
               'find_user_id':1,
-              'account_id': account_id
+              'account_id': data[0]
             },
             async: true,
             dataType: 'JSON',
             success: function(response,data){
               // console.info(response)
               $('#deleteUserAccountModal').modal('show');
-              $('#delete_account_id').text(response.account_id).hide();;
-              $('#delete_user_id').text(response.user_id).hide();;
+              $('#delete_account_id').text(response.account_id).hide() 
+              $('#delete_user_id').text(response.user_id).hide() 
             },
             // Error Handler
             error: function(xhr, textStatus, error){
               console.info(xhr.responseText);
             }
           });
-        });
-
       });
     }
 
-
-    //Confirm delete user account
-    $('#confirm-delete-user-account').click(function() {
+     //Confirm delete user account
+     $('#confirm-delete-user-account').click(function() {
       var account_id =  $('#delete_account_id').text();
       var user_id =  $('#delete_user_id').text();
       
@@ -308,7 +386,7 @@ $(document).ready(function(){
           }else{
             msg_FailedToDelete();
           }
-          viewAllUser();
+          $('#example').DataTable().ajax.reload();
           $('#deleteUserAccountModal').modal('hide');
         },
         error: function(xhr, textStatus, error){
@@ -316,7 +394,6 @@ $(document).ready(function(){
         }
       });
     });
-
   }
 
   if(filename=="profile"){
@@ -832,252 +909,245 @@ $(document).ready(function(){
   *
   ***********************************************************/
   
-  if(filename == "street"){
-    viewBarangayStreet();
-    // <button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>
-													
-    // Barangay Street List
-    function viewBarangayStreet(){
-      $.get("view_barangay_street.php", function(data) {
-        // list of all street within the barangay
-        $("#list_of_barangay_street").html(data);
-        var click_Count = 0;
-        // Edit Barangay Street
-        $('.edit-barangay-street').click(function() {
-          $('#barangay_street').css("border-color","").focus();
-          $('#label').css("color","");
-          $('#err_msgs').empty();
-          
-          var barangay_street_id = $(this).attr('id');  
-          $('#add_new_barangay_street').hide();
-          if(click_Count<=0){
-            $('#update-barangay-street').append('<button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
-            click_Count++;
-          }
-          $('#barangay-list').val();
-          
-          $.ajax({
-            url: '../classes/main.php',
-            type: 'POST',
-            data:{
-              'edit_barangay_street':1,
-              'barangay_street_id': barangay_street_id
-            },
-            async: true,
-            dataType: 'JSON',
-            success: function(response,data){
-              
-              // Pass the response value in an element
-              $('#barangay-list').val(response.barangay_id);
-              $('#barangay_street_id').val(response.barangay_street_id);
-              $('#barangay_street').val(response.barangay_street).focus();
-              $('.panel-title#panel-title').text('Update Street');
-            },
+ if(filename == "street"){
+  viewBarangayStreet();
+  var click_Count = 0;
+  function viewBarangayStreet(){
+    
+    var table = $('#example').DataTable( {
+      "destroy": true,    // Destroy after event
+      "retrieve":true,    // retrieve after event
+      "paging": true,     // pagination
+      "ajax":"view_barangay_street.php",  // data
+      "bDestroy": true,   // destro after event
+      "columnDefs": [ {   // define the column
+          "targets": -1,
+          "data": null,
+          "defaultContent": 
+              `<a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+              <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+      } ],
+      "scrollY": 400,     // scroll vertical
+      "scrollX": true	    // scroll horizontal
+    } );
 
-            // Error Handler
-            error: function(xhr, textStatus, error){
-              console.info(xhr.responseText);
-            }
-          });
-          
-        });
+    var column = table.column(0);
+    // Get the column API object
+    // Hide the  ID
 
-        // Call Modal to Delete Barangay Street
-        $('.delete-barangay-street').click(function() {
-          var barangay_street_id = $(this).attr('id');
-          $('#delete_barangay_street_id').text(barangay_street_id).hide();
-          $('#deleteBarangayStreetModal').modal('show');
-        });
+    // Toggle the visibility
+    column.visible( ! column.visible() );
+    
+
+    // Edit Barangay
+    
+    $('#example tbody').on( 'click', '#edit', function () {
+      var data = table.row( $(this).parents('tr') ).data();
+      $('#barangay_street').css("border-color","").focus();
+      $('#label').css("color","");
+      $('#err_msgs').empty(); 
+      $('#add_new_barangay_street').hide();
+      if(click_Count<=0){
+        $('#update-barangay-street').append('<button type="button" id="update_barangay_street" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
+        click_Count++;
+      }
+      $('#barangay-list').val();
+      
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'edit_barangay_street':1,
+          'barangay_street_id': data[0]
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          
+          // Pass the response value in an element
+          $('#barangay-list').val(response.barangay_id);
+          $('#barangay_street_id').val(response.barangay_street_id);
+          $('#barangay_street').val(response.barangay_street).focus();
+          $('.panel-title#panel-title').text('Update Street');
+        },
+
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      });
+    });
 
         
-
-      });
-    }
-
-    $('#barangay_street').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#add_new_barangay_street').click();
-      }
-    });
-    
-    // Add New Barangay Street
-    $(document).on('click','#add_new_barangay_street',function(){
-      var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
-      var _isBarangayStreetRequired = isBarangayStreetRequired();
-
-      if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
-        return
-      }
-
-      var barangay_street = $('#barangay_street').val();
-      var barangay_id = $('#barangay-list').val();
-
-      $.ajax({
-        url: '../classes/main.php',
-        type: 'POST',
-        data:{
-          'save_barangay_street':1,
-          'barangay_street': barangay_street,
-          'barangay_id': barangay_id
-        },
-        async: true,
-        dataType: 'JSON',
-        success: function(response,data){
-          JSON.parse(JSON.stringify(data));
-          afterBarangayStreetAction();
-          
-          if(response.msg == true){
-            msg_SuccessfulSave();
-          }else{
-            msg_FailedToSave(); 
-          }
-          viewBarangayStreet();
-          
-        },
-        error: function(xhr, textStatus, error){
-          console.info(xhr.responseText);
-        }
-      });
-    });
-
-
-    $('#barangay_street').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#update_barangay_street').click();
-      }
-    });
-
-    //  Update Selected Barangay Street
-    $(document).on('click','#update_barangay_street',function(){
-
-      var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
-      var _isBarangayStreetRequired = isBarangayStreetRequired();
-
-      if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
-        return
-      }
-      
-      var barangay_street_id = $('#barangay_street_id').val();
-      var barangay_street = $('#barangay_street').val();
-      var barangay_id = $('#barangay-list').val();
-
-      
-      $.ajax({
-        url: '../classes/main.php',
-        type: 'POST',
-        data:{
-          'update_barangay_street':1,
-          'barangay_street_id': barangay_street_id,
-          'barangay_street':barangay_street,
-          'barangay_id':barangay_id
-        },
-        async: true,
-        dataType: 'JSON',
-        success: function(response,data){
-          afterBarangayStreetAction();
-          $('.panel-title#panel-title').text('Add Street');
-          $('#update_barangay_street').hide();
-          $('#add_new_barangay_street').slideDown(500);
-          if(response.msg == true){
-            msg_SuccessfulUpdate();
-          }else{
-            msg_FailedToUPdate();
-          }
-          viewBarangayStreet();
-        },
-        error: function(xhr,textStatus, error){
-          console.info( xhr.responseText);
-        }
-      });
-    });
-    
-    $('#confirm-delete-Barangay-Street').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#confirm-delete-Barangay-Street').click();
-      }
-    });
-
-    
-
-    // Delete Selected Barangay
-    $('#confirm-delete-Barangay-Street').click(function() {
-      var barangay_street_id =  $('#delete_barangay_street_id').text();
-      
-      $.ajax({
-        url: '../classes/main.php',
-        type: 'POST',
-        data:{
-          'delete_barangay_street':1,
-          'barangay_street_id': barangay_street_id
-        },
-        async: true,
-        dataType: 'JSON',
-        success: function(response,data){
-          JSON.parse(JSON.stringify(data));
-          // afterBarangayAction();
-          // Successful Delete
-          if(response.msg == true){
-            msg_SuccessfulDelete();
-          }else{
-            msg_FailedToDelete();
-          }
-          viewBarangayStreet();
-          $('#deleteBarangayStreetModal').modal('hide');
-        },
-        error: function(xhr, textStatus, error){
-          console.info(xhr.responseText);
-        }
-      });
-    });
-
-    // fields is required Function
-    function isBarangayRequiredForStreet(){
-      if($('#barangay-list').val() == ""){
-        $('#err_msgs_barangay_list').text('This field is required').effect( "shake", 500 );
-        $('#barangay-list').css("border-color", "red").effect( "shake", 500 ).focus();
-        $('#label_barangay').css("color", "red").effect( "shake", 500 );
-        return true;
-      }else{
-        $('#err_msgs_barangay_list').empty();
-        $('#barangay-list').css("border-color","").focus();
-        $('#label_barangay').css("color","");
-        return false;
-      }
-    }
-    function isBarangayStreetRequired(){
-      if($('#barangay_street').val().length<1){
-        $('#err_msgs').text('This field is required').effect( "shake", 500 );
-        $('#barangay_street').css("border-color", "red").focus().effect( "shake", 500 );
-        $('#label_barangay_street').css("color", "red").effect( "shake", 500 );
-        return true;
-      }else{
-        $('#err_msgs').empty();
-        $('#barangay_street').css("border-color","").focus();
-        $('#label_barangay_street').css("color","");
-        return false;
-      }
-    }
-
-    // do this after an actions
-    function afterBarangayStreetAction(){
-      $('#barangay-list').val(''); 
-      $('#barangay_street').val(''); 
-    }
-  
-    // Reset fields
-    $(document).on('click','#reset_barangay_street',function(){
-      $('#err_msgs_barangay_list').empty();
-      $('#barangay-list').val('').css("border-color","").focus();
-      $('#label_barangay').css("color","");
-      $('#barangay_street').val('').css("border-color","").focus();
-      $('#err_msgs').empty();
-      $('#label_barangay_street').css("color","");
-
+    $('#example tbody').on( 'click', '#delete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        $('#delete_barangay_street_id').text(data[0]).hide();
+        $('#deleteBarangayStreetModal').modal('show');
     });
   }
+  // Add New Barangay Street
+  $(document).on('click','#add_new_barangay_street',function(){
+    var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
+    var _isBarangayStreetRequired = isBarangayStreetRequired();
+
+    if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
+      return
+    }
+
+    var barangay_street = $('#barangay_street').val();
+    var barangay_id = $('#barangay-list').val();
+
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'save_barangay_street':1,
+        'barangay_street': barangay_street,
+        'barangay_id': barangay_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        JSON.parse(JSON.stringify(data));
+        afterBarangayStreetAction();
+        
+        if(response.msg == true){
+          msg_SuccessfulSave();
+        }else{
+          msg_FailedToSave(); 
+        }
+        $('#example').DataTable().ajax.reload();
+        click_Count = 0;  
+        
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+    });
+  });
+
+  //  Update Selected Barangay Street
+  $(document).on('click','#update_barangay_street',function(){
+    $(this).hide()
+    var _isBarangayRequiredForStreet = isBarangayRequiredForStreet();
+    var _isBarangayStreetRequired = isBarangayStreetRequired();
+
+    if((_isBarangayRequiredForStreet || _isBarangayStreetRequired )){
+      return
+    }
+    
+    var barangay_street_id = $('#barangay_street_id').val();
+    var barangay_street = $('#barangay_street').val();
+    var barangay_id = $('#barangay-list').val();
+
+    
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'update_barangay_street':1,
+        'barangay_street_id': barangay_street_id,
+        'barangay_street':barangay_street,
+        'barangay_id':barangay_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        afterBarangayStreetAction();
+        $('.panel-title#panel-title').text('Add Street');
+        $('#add_new_barangay_street').slideDown(500);
+        if(response.msg == true){
+          msg_SuccessfulUpdate();
+        }else{
+          msg_FailedToUPdate();
+        }
+        $('#example').DataTable().ajax.reload();
+        click_Count = 0;
+      },
+      error: function(xhr,textStatus, error){
+        console.info( xhr.responseText);
+      }
+    });
+  });
+
+  // Delete Selected Barangay
+  $('#confirm-delete-Barangay-Street').click(function() {
+    var barangay_street_id =  $('#delete_barangay_street_id').text();
+    
+    $.ajax({
+      url: '../classes/main.php',
+      type: 'POST',
+      data:{
+        'delete_barangay_street':1,
+        'barangay_street_id': barangay_street_id
+      },
+      async: true,
+      dataType: 'JSON',
+      success: function(response,data){
+        JSON.parse(JSON.stringify(data));
+        // Successful Delete
+        if(response.msg == true){
+          msg_SuccessfulDelete();
+        }else{
+          msg_FailedToDelete();
+        }
+        $('#example').DataTable().ajax.reload();
+        $('#deleteBarangayStreetModal').modal('hide');
+      },
+      error: function(xhr, textStatus, error){
+        console.info(xhr.responseText);
+      }
+    });
+  });
+
+  // fields is required Function
+  function isBarangayRequiredForStreet(){
+    if($('#barangay-list').val() == ""){
+      $('#err_msgs_barangay_list').text('This field is required').effect( "shake", 900 );
+      $('#barangay-list').css("border-color", "red").effect( "shake", 900 ).focus();
+      $('#label_barangay').css("color", "red").effect( "shake", 900 );
+      return true;
+    }else{
+      $('#err_msgs_barangay_list').empty();
+      $('#barangay-list').css("border-color","").focus();
+      $('#label_barangay').css("color","");
+      return false;
+    }
+  }
+  function isBarangayStreetRequired(){
+    if($('#barangay_street').val().length<1){
+      $('#err_msgs').text('This field is required').effect( "shake", 900 );
+      $('#barangay_street').css("border-color", "red").focus().effect( "shake", 900 );
+      $('#label_barangay_street').css("color", "red").effect( "shake", 900 );
+      return true;
+    }else{
+      $('#err_msgs').empty();
+      $('#barangay_street').css("border-color","").focus();
+      $('#label_barangay_street').css("color","");
+      return false;
+    }
+  }
+
+  // do this after an actions
+  function afterBarangayStreetAction(){
+    $('#barangay-list').val(''); 
+    $('#barangay_street').val(''); 
+  }
+
+  // Reset fields
+  $(document).on('click','#reset_barangay_street',function(){
+    $('#err_msgs_barangay_list').empty();
+    $('#barangay-list').val('').css("border-color","").focus();
+    $('#label_barangay').css("color","");
+    $('#barangay_street').val('').css("border-color","").focus();
+    $('#err_msgs').empty();
+    $('#label_barangay_street').css("color","");
+
+  });
+  
+
+
+}
     
 
  
@@ -1087,22 +1157,53 @@ $(document).ready(function(){
   *
   ***********************************************************/
 
+  // Barangay page
   if(filename == "barangay"){
-    viewBarangay();
-    function viewBarangay(){
-      $.get("view_barangay.php", function(data) {
-        // list of all Barangay  
-        $("#list_of_barangay").html(data);
-        var click_Count = 0;
-        // Edit Barangay
-        $('.edit-barangay').click(function() {
-          
+    var click_Count = 0; 
+    viewPosition();
+    function viewPosition(){
+      
+      var table = $('#example').DataTable( {
+        "destroy": true,    // Destroy after event
+        "retrieve":true,    // retrieve after event
+        "paging": true,     // pagination
+        "ajax":"view_barangay.php",  // data
+        "bDestroy": true,   // destro after event
+        "columnDefs": [ {   // define the column
+            "targets": -1,
+            "data": null,
+            "defaultContent": 
+                `<a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+                <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+        } ],
+        "scrollY": 400,     // scroll vertical
+        "scrollX": true	    // scroll horizontal
+      } );
+
+      var column = table.column(0);
+      // Get the column API object
+      // Hide the  ID
+ 
+      // Toggle the visibility
+      column.visible( ! column.visible() );
+      
+
+      // Edit Barangay
+      
+      $('#example tbody').on( 'click', '#edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+          if(click_Count<=0){
+            $("#update-barangay").append('<button type="button"  id="update_barangay" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
+            click_Count++;
+            
+          }
+          $('#add_new_barangay').hide();
           $.ajax({
             url: '../classes/main.php',
             type: 'POST',
             data:{
               'edit_barangay':1,
-              'barangay_id': barangay_id
+              'barangay_id': data[0]
             },
             async: true,
             dataType: 'JSON',
@@ -1123,26 +1224,16 @@ $(document).ready(function(){
               });
             }
           });
-        });
-        // Call Modal to Delete Barangay
-        $('.delete-barangay').click(function() {
-          var delete_id = $(this).attr('id');
-          $('#delete_barangay_id').text(delete_id).hide();
+      });
+  
+          
+      $('#example tbody').on( 'click', '#delete', function () {
+          var data = table.row( $(this).parents('tr') ).data();
+          $('#delete_barangay_id').text(data[0]).hide();
           $('#deleteBarangayModal').modal('show');
-        });
-
-        
       });
     }
-  
 
-    // KeyPress
-    $('#barangay').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#add_new_barangay').click();
-      }
-    });
     // Add New Barangay
     $(document).on('click','#add_new_barangay',function(){
   
@@ -1170,8 +1261,8 @@ $(document).ready(function(){
           }else{
             msg_FailedToSave();
           }
-          viewBarangay();
-          
+          $('#example').DataTable().ajax.reload();
+          click_Count = 0;
         },
         error: function(xhr, textStatus, error){
           console.info(textStatus);
@@ -1179,8 +1270,8 @@ $(document).ready(function(){
       });
   
     });
-  
-    // Delete Selected Barangay
+
+    // Delete selected Barangay
     $('#confirm-delete-Barangay').click(function() {
       var barangay_id =  $('#delete_barangay_id').text();
       
@@ -1202,7 +1293,7 @@ $(document).ready(function(){
           }else{
             msg_FailedToDelete();
           }
-          viewBarangay();
+          $('#example').DataTable().ajax.reload();
           $('#deleteBarangayModal').modal('hide');
         },
         error: function(xhr, textStatus, error){
@@ -1210,18 +1301,11 @@ $(document).ready(function(){
         }
       });
     });
-  
-    // Keypres
-    $('#barangay').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#update_barangay').click();
-      }
-    });
 
     // Update Selected Barangay
     $(document).on('click','#update_barangay',function(){
   
+      $(this).hide()
       if(isBarangayRequired()){
         return;
       }
@@ -1249,13 +1333,16 @@ $(document).ready(function(){
           }else{
             msg_FailedToUPdate();
           }
-          viewBarangay();
+          
+          $('#example').DataTable().ajax.reload();
+          click_Count = 0;
         },
         error: function(xhr,textStatus, error){
           console.info( xhr.responseText);
         }
       });
     });
+
     // fields is required Function
     function isBarangayRequired(){
       if($('#barangay').val().length<1){
@@ -1281,6 +1368,8 @@ $(document).ready(function(){
       $('#label').css("color","");
   
     });
+
+
   }
 
   
@@ -1290,44 +1379,63 @@ $(document).ready(function(){
   * Position Crud with Ajax
   *
   ***********************************************************/
-  
+ 
+  // Position page
   if(filename == "position"){
-    
+ 
     viewPosition();
-    // $('#update_position').hide();
 
-    // Functions for some purposes
-
-    // purposed of this function is to view, edit, delete the data
-    
+    var click_Count = 0;
     function viewPosition(){
-      $.get("view_position.php", function(data) {
-        // list of all position  
-        $("#list_of_position").html(data);
-        
-        var click_Count = 0; 
-        // Edit Position
-        $('.edit-position').click(function() {
+      
+      var table = $('#example').DataTable( {
+        "destroy": true,    // Destroy after event
+        "retrieve":true,    // retrieve after event
+        "paging": true,     // pagination
+        "ajax":"view-position.php",  // data
+        "bDestroy": true,   // destro after event
+        "columnDefs": [ {   // define the column
+            "targets": -1,
+            "data": null,
+            "defaultContent": 
+                `<a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
+                <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
+        } ],
+        "scrollY": 400,     // scroll vertical
+        "scrollX": true	    // scroll horizontal
+      } );
+
+      var column = table.column(0);
+      // Get the column API object
+      // Hide the Position Id
+ 
+      // Toggle the visibility
+      column.visible( ! column.visible() );
+
+
+      // Edit Position
+      
+      $('#example tbody').on( 'click', '#edit', function () {
+        var position_id = table.row( $(this).parents('tr') ).data();
+        // alert( data[0] +"'s salary is: "+ data[ 0 ] );
           $('#position').focus();
           $('#position').css("border-color","");
           $('#label').css("color","");
           $('#err_msgs').empty();
-          
-          var edit_id = $(this).attr('id');
           if(click_Count<=0){
-            $("#update-position").append('<button type="button" name="update_position" id="update_position" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
             
+            // click_Count+=1;
+            $("#update-position").append('<button type="button" name="update_position" id="update_position" class="btn btn-primary  mb-xs mt-xs mr-xs "><i class="fa fa-edit"></i> Update</button>');
             click_Count++;
           }
-          
           $('#add_new_position').hide();
-          
+
           $.ajax({
             url: '../classes/main.php',
             type: 'POST',
             data:{
               'edit_position':1,
-              'edit_id': edit_id
+              'edit_id': position_id[0]
             },
             async: true,
             dataType: 'JSON',
@@ -1342,44 +1450,88 @@ $(document).ready(function(){
             }
           });
           
-        });
-
-        // Call Modal to Delete  Position
-        $('.delete-position').click(function() {
-          var delete_id = $(this).attr('id');
-          $('#delete_position_id').text(delete_id).hide();
+      });
+  
+          
+      $('#example tbody').on( 'click', '#delete', function () {
+          // console.info(table.row( $('#delete').parents('tr') ).data())
+          var position_id = table.row( $(this).parents('tr') ).data();
+          // alert( data[0] +"'s salary is: "+ data[ 0 ] );
+          $('#delete_position_id').text(position_id[0]);
           $('#deletePositionModal').modal('show');
-        });
-
-    
       });
     }
 
-    
-    // fields is required Function
-    function isPositionRequired(){
-      if($('#position').val().length<1){
-        $('#err_msgs').text('This field is required').effect( "shake", 900 );
-        $('#position').css("border-color", "red").effect( "shake", 900 ).focus();
-        $('#label').css("color", "red").effect( "shake", 900 );
-        return true;
-      }
-    }
-    
-    // do this after an actions
-    function afterPositionAction(){
-      $('#err_msgs').empty();
-      $('#position').val('').css("border-color","").focus();
-      $('#label').css("color","");
-    }
 
-
-    // Using keypress
-    $('#position').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#add_new_position').click();
+    // Update Selected Position
+    $(document).on('click','#update_position',function(){
+      $(this).hide();
+      if(isPositionRequired()){
+        return;
       }
+      var position_id = $('#position_id').val();
+      var position = $('#position').val();
+      
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'update_position':1,
+          'position_id': position_id,
+          'position': position
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          // JSON.parse(JSON.stringify(data));
+          afterPositionAction();
+          $('.panel-title#panel-title').text('Add Position');
+          // $(this).hide();
+          
+          $('#add_new_position').slideDown(500);
+          if(response.msg == true){
+            msg_SuccessfulUpdate();
+          }else{
+            msg_FailedToUPdate();
+          } 
+          $('#example').DataTable().ajax.reload();
+          click_Count = 0;
+        },
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      });
+    });
+
+    // Delete Selected Position
+    $('#confirm-delete-Position').click(function() {
+      var position_id =  $('#delete_position_id').text();
+      
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'delete_position':1,
+          'delete_id': position_id
+        },
+        async: true,
+        dataType: 'JSON',
+        success: function(response,data){
+          // JSON.parse(JSON.stringify(data));
+          afterPositionAction();
+          // Successful Delete
+          if(response.msg == true){
+            msg_SuccessfulDelete();
+          }else{
+            msg_FailedToDelete(response.msg);
+          }
+          $('#example').DataTable().ajax.reload();
+          $('#deletePositionModal').modal('hide');
+        },
+        error: function(xhr, textStatus, error){
+          console.info(textStatus);
+        }
+      });
     });
 
     // Add new Position
@@ -1413,8 +1565,8 @@ $(document).ready(function(){
               type: 'error'
             });
           }
-          
-          viewPosition();
+          $('#example').DataTable().ajax.reload();
+          click_Count = 0;
           
         },
         error: function(xhr, textStatus, error){
@@ -1424,83 +1576,12 @@ $(document).ready(function(){
     });
 
 
-    $('#position').keypress(function(event){
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      if(keycode == '13'){
-        $('#update_position').click();
-      }
-    });
-
-    // update position
-    $(document).on('click','#update_position',function(){
-
-
-      if(isPositionRequired()){
-        return;
-      }
-      var position_id = $('#position_id').val();
-      var position = $('#position').val();
-      
-      $.ajax({
-        url: '../classes/main.php',
-        type: 'POST',
-        data:{
-          'update_position':1,
-          'position_id': position_id,
-          'position': position
-        },
-        async: true,
-        dataType: 'JSON',
-        success: function(response,data){
-          // JSON.parse(JSON.stringify(data));
-          afterPositionAction();
-          $('.panel-title#panel-title').text('Add Position');
-          $('#update_position').hide();
-          $('#add_new_position').slideDown(500);
-          if(response.msg == true){
-            msg_SuccessfulUpdate();
-          }else{
-            msg_FailedToUPdate();
-          }
-          viewPosition();
-        },
-        error: function(xhr, textStatus, error){
-          console.info(xhr.responseText);
-        }
-      });
-    });
-
-    // Delete Selected Position
-    $('#confirm-delete-Position').click(function() {
-      var position_id =  $('#delete_position_id').text();
-      
-      $.ajax({
-        url: '../classes/main.php',
-        type: 'POST',
-        data:{
-          'delete_position':1,
-          'delete_id': position_id
-        },
-        async: true,
-        dataType: 'JSON',
-        success: function(response,data){
-          // JSON.parse(JSON.stringify(data));
-          afterPositionAction();
-          // Successful Delete
-          if(response.msg == true){
-            msg_SuccessfulDelete();
-          }else{
-            msg_FailedToDelete(response.msg);
-          }
-          viewPosition();
-          $('#deletePositionModal').modal('hide');
-        },
-        error: function(xhr, textStatus, error){
-          console.info(textStatus);
-        }
-      });
-    });
-
+    // $('#position').keypress(function(event){
+    //   var keycode = (event.keyCode ? event.keyCode : event.which);
+    //   if(keycode == '13'){
+    //     $('#add_new_position').click();
+    //   }
+    // });
     // Reset fields
     $(document).on('click','#reset_position',function(){
       $('#position').css("border-color","").val('').focus();
@@ -1508,6 +1589,24 @@ $(document).ready(function(){
       $('#label').css("color","");
 
     });
+
+    // fields is required Function
+    function isPositionRequired(){
+      if($('#position').val().length<1){
+        $('#err_msgs').text('This field is required').effect( "shake", 900 );
+        $('#position').css("border-color", "red").effect( "shake", 900 ).focus();
+        $('#label').css("color", "red").effect( "shake", 900 );
+        return true;
+      }
+    }
+    
+    // do this after an actions
+    function afterPositionAction(){
+      $('#err_msgs').empty();
+      $('#position').val('').css("border-color","").focus();
+      $('#label').css("color","");
+    }
+
   }
   
 
