@@ -45,6 +45,20 @@ $(document).ready(function(){
     filename ="index";
   }
 
+
+  var text = window.location.href;
+  var result = text.split('/')
+  
+  checkPage(result[4])
+  
+  function checkPage(roleFolder ){
+    var _roleFolder = "admin"
+
+    if(roleFolder != "admin"){
+      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"admin/404.php");
+    }
+  }
+
   ChnageInfo();
   //  log_out
   $('#log_out').click(function() 
