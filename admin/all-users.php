@@ -1,15 +1,15 @@
 <?php session_start(); ?>
 <!DOCTYPE html>
-<html class="fixed">
+<html class="fixed" lang="en">
 	<head>
 		<title>All Users</title>
 
 		<!-- Specific Page Vendor CSS -->
 		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="../assets/vendor/jquery-datatables/media/css/jquery.dataTables.css">
 		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-		<?php include('../component/csslink.php'); ?>
+		<?php include('../component/cssthemelink.php'); ?>
 
 		
 
@@ -62,35 +62,63 @@
 									</div>
 								</div>
 								<div class="panel-body">
-                  <div id="list_of_user"></div>
+
+									<table id="example" class="dislay table table-hover table-striped																																																																																																														" cellspacing="0" width="100%">
+										<thead>
+												<tr>
+												<th>ID</th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Registered</th>
+                        <th>Status</th>
+                        <th>Action</th>
+												</tr>
+										</thead>
+										<tfoot>
+												<tr>						
+												<th>ID</th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Registered</th>
+                        <th>Status</th>
+                        <th>Action</th>
+												</tr>
+										</tfoot>
+                  </table> 
 								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="deleteUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserAccountModal" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<div class="modal-wrapper">
-													<div class="modal-icon center ">
-														<i class="text-primary fa fa-question-circle"></i>
-													</div>
-													<div class="modal-text text-center">
-														<h4>Are you sure?</h4>
-														<p>Are you sure that you want to delete this User Account  <span id="delete_account_id"></span> <span id="delete_user_id"></span>?</p>
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" id="confirm-delete-user-account" class="btn btn-primary">Confirm</button>
-												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								
 							</div>
+							
 						</section>
 						
 					<!-- end: page -->
 				</section>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="deleteUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserAccountModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="modal-wrapper">
+								<div class="modal-icon center ">
+									<i class="text-primary fa fa-question-circle"></i>
+								</div>
+								<div class="modal-text text-center">
+									<h4>Are you sure?</h4>
+									<p>Are you sure that you want to delete this User Account  <span id="delete_account_id"></span> <span id="delete_user_id"></span>?</p>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="confirm-delete-user-account" class="btn btn-primary">Confirm</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<?php include('../layout/sidebar-right.php'); ?>
@@ -98,17 +126,21 @@
 
 		<!-- Vendor -->
 			
-		<?php include('../component/jslink.php'); ?>
+			<?php include('../component/jslink.php'); ?>
+      <!-- Specific Page Vendor -->
+      <script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+      <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
+      <script src="../assets/vendor/select2/select2.js"></script>
+          
+          
+    <!-- Theme Base, Components and Settings -->
+		<script src=" ../assets/javascripts/theme.js"></script>
 		
-		<!-- Specific Page Vendor -->
-		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
-		<script src="../assets/vendor/select2/select2.js"></script>
-		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+		<!-- Theme Custom -->
+		<script src=" ../assets/javascripts/theme.custom.js"></script>
 		
-		
-
-		<?php include('../component/themejslink.php');  ?>
-		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+		<!-- Theme Initialization Files -->
+		<script src=" ../assets/javascripts/theme.init.js"></script>
+      <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 		</body>
 </html>

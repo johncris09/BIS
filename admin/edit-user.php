@@ -18,10 +18,12 @@
   <title>Edit User</title>
   
   <?php include('../component/metadata.php'); ?>
+  <?php include('../component/csslink.php'); ?>
   
   <!-- Specific Page Vendor CSS -->
   <link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-  <?php include('../component/csslink.php'); ?>
+  <link rel="stylesheet" href="../assets/stylesheets/animate.css">
+  <?php include('../component/cssthemelink.php'); ?>>
 </head>
 <body>
   <section class="body">
@@ -295,17 +297,12 @@
 
 
   </section>
-  <?php include('../component/jslink.php');  ?>
+  <?php include('../component/jslink.php');  ?> 
   <!-- Specific Page Vendor -->
   <script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
   <script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
   <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
-
- 
   <?php include('../component/themejslink.php');  ?>
-
-  <!-- Examples -->
-  <!-- <script src="../assets/javascripts/forms/examples.wizard.js"></script> -->
   <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
   
 

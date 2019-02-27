@@ -20,7 +20,7 @@
 		<!-- Specific Page Vendor CSS -->
 		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-		<?php include('../component/csslink.php'); ?>
+		<?php include('../component/cssthemelink.php'); ?>
     
   </head>
   <body>
@@ -52,7 +52,7 @@
             </header>
 
             <!-- Main Content -->
-            <div class="row">
+            <!-- <div class="row">
 						  <div class="col-md-4 col-lg-3">
 
 							<section class="panel">
@@ -76,8 +76,8 @@
 									</div>
 								</div>
 							</section>
-						</div>
-						<div class="col-md-10 col-lg-9">
+						</div> -->
+						<div class="col-md-12 ">
 
 							<div class="tabs tabs-primary">
 								<ul class="nav nav-tabs tabs-primary">
@@ -96,7 +96,7 @@
 												<div class="form-group">
 													<label class="col-md-3 control-label" for="first_name">First Name</label>
 													<div class="col-md-8">
-														<input type="text" id="first_name" class="form-control" name="first_name" placeholder="First Name" required>
+														<input type="text" id="first_name" class="form-control" name="first_name" placeholder="First Name" autofocus required>
 													</div>
 												</div>
 												<div class="form-group">
@@ -113,7 +113,7 @@
 												</div>
 												<div class="form-group">
 													<label class="col-md-3 control-label" for="profileGender">Gender</label>
-													<div class="col-sm-9">
+													<div class="col-md-9">
                             <div class="radio-custom radio-primary">
                               <input id="male" name="gender" type="radio" value="Male" required="" checked="checked">
                               <label for="male">Male</label>
@@ -126,8 +126,8 @@
                           </div>
 												</div>
 												<div class="form-group">
-													<label class="col-sm-3 control-label" for="civil_status">Status</label>
-                          <div class="col-sm-4">
+													<label class="col-md-3 control-label" for="civil_status">Status</label>
+                          <div class="col-md-4">
                             <select id="civil_status" name="status" class="form-control" required="">
                             	<option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -138,8 +138,8 @@
                           </div>
 												</div>
 												<div class="form-group">
-													<label class="col-sm-3 control-label" for="citizenship">Citizenship</label>
-                          <div class="col-sm-4">
+													<label class="col-md-3 control-label" for="citizenship">Citizenship</label>
+                          <div class="col-md-4">
                             <input type="text" id="citizenship" class="form-control"   placeholder="Citizenship" name="citizenship"  required="">
                           </div>
 												</div>
@@ -150,8 +150,8 @@
 											<h4 class="mb-xlg">Contact Info</h4>
 											<fieldset>
 												<div class="form-group">
-												<label class="col-sm-3 control-label" for="email">Email</label>
-                          <div class="col-sm-8">
+												<label class="col-md-3 control-label" for="email">Email</label>
+                          <div class="col-md-8">
                             <div class="input-group input-group-icon ">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-envelope"></i></span>
@@ -183,13 +183,13 @@
 											<h4 class="mb-xlg">Account Management</h4>
 											<fieldset>
 												<div class="form-group">
-													<label class="col-sm-3 control-label" for="usename" >Username</label>
-                          <div class="col-sm-7">
+													<label class="col-md-3 control-label" for="usename" >Username</label>
+                          <div class="col-md-7">
                             <div class="input-group input-group-icon">
                               <span class="input-group-addon">
                                 <span class="icon"><i class="fa fa-user"></i></span>
                               </span>
-                              <input type="text" id="username" class="form-control" placeholder="Username" name="username"  autofocus required="">
+                              <input type="text" id="username" class="form-control" placeholder="Username" name="username"   required="">
                             </div>
                           </div>
 												</div>
@@ -251,18 +251,12 @@
 
 
     </section>
-		<?php include('../component/jslink.php');  ?>
+		<?php include('../component/jslink.php');  ?> 
 		<!-- Specific Page Vendor -->
 		<script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
 		<script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
-		
-
-
 		<?php include('../component/themejslink.php');  ?>
-
-		<!-- Examples -->
-		<!-- <script src="../assets/javascripts/forms/examples.wizard.js"></script> -->
 		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
   </body>
 </html>

@@ -7,7 +7,7 @@
 		<!-- Specific Page Vendor CSS -->
 		<?php include('../component/csslink.php'); ?>
 		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-		<?php include('../component/csslink.php'); ?>
+		<?php include('../component/cssthemelink.php'); ?>
     
 
 	</head>
@@ -56,8 +56,7 @@
               
               <div class="row">
                 <div class="col-sm-12 text-right">  
-                  <button id="back-up" class="hidden-xs mt-sm mb-sm btn text-right btn-success"><i class="fa fa-database"></i> Back up Here</button>
-                  <button id="default-success" class=" btn mt-sm mb-sm form-control btn-md text-right btn-success  visible-xs"><i class="fa fa-database"></i> Back up Here</button>
+                  <button id="back-up" class="mt-sm mb-sm btn text-right btn-success"><i class="fa fa-database"></i> Back up Here</button>
             
                   
                 </div>
