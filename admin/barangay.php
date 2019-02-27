@@ -2,15 +2,14 @@
 <!DOCTYPE html>
 <html class="fixed">
 	<head>
-		<title>Barangay</title>
-		<?php include('../component/metadata.php'); ?>
-
-		<!-- Specific Page Vendor CSS -->
-		<?php include('../component/csslink.php'); ?>
-		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-		<?php include('../component/csslink.php'); ?>
+		<title>Barangay</title>>
+		<?php include('../component/metadata.php'); ?> 
+     <?php include('../component/csslink.php'); ?>
+     <!-- Specific Page Vendor CSS --> 
+     <link rel="stylesheet" href="../assets/vendor/jquery-datatables/media/css/jquery.dataTables.css">
+      <link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
+      <link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
+     <?php include('../component/cssthemelink.php'); ?>
 
 	</head>
 	<body>
@@ -92,56 +91,73 @@
 									<h2 class="panel-title">List of All Barangay</h2>
 								</header>
 								<div class="panel-body">
-                  <div id="list_of_barangay"></div>
+                  <table id="example" class="dislay table table-hover table-striped" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>#</th>
+                            <th>Barangay</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>#</th>
+                            <th>Barangay</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>
 								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="deleteBarangayModal" tabindex="-1" role="dialog" aria-labelledby="deleteBarangayModal" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<div class="modal-wrapper">
-													<div class="modal-icon center ">
-														<i class="text-primary fa fa-question-circle"></i>
-													</div>
-													<div class="modal-text text-center">
-														<h4>Are you sure?</h4>
-														<p>Are you sure that you want to delete this Barangay  <span id="delete_barangay_id"></span>?</p>
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" id="confirm-delete-Barangay" class="btn btn-primary">Confirm</button>
-												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								
+							
 							</section>
 						</div>
 
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="deleteBarangayModal" tabindex="-1" role="dialog" aria-labelledby="deleteBarangayModal" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="modal-wrapper">
+										<div class="modal-icon center ">
+											<i class="text-primary fa fa-question-circle"></i>
+										</div>
+										<div class="modal-text text-center">
+											<h4>Are you sure?</h4>
+											<p>Are you sure that you want to delete this Barangay  <span id="delete_barangay_id"></span>?</p>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id="confirm-delete-Barangay" class="btn btn-primary">Confirm</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
 					</div>
 						
 						
 					<!-- end: page -->
 				</section>
+					
 			</div>
 
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
 
 		<!-- Vendor -->
-			
-		<?php include('../component/jslink.php'); ?>
-		
-		<!-- Specific Page Vendor -->
-		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
-		<script src="../assets/vendor/select2/select2.js"></script>
-		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
-		
-		
-
-		<?php include('../component/themejslink.php');  ?>
-		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+			<?php include('../component/jslink.php'); ?>
+      <!-- <<script src="example1.js"></script> -->
+      
+      <!-- Specific Page Vendor -->
+      <script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+      <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
+      <script src="../assets/vendor/select2/select2.js"></script>
+          
+      <?php include('../component/themejslink.php'); ?>
+      <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 	</body>
 </html>
