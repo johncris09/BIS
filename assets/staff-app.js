@@ -18,6 +18,20 @@ $(document).ready(function(){
     filename ="index";
   }
 
+  var text = window.location.href;
+  var result = text.split('/')
+  
+  checkPage(result[4])
+  
+  function checkPage(roleFolder ){
+
+    if(roleFolder != "staff"){
+      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"staff/404.php");
+    }
+  }
+
+
+
   ChnageInfo();
   //  log_out
   $('#log_out').click(function() 
