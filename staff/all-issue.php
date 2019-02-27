@@ -4,12 +4,12 @@
 	<head>
 		<title>All Issue</title>
 
-		<!-- Specific Page Vendor CSS -->
-		<?php include('../component/csslink.php'); ?>
+			<!-- Specific Page Vendor CSS -->
+      <?php include('../component/csslink.php'); ?>
+    <link rel="stylesheet" href="../assets/vendor/jquery-datatables/media/css/jquery.dataTables.css">
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="../assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 		<link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-		<?php include('../component/csslink.php'); ?>
+		<?php include('../component/cssthemelink.php'); ?>
   
 
 	</head>
@@ -58,7 +58,32 @@
                   <a href="new-issue.php" title="Add New Barangay Issue" class="btn btn-primary mb-sm mt-xs mr-xs">Add New Issue</a></div>
 								</div>
 								<div class="panel-body">
-									<div id="lisf-of-issue"></div>
+                <table id="example" class="dislay" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>#</th>
+                        <th>Complainant</th>
+                        <th>Complained Resident</th>
+                        <th>Date of Filling</th>
+                        <th>OIC</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                      <th>Id</th>
+                        <th>#</th>
+                        <th>Complainant</th>
+                        <th>Complained Resident</th>
+                        <th>Date of Filling</th>
+                        <th>OIC</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </tfoot>
+                  </table>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="deleteBarangayIssueModal" tabindex="-1" role="dialog" aria-labelledby="deleteBarangayIssueModal" aria-hidden="true">
@@ -82,10 +107,11 @@
 										</div>
 									</div>
 							</div>
+							
 							<div id="viewIssue" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
 								<section class="panel">
 									<header class="panel-heading bg-info" >
-										<h2 class="panel-title ">Barangay Issue</h2>
+										<h2 class="panel-title " style="color:white;">Barangay Issue</h2>
 									</header>
 									<div class="panel-body">
 									<div class="row">
@@ -145,20 +171,17 @@
 
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
-
+ 
 		<!-- Vendor -->
-			
 		<?php include('../component/jslink.php'); ?>
-		
-		<!-- Specific Page Vendor -->
+
+    <!-- Specific Page Vendor -->
+    
+    <script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="../assets/vendor/select2/select2.js"></script>
-		<script src="../assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="../assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
-		
-		
-
 		<?php include('../component/themejslink.php');  ?>
-		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script>
+		<script src="../assets/javascripts/ui-elements/examples.modals.js"></script>
 		</body>
 </html>

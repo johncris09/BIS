@@ -15,12 +15,13 @@
   <title>Add New Resident</title>
   
   <?php include('../component/metadata.php'); ?>
-  
+  <?php include('../component/csslink.php'); ?>
   <!-- Specific Page Vendor CSS -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
   <link rel="stylesheet" href="../assets/vendor/pnotify/pnotify.custom.css" />
-  <?php include('../component/csslink.php'); ?>
+  
+  <?php include('../component/cssthemelink.php'); ?>
 </head>
 <body>
   <section class="body">
@@ -84,38 +85,38 @@
                       <div id="w4-profile" class="tab-pane active ">
                       
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="first_name">First Name</label>
-                          <div class="col-sm-7">
+                          <label class="col-md-3 control-label" for="first_name">First Name</label>
+                          <div class="col-md-7">
                             <input type="text" class="form-control" placeholder="First Name" name="first_name" id="first_name" required="" autofocus>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="middle_name">Middle Name</label>
-                          <div class="col-sm-7">
+                          <label class="col-md-3 control-label" for="middle_name">Middle Name</label>
+                          <div class="col-md-7">
                             <input type="text" class="form-control"  placeholder="Midde Name" name="middle_name" id="middle_name" >
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="last_name">Last Name</label>
-                          <div class="col-sm-7">
+                          <label class="col-md-3 control-label" for="last_name">Last Name</label>
+                          <div class="col-md-7">
                             <input type="text" class="form-control" placeholder="Last Name" name="last_name" id="last_name" required="">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="extension">Name Extension</label>
-                          <div class="col-sm-3">
+                          <label class="col-md-3 control-label" for="extension">Name Extension</label>
+                          <div class="col-md-3">
                             <input type="text" class="form-control"  placeholder="Extension" name="extension" id="extension">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="house_number">House Number</label>
-                          <div class="col-sm-3">
+                          <label class="col-md-3 control-label" for="house_number">House Number</label>
+                          <div class="col-md-3">
                             <input type="text" class="form-control" placeholder="House Number" name="house_number" id="house_number" required="required">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="birthplace">Birthplace</label>
-                          <div class="col-sm-7">
+                          <label class="col-md-3 control-label" for="birthplace">Birthplace</label>
+                          <div class="col-md-7">
                             <textarea name="birthplace" id="birthplace"  class="form-control" rows="3" placeholder="Birthplace" required="required"></textarea>
                           </div>
                         </div>
@@ -134,8 +135,8 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="gender">Gender</label>
-                          <div class="col-sm-9">
+                          <label class="col-md-3 control-label" for="gender">Gender</label>
+                          <div class="col-md-7">
                             <div class="radio-custom radio-primary">
                               <input id="male" name="gender" type="radio" value="Male" required="" checked="checked">
                               <label for="male">Male</label>
@@ -148,8 +149,8 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="status">Civil Status</label>
-                          <div class="col-sm-3">
+                          <label class="col-md-3 control-label" for="status">Civil Status</label>
+                          <div class="col-md-3">
                             <select id="status" name="status" class="form-control" required="">
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -161,8 +162,8 @@
                         </div>
                         
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="citizenship">Citizenship</label>
-                          <div class="col-sm-3">
+                          <label class="col-md-3 control-label" for="citizenship">Citizenship</label>
+                          <div class="col-md-3">
                             <input type="text" class="form-control" placeholder="Citizenship" name="citizenship" id="citizenship" required="">
                           </div>
                         </div>
@@ -180,7 +181,7 @@
                         </div> -->
                         <div class="form-group">
 													<label class="col-md-3 control-label" for="occupation">Occupation</label>
-													<div class="col-sm-4">
+													<div class="col-md-3">
                             <select class="form-control" id="occupation"> 
                               <option value="Student">Student</option>
                               <option value="Teacher">Teacher</option>
@@ -193,7 +194,7 @@
 													</div>
 												</div>
                         <!-- <div class="form-group">
-                          <label class="col-sm-3 control-label" for="ProfilePicture">Profile Picture</label>
+                          <label class="col-md-3 control-label" for="ProfilePicture">Profile Picture</label>
                           <div class="row">
                             <div class="col-md-4 col-xs-8 col-lg-3">
                               <section class="panel">
@@ -210,7 +211,7 @@
                       </div>
                       
                       <!-- Household  -->
-                      <div id="w4-household" class="tab-pane  ">
+                      <div id="w4-household" class="tab-pane ">
                         
                         <div class="form-group">
                           <label class="col-md-3 control-label" for="street">Street </label>
@@ -227,9 +228,10 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-sm-3 control-label" for="household_number">Household Number</label>
-                          <div class="col-sm-7">
-                            <input type="text" class="form-control" placeholder="Household Number" name="household_number" id="household_number" required="">
+                          <label class="col-md-3 control-label" for="household_number">Household Number</label>
+                          <div class="col-md-7">
+                            <!-- <span id="household_number" class="form-control"></span> -->
+                            <input type="text" class="form-control" placeholder="Household Number" id="household_number" required="" readonly>
                           </div>
                         </div>
                       </div> 
@@ -264,21 +266,13 @@
 
 
   </section>
-  <?php include('../component/jslink.php');  ?>
+  <?php include('../component/jslink.php');  ?> 
   <!-- Specific Page Vendor -->
-  
   <script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
   <script src="../assets/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
   <script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
   <script src="../assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
-
-
-
- 
   <?php include('../component/themejslink.php');  ?>
-
-  <!-- Examples -->
-  <!-- <script src="../assets/javascripts/forms/examples.wizard.js"></script> -->
   <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 
 </body>

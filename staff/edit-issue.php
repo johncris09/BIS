@@ -18,6 +18,7 @@
 		<title>Edit Issue</title>
 
 		<?php include('../component/metadata.php'); ?>
+		<?php include('../component/csslink.php'); ?>
   
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="../assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
@@ -26,10 +27,10 @@
 		<link rel="stylesheet" href="../assets/vendor/summernote/summernote.css" />
 		<link rel="stylesheet" href="../assets/vendor/summernote/summernote-bs3.css" />
 		<link rel="stylesheet" href="../assets/vendor/select2/select2.css" /> 
+		<?php include('../component/cssthemelink.php'); ?>
 
 
-
-		<?php include('../component/csslink.php'); ?>
+		
 
 	</head>
 	<body>
@@ -145,15 +146,13 @@
 			<?php include('../layout/sidebar-right.php'); ?>
 		</section>
 
-		<?php include('../component/jslink.php');  ?>
+		<?php include('../component/jslink.php');  ?> 
 		<!-- Specific Page Vendor -->
 		<script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
 		<script src="../assets/vendor/select2/select2.js"></script>
 		<script src="../assets/vendor/summernote/summernote.js"></script>
-
 		<?php include('../component/themejslink.php');  ?>
-		
 		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
 		</body>
 </html>
