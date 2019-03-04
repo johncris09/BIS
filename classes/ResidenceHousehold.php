@@ -123,16 +123,22 @@
         household.household_number,
         household.date_accomplished,
         CONCAT(user.first_name , ' ', user.middle_name,' ', user.last_name) as staff
-        
       FROM 
-        residence_household 
-        inner join person on residence_household.person_id = person.person_id 
-        inner join household on residence_household.household_id = household.household_id 
-        inner join street on household.street_id = street.street_id 
-        INNER join account on household.account_id = account.account_id 
-        inner join user on account.user_id = user.user_id
+        residence_household,
+        household,
+        person,
+        street,
+        barangay,
+        account,
+        user
       WHERE
-        street.barangay_id = :barangay_id";
+        household.household_id = residence_household.household_id AND
+        person.person_id = residence_household.person_id AND
+        street.street_id = household.street_id AND
+        barangay.barangay_id = street.barangay_id AND
+        account.account_id = household.account_id AND
+        user.user_id = account.user_id AND
+        user.barangay_id  = :barangay_id";
 
       
       $stmnt = $this->conn->prepare($sql);
@@ -158,6 +164,146 @@
       $db_conn = NULL;
     }
     
+    // Gender of Residence household with in the barangay
+    public function ResidenceHouseholdGender($barangay_id,$street_name){
+      $sql = "
+              
+        Select DISTINCT
+        (
+          SELECT 
+            Count(sex) as Male
+          FROM 
+            residence_household,
+            household,
+            person,
+            street,
+            barangay,
+            account,
+            user
+          WHERE
+            household.household_id = residence_household.household_id AND
+            person.person_id = residence_household.person_id AND
+            street.street_id = household.street_id AND
+            barangay.barangay_id = street.barangay_id AND
+            account.account_id = household.account_id AND
+            user.user_id = account.user_id AND
+            user.barangay_id  = :barangay_id  AND
+            street.street_name = :street_name AND person.sex = 'Male') as Male,
+        ( 
+          SELECT 
+            Count(sex) as Female
+          FROM 
+            residence_household,
+            household,
+            person,
+            street,
+            barangay,
+            account,
+            user
+          WHERE
+            household.household_id = residence_household.household_id AND
+            person.person_id = residence_household.person_id AND
+            street.street_id = household.street_id AND
+            barangay.barangay_id = street.barangay_id AND
+            account.account_id = household.account_id AND
+            user.user_id = account.user_id AND
+            user.barangay_id  = :barangay_id  AND
+            street.street_name = :street_name AND person.sex = 'Female') as Female
+
+        FROM 
+          residence_household,
+          household,
+          person,
+          street,
+          barangay,
+          account,
+          user
+        WHERE
+          household.household_id = residence_household.household_id AND
+          person.person_id = residence_household.person_id AND
+          street.street_id = household.street_id AND
+          barangay.barangay_id = street.barangay_id AND
+          account.account_id = household.account_id AND
+          user.user_id = account.user_id AND
+          user.barangay_id  = :barangay_id
+        ORDER BY street.street_name";
+
+
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->bindParam(':barangay_id',$barangay_id);
+      $stmnt->bindParam(':street_name',$street_name);
+      $stmnt->execute();
+      return $stmnt;
+      $db_conn = NULL;
+
+      
+    }
+
+    public function showbarangayResidenceHousehold($barangay_id,$street_id){
+      $sql = "
+      SELECT 
+        COUNT(residence_household.person_id) as population_number,
+        street.street_name
+      FROM 
+        residence_household,
+        household,
+        barangay,
+        street,
+        person
+      WHERE
+        residence_household.household_id = household.household_id AND
+        household.street_id = street.street_id AND
+        street.barangay_id = barangay.barangay_id AND
+        residence_household.person_id = person.person_id AND
+        barangay.barangay_id = :barangay_id AND
+        street.street_id = :street_id
+      GROUP BY 
+        street.street_name 
+      ORDER BY 
+        street.street_name
+      ";
+
+      $stmnt = $this->conn->prepare($sql);
+      $stmnt->bindParam(':barangay_id',$barangay_id);
+      $stmnt->bindParam(':street_id',$street_id);
+      $stmnt->execute();
+      return $stmnt;
+      $db_conn = NULL;
+    }
+
+
+    public function fetchAllPopulation(){
+      $sql = "
+        SELECT 
+          person.*, 
+          street.street_name, 
+          barangay.barangay_name,
+          household.household_number,
+          household.date_accomplished,
+          CONCAT(user.first_name , ' ', user.middle_name,' ', user.last_name) as staff
+        FROM 
+          residence_household,
+          household,
+          person,
+          street,
+          barangay,
+          account,
+          user
+        WHERE
+          household.household_id = residence_household.household_id AND
+          person.person_id = residence_household.person_id AND
+          street.street_id = household.street_id AND
+          barangay.barangay_id = street.barangay_id AND
+          account.account_id = household.account_id AND
+          user.user_id = account.user_id";
+
+      $stmnt = $this->conn->prepare($sql);
+      
+      $stmnt->execute();
+      return $stmnt;
+      $db_conn = NULL;
+      
+    }
   }
 
   
