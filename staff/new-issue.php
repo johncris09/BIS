@@ -147,7 +147,6 @@
 		</section>
 
 		<?php include('../component/jslink.php');  ?>
-		<script src=" ../assets/vendor/bootstrap/js/bootstrap.js"></script>
 		<!-- Specific Page Vendor -->
 		<script src="../assets/vendor/jquery-validation/jquery.validate.js"></script>
 		<script src="../assets/vendor/pnotify/pnotify.custom.js"></script>
