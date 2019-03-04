@@ -2,7 +2,7 @@
 <!doctype html>
 <html class="fixed">
 	<head>
-		<title>Back Up Records</title>
+		<title>404</title>
 
 		<!-- Specific Page Vendor CSS -->
 		<?php include('../component/csslink.php'); ?>
