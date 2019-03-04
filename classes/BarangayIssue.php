@@ -193,6 +193,28 @@
       $db_conn = NULL;
       
     }
+
+    // select those person who has an issue
+    public function hasIssue($person_id){
+      
+      $sql ="
+        SELECT *
+        FROM barangay_issue 
+        WHERE
+          complainant = :person_id OR 
+          complained_resident = :person_id
+      ";
+
+      $stmnt = $this->conn->prepare($sql);
+
+      $stmnt->bindParam(':person_id', $person_id);
+  
+      $stmnt->execute();
+  
+      return $stmnt;
+      $db_conn = NULL;
+
+    }
   }
 
   
