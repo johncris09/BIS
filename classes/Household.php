@@ -104,6 +104,21 @@
         // return false;
       }
     }
+
+    // Getting the maximum value for household Number
+    public function getMaxValHouseNumber()
+    {
+      $sql = "
+        SELECT MAX(household_number) as household_number
+        FROM household";
+      
+      $stmnt = $this->conn->prepare($sql);
+  
+      $stmnt->execute();
+  
+      return $stmnt;
+      $db_conn = NULL;
+    }
     
   }
 
