@@ -1,47 +1,93 @@
 
 <?php session_start(); ?>
+<?php
+	// Include all database and object files
+	include_once '../classes/Database.php';
+	include_once  '../classes/Barangay.php';
+	include_once  '../classes/initial.php';
+
+	$barangay = new Barangay($db);
+  $prep_state = $barangay->getAllBarangay();
+?>
 <!DOCTYPE html>
 <html>
 	<head>	
-      <title>Barangay</title>
-      <?php include('../component/metadata.php'); ?>
-			<?php include('../component/csslink.php'); ?>
-			<link rel="stylesheet" href="../assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-			<link rel="stylesheet" href="../assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
-			<link rel="stylesheet" href="../assets/vendor/morris/morris.css" />
-      <?php include('../component/cssthemelink.php'); ?>
+	  <title>Barangay</title>
+		<?php include('../component/metadata.php'); ?>
+		<?php include('../component/csslink.php'); ?>
+			
+	  <!-- Specific Vendor Page -->
+	  <link rel="stylesheet" href="../assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+	  <link rel="stylesheet" href="../assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+	  <link rel="stylesheet" href="../assets/vendor/morris/morris.css" />
+    
+		<?php include('../component/cssthemelink.php'); ?>
 	</head>
 	<body>
 		<section class="body">
-
 			<?php include('../layout/header.php'); ?>
-			<div class="inner-wrapper">
 
+		  <div class="inner-wrapper">
 				<?php include('../layout/sidebar-left.php'); ?>
 
-        <section role="main" class="content-body">
-					<header class="page-header">
-						<h2>Dashboard</h2>
-					
-						<div class="right-wrapper pull-right">
-							<ol class="breadcrumbs">
-								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
-									</a>
-								</li>
-								<li><span>Dashboard</span></li>
-							</ol>
-					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
-						</div>
+        
+			<section role="main" class="content-body">
+			  <header class="page-header">
+			    <h2>Dashboard</h2>
+			    <div class="right-wrapper pull-right">
+			      <ol class="breadcrumbs">
+						<li>
+							<a href="index.html">
+								<i class="fa fa-home"></i>
+							</a>
+						</li>
+						<li><span>Dashboard</span></li>
+					</ol>
+
+					<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+				</div>
 					</header>
 
 					<!-- start: page -->
-						
+					<h3 class="mt-lg">Dashboard</h3>
+						<div class="row">
+							<div class="col-md-12 col-lg-12 col-xl-12">
+								<section class="panel panel-primary ">
+									<header class="panel-heading">
+										<div class="panel-actions">
+											<a href="#" class="fa fa-caret-down"></a>
+											<a href="#" class="fa fa-times"></a>
+										</div>
+										<h2 class="panel-title">Barangay</h2>
+									</header>
+									<div class="panel-body"> 
+											<div class="row">
+												<label class="col-sm-4 col-md-3 col-lg-2 control-label"><h5>Select Barangay</h5></label>
+												<div class="col-sm-8 col-md-8 col-lg-8">
+													<select id="barangay-list" data-plugin-selectTwo class="form-control populate">
+														<option value="">Choose Barangay</option>
+														<?php while ($row = $prep_state->fetch(PDO::FETCH_ASSOC)) { ?>
+
+														<option value="<?php echo $row['barangay_id'];?>"><?php echo $row['barangay_name']; ?></option>
+
+														<?php 	} ?>
+													</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-10 col-sm-offset-1">
+												<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
+												</div>
+											</div> 
+                    
+									</div>
+								</section>
+							</div> 
+						</div>
 						<div class="row">
 							<div class="col-md-12 col-lg-12 col-xl-4">
-                <h3 class="mt-lg">Dashboard</h3>
+                
 								<div class="row">
 									<div class="col-md-6 col-xl-12">
 										<section class="panel">
@@ -143,7 +189,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
+							<!-- <div class="row">
 							<div class="col-md-12 col-lg-6">
 								<div class="row">
 									<div class="col-md-12 col-xl-6">
@@ -165,7 +211,7 @@
 												</div>
 						
 											</header>
-											<!-- <div id="accordion">
+										<div id="accordion">
 												<div class="panel panel-accordion panel-accordion-first">
 													<div class="panel-heading">
 														<h4 class="panel-title">
@@ -214,85 +260,24 @@
 														</div>
 													</div>
 												</div>
-											</div> -->
+											</div> 
 										</section>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>-->
+
+						
+
 
 						
 					<!-- end: page -->
 				</section>
 			</div>
+			
 
-			<aside id="sidebar-right" class="sidebar-right">
-				<div class="nano">
-					<div class="nano-content">
-						<a href="#" class="mobile-close visible-xs">
-							Collapse <i class="fa fa-chevron-right"></i>
-						</a>
+
 			
-						<div class="sidebar-right-wrapper">
-			
-							<div class="sidebar-widget widget-calendar">
-								<h6>Upcoming Tasks</h6>
-								<div data-plugin-datepicker data-plugin-skin="dark" ></div>
-			
-								<ul>
-									<li>
-										<time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
-										<span>Company Meeting</span>
-									</li>
-								</ul>
-							</div>
-			
-							<div class="sidebar-widget widget-friends">
-								<h6>Friends</h6>
-								<ul>
-									<li class="status-online">
-										<figure class="profile-picture">
-											<img src="../assets/images/default-avatar.jpg" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-online">
-										<figure class="profile-picture">
-											<img src="../assets/images/default-avatar.jpg" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-offline">
-										<figure class="profile-picture">
-											<img src="../assets/images/default-avatar.jpg" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-offline">
-										<figure class="profile-picture">
-											<img src="../assets/images/default-avatar.jpg" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-								</ul>
-							</div>
-			
-						</div>
-					</div>
-				</div>
-			</aside>
 		</section>
 	
 			</div>
@@ -307,7 +292,63 @@
 		<?php include('../component/jslink.php'); ?>
 			<!-- Specific Page Vendor -->
 		<?php include('../component/themejslink.php');  ?>
-		<script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+    <script src="../assets/vendor/jquery-ui/js/jquery-ui.1.12.1.js"></script> 
+    <script src="../assets/vendor/canvasjs-2.2/canvasjs.min.js"></script>
+		 
+    <script>
+		$(document).ready(function(){
+			var chart = new CanvasJS.Chart("chartContainer", {
+				theme:"light2",
+				zoomEnabled: true,
+				animationEnabled: true,
+				animationEnabled: true,
+				axisX: {
+					title: "Street Name",
+					gridThickness: .9,
+					lineThickness: .9,
+					titleFontSize: 14,
+					labelFontSize: 12,
+					
+				},
+				axisY :{
+					includeZero: true,
+					title: "Number of Population",
+					gridThickness: .9,
+					lineThickness: .9,
+					titleFontSize: 14,
+					labelFontSize: 12
+				},
+				toolTip: {
+					shared: "true"
+				},
+				legend:{
+					cursor:"pointer",
+					itemclick : toggleDataSeries,
+					verticalAlign: "bottom",
+					horizontalAlign: "center"
+				},
+				data: [{
+					type: "spline", 
+					showInLegend: true,
+					name: "Populaltion Number",
+					dataPoints: []
+						 
+				}]
+			}); 
+			chart.render();
+	
+			function toggleDataSeries(e) {
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+					e.dataSeries.visible = false;
+				} else {
+					e.dataSeries.visible = true;
+				}
+				chart.render();
+			}
+		}); 
+    </script>
+
+
 		
 	</body>
 </html>
