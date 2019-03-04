@@ -31,9 +31,6 @@ $(document).ready(function(){
 
   // $( "div.ui-pnotify").addClass('animated rotateInDownRight ');
 
-   
-
-  
   
   // $('section.body').addClass('animated pulse')
 
@@ -47,15 +44,22 @@ $(document).ready(function(){
 
 
   var text = window.location.href;
-  var result = text.split('/')
-  
-  checkPage(result[4])
+  var result = text.split('/') 
+
+  if(result.length == 6){
+    if(result[4] != "admin"){
+      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"admin/404.php");
+    }
+  }else{
+    window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
+  }
+  // checkPage(result[4])
   
   function checkPage(roleFolder ){
     var _roleFolder = "admin"
 
     if(roleFolder != "admin"){
-      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"admin/404.php");
+      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
     }
   }
 
@@ -231,7 +235,87 @@ $(document).ready(function(){
   *
   ***********************************************************/
 
-  if(filename == "index"){
+  if(filename == "index"){ 
+
+    $('#barangay-list').click();
+    $('#barangay-list').click(function(){
+      var barangay_id = $(this).val() 
+      $.ajax({
+        url: '../classes/main.php',
+        type: 'POST',
+        data:{
+          'population-chart':1,
+          'barangay_id': barangay_id
+        },
+        // async: true,
+        // dataType: 'JSON',
+        success: function(response,data){
+          // var datapoints = JSON.parse(response)
+          let datapoints = (JSON.parse(response))
+
+          let result = datapoints.map(function(x) { 
+              x.y = Number(x.y);  
+              return x;
+          }); 
+          var chart = new CanvasJS.Chart("chartContainer", {
+            theme:"light2",
+            zoomEnabled: true,
+            animationEnabled: true,
+            animationEnabled: true,
+            axisX: {
+              title: "Street Name",
+              gridThickness: .9,
+              lineThickness: .9,
+              titleFontSize: 14,
+              labelFontSize: 12,
+              
+            },
+            axisY :{
+              includeZero: true,
+              title: "Number of Population",
+              gridThickness: .9,
+              lineThickness: .9,
+              titleFontSize: 14,
+              labelFontSize: 12
+            },
+            toolTip: {
+              shared: "true"
+            },
+            legend:{
+              cursor:"pointer",
+              itemclick : toggleDataSeries,
+              verticalAlign: "bottom",
+              horizontalAlign: "center"
+            },
+            data: [{
+              type: "spline", 
+              showInLegend: true,
+              name: "Populaltion Number",
+              dataPoints: 
+                result
+            }]
+          }); 
+          chart.render();
+      
+          function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+              e.dataSeries.visible = false;
+            } else {
+              e.dataSeries.visible = true;
+            }
+            chart.render();
+          }
+           
+        },
+        // Error Handler
+        error: function(xhr, textStatus, error){
+          console.info(xhr.responseText);
+        }
+      }); 
+
+    });
+
+
     $.ajax({
       url: '../classes/main.php',
       type: 'POST',
@@ -251,7 +335,8 @@ $(document).ready(function(){
       error: function(xhr, textStatus, error){
         console.info(xhr.responseText);
       }
-    });
+    }); 
+    
   }
   
 
