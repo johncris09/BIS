@@ -20,14 +20,12 @@ $(document).ready(function(){
 
   var text = window.location.href;
   var result = text.split('/')
-  
-  checkPage(result[4])
-  
-  function checkPage(roleFolder ){
-
-    if(roleFolder != "staff"){
+  if(result.length == 6){
+    if(result[4] != "staff"){
       window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"staff/404.php");
     }
+  }else{
+    window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
   }
 
 
@@ -920,7 +918,7 @@ $(document).ready(function(){
             "targets": -1,
             "data": null,
             "defaultContent": 
-                `<a style="cursor: pointer" href="#viewIssue" class="text-primary view-issue"> <i class="fa fa-eye" aria-hidden="true"></i> View </a>
+                `
                 <a  style="cursor: pointer"  id="edit" class="text-warning"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit </a>
                 <a style="cursor: pointer"  class='text-danger' id='delete'><i class='fa  fa-trash-o '> Delete </i></a>`
         } ],
