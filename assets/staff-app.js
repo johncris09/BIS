@@ -20,12 +20,17 @@ $(document).ready(function(){
 
   var text = window.location.href;
   var result = text.split('/')
+  
+  
   if(result.length == 6){
     if(result[4] != "staff"){
-      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"staff/404.php");
+      window.location.replace(result[0] + '/' + result[1] + '/' + result[2] + '/' + result[3] + '/staff/404.php');
     }
+
   }else{
-    window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
+    if(result[3] != "staff"){
+      window.location.replace(result[0] + '/' + result[1] + '/' + result[2] + '/' + 'staff/404.php')
+    }
   }
 
 

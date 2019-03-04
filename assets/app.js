@@ -48,20 +48,15 @@ $(document).ready(function(){
 
   if(result.length == 6){
     if(result[4] != "admin"){
-      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"admin/404.php");
+      window.location.replace(result[0] + '/' + result[1] + '/' + result[2] + '/' + result[3] + '/admin/404.php');
     }
-  }else{
-    window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
-  }
-  // checkPage(result[4])
-  
-  function checkPage(roleFolder ){
-    var _roleFolder = "admin"
 
-    if(roleFolder != "admin"){
-      window.location.replace(result[0]+'/'+result[1]+'/'+result[2]+'/'+result[3]+'/'+"404.php");
+  }else{
+    if(result[3] != "admin"){
+      window.location.replace(result[0] + '/' + result[1] + '/' + result[2] + '/' + 'admin/404.php')
     }
   }
+
 
   ChnageInfo();
   //  log_out
