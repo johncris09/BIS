@@ -141,14 +141,39 @@ class BarangayStreet
   public function fetchSpecificStreetName($user_id){
     $sql = "
       SELECT 
-      street.street_id,street.street_name
+        street.street_id,street.street_name
       FROM 
         street, barangay,user
       WHERE
-      user.barangay_id = barangay.barangay_id AND street.barangay_id= barangay.barangay_id AND user.user_id = :user_id";
+        user.barangay_id = barangay.barangay_id AND 
+        street.barangay_id= barangay.barangay_id AND
+        user.user_id = :user_id
+      ORDER BY 
+        street.street_name  
+      ";
 
     $stmnt = $this->conn->prepare($sql);
     $stmnt->bindParam(':user_id', $user_id);
+    $stmnt->execute();
+
+    return $stmnt;
+    $conn= NULL;
+
+  }
+
+  public function selectStreetName($barangay_id){
+    $sql = "
+      SELECT 
+        * 
+      FROM 
+        street
+      WHERE 
+        street.barangay_id = :barangay_id
+      ORDER BY street.street_name
+    ";
+
+    $stmnt = $this->conn->prepare($sql);
+    $stmnt->bindParam(':barangay_id', $barangay_id);
     $stmnt->execute();
 
     return $stmnt;
