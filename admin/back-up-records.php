@@ -59,11 +59,34 @@
                   <button id="back-up" class="mt-sm mb-sm btn text-right btn-success"><i class="fa fa-database"></i> Back up Here</button>
             
                   
-                </div>
-              </div>
+								</div>
+								
+							</div>
+							
             </div>
-          </section>
-				
+					</section>
+					<!-- <section class="panel panel-featured panel-featured-primary">
+            <header class="panel-heading bg-primary">
+						<div class="panel-heading-icon">
+								<i class="fa fa-database"></i>
+							</div>
+              <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+                <a href="#" class="fa fa-times"></a>
+              </div>
+
+              <h2 class="panel-title">Back up</h2>
+            </header>
+            <div class="panel-body p-lg">
+							<h3 class="text-semibold mt-sm">Simple Block Title</h3>
+							<p>Nullam quiris risus eget urna mollis ornare vel eu leo. Soccis natoque penatibus et magnis dis parturient montes.</p>
+						</div>
+								
+							</div>
+							
+            </div>
+					</section> -->
+					
 					<!-- end: page -->
 				</section>
 			</div>
