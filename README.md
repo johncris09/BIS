@@ -1,12 +1,11 @@
-#Introduction
+<strong>Introduction</strong>
   Information System is a system
 information to collect, process, store and
 disseminate information to support decision
 making, coordination, control, analysis, and
 visualization in an organization which is used to
 manage and analyze all types of geographical
-data information or to carry out very specific
-analysis.
+data information or to carry out very specific analysis.
   Barangay Information System is a
 system with database in order to monitor the
 barangay area, including census, barangay
