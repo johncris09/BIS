@@ -1,4 +1,4 @@
-<strong>Introduction</strong>
+<h3>Introduction</h3>
   Information System is a system
 information to collect, process, store and
 disseminate information to support decision
