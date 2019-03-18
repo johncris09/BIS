@@ -628,7 +628,7 @@ $(document).ready(function(){
             }else{
               msg_FailedToSave();
             }
-            getMaxHouseholdNumber();
+            // getMaxHouseholdNumber();
           },
     
           // Error Handler
@@ -679,7 +679,7 @@ $(document).ready(function(){
 
     
 
-    getMaxHouseholdNumber();
+    // getMaxHouseholdNumber();
     // get the maximum household number
     function getMaxHouseholdNumber(){
       $.ajax({
