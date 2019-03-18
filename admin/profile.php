@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php
+=======
+<?php 
+>>>>>>> 8cee827f606c5eb4ffd80e6f8cdedeac47d7ee85
   session_start(); 
   include_once '../classes/Database.php';
   include_once  '../classes/Position.php';
