@@ -42,7 +42,17 @@
       h3.text-primary{
         font-family: 'Coiny', cursive;
       }
-      
+      body{
+        background-image: url('assets/images/background-1.jpg');
+        
+        /* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
     </style>
   </head>
   <body>
