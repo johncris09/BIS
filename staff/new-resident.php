@@ -231,7 +231,7 @@
                           <label class="col-md-3 control-label" for="household_number">Household Number</label>
                           <div class="col-md-7">
                             <!-- <span id="household_number" class="form-control"></span> -->
-                            <input type="text" class="form-control" placeholder="Household Number" id="household_number" required="" readonly>
+                            <input type="text" class="form-control" placeholder="Household Number" id="household_number" required="">
                           </div>
                         </div>
                       </div> 
