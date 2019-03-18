@@ -1,4 +1,4 @@
-<? 
+<?php
   session_start(); 
   include_once '../classes/Database.php';
   include_once  '../classes/Position.php';
